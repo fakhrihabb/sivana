@@ -9,8 +9,7 @@ export default function Footer() {
           <div>
             <h3 className="text-2xl font-bold text-brand-blue mb-4">SIVANA</h3>
             <p className="text-gray-400 text-sm">
-              Sistem Informasi Verifikasi Administrasi Nasional untuk seleksi
-              Aparatur Sipil Negara Indonesia.
+              Sistem Integritas dan Verifikasi ASN Nasional.
             </p>
           </div>
 
