@@ -9,7 +9,7 @@ function SuccessModal({ isOpen, countdown }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-60 flex items-center justify-center p-4">
       <div className="bg-white rounded-xl p-8 max-w-md w-full shadow-2xl">
         <div className="text-center">
           <div className="flex justify-center mb-4">

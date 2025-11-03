@@ -93,7 +93,7 @@ html {
   z-index: 0;
 }
 
-.gradient-bg > * {
+.gradient-bg > *:not([class*="fixed"]) {
   position: relative;
   z-index: 1;
 }

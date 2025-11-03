@@ -167,7 +167,7 @@ export default function Hero() {
 
       {/* CV Analysis Modal */}
       {showCVModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-fade-in">
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl transform animate-scale-in">
             {/* Modal Header with Gradient */}
             <div className="sticky top-0 bg-gradient-to-r from-brand-blue to-brand-pink px-6 py-5 flex justify-between items-center">
