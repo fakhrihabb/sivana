@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function TanyaBKN() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -30,6 +32,11 @@ export default function TanyaBKN() {
       inputRef.current.focus();
     }
   }, [isOpen]);
+
+  // Don't render on admin pages
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   const quickReplies = [
     "Cara mendaftar CPNS",
