@@ -73,7 +73,7 @@ export default function AdminDashboard() {
       title: "Kelola Lamaran",
       description:
         "Lihat dan kelola data lamaran lengkap dari peserta yang telah mendaftar dalam sistem SSCASN.",
-      onClick: () => setIsModalOpen(true),
+      href: "/admin/lamaran",
     },
     {
       icon: MessageSquareWarning,
