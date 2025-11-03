@@ -129,7 +129,7 @@ export default function VerifikasiWajahCamera({ params }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-blue/5 to-white p-4 pt-20">
+    <div className="min-h-screen gradient-bg p-4 pt-20">
       {/* Back Button */}
       <div className="max-w-4xl mx-auto mb-4">
         <Link

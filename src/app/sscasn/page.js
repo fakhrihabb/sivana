@@ -3,9 +3,11 @@ import DaftarFormasi from "@/components/DaftarFormasi";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white pt-16">
+    <div className="min-h-screen pt-16">
       <Hero />
-      <DaftarFormasi />
+      <div className="gradient-bg">
+        <DaftarFormasi />
+      </div>
     </div>
   );
 }

@@ -156,7 +156,7 @@ export default function KelolaLamaranPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-16">
+    <div className="min-h-screen gradient-bg pt-16">
       {/* Header Section */}
       <section className="bg-white border-b border-gray-200 py-8 px-6">
         <div className="max-w-7xl mx-auto">

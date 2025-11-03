@@ -1105,7 +1105,7 @@ export default function DetailLamaranPage() {
 
   if (!applicationData) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-16 flex items-center justify-center">
+      <div className="min-h-screen gradient-bg pt-16 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Lamaran Tidak Ditemukan
@@ -1154,7 +1154,7 @@ export default function DetailLamaranPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-16 pb-12">
+    <div className="min-h-screen gradient-bg pt-16 pb-12">
       {/* Header Section */}
       <section className="bg-white border-b border-gray-200 py-8 px-6">
         <div className="max-w-7xl mx-auto">
