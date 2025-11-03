@@ -85,31 +85,41 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-blue/5 to-white pt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
-        <div className="mb-12">
+    <div className="min-h-screen pt-16">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-[#239DD7] to-[#DE1B5D] text-white py-20 px-6 overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
           <Link
             href="/"
-            className="inline-block text-brand-blue hover:text-brand-pink transition-colors mb-4"
+            className="inline-block text-white hover:text-white/80 transition-colors mb-6"
           >
             ← Kembali ke Beranda
           </Link>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Dashboard Admin
-          </h1>
-          <p className="text-lg text-gray-600">
-            Kelola sistem SIVANA x SSCASN dengan mudah
-          </p>
+          <div className="space-y-6 animate-slide-up max-w-3xl">
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+              Dashboard Admin
+            </h1>
+            <p className="text-xl text-white/90 leading-relaxed">
+              Kelola sistem SIVANA x SSCASN dengan mudah. Verifikasi identitas, monitor pendaftar, dan kelola keluhan pengguna dalam satu platform terpadu.
+            </p>
+          </div>
         </div>
+      </section>
 
-        {/* Feature Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <FeatureCard key={index} {...feature} />
-          ))}
+      {/* Feature Cards Section */}
+      <section className="bg-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature, index) => (
+              <FeatureCard key={index} {...feature} />
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* Modal */}
       <DalamPengembanganModal
