@@ -433,19 +433,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gradient-to-br from-[#239DD7] to-[#DE1B5D] text-white py-12 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <h3 className="text-2xl font-bold mb-4">SIVANA</h3>
-          <p className="text-white/80 mb-6">
-            Sistem Integritas dan Verifikasi ASN Nasional
-          </p>
-          <p className="text-white/60 text-sm">
-            © 2025 Tim Makara - ASN Digital AI Hackathon
-          </p>
-        </div>
-      </footer>
-
       {/* Modal */}
       <CobaSivanaModal
         isOpen={isModalOpen}
