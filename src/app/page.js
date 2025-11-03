@@ -102,7 +102,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-16">
       {/* Hero Section - Gradient Background */}
       <section className="relative bg-gradient-to-br from-[#239DD7] to-[#DE1B5D] text-white py-20 px-6 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
