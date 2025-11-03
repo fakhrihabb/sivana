@@ -202,6 +202,490 @@ const dummyApplicationsData = {
       },
     ],
   },
+  LAM003: {
+    id: "LAM003",
+    name: "Ahmad Wijaya",
+    email: "ahmad.wijaya@email.com",
+    phone: "083456789012",
+    position: "Analis Data dan Informasi",
+    submittedDate: "2024-01-13",
+    status: "ms",
+    finalDecision: {
+      status: "ms",
+      decidedBy: "Admin Sistem",
+      decidedAt: "2024-01-16",
+    },
+    documents: [
+      {
+        id: "ktp",
+        name: "KTP",
+        filename: "ktp_ahmad.pdf",
+        uploadedDate: "2024-01-13",
+        ocrText: "NIK: 3401234567890125\nNama: AHMAD WIJAYA\nTempat/Tgl Lahir: YOGYAKARTA, 10-03-1996",
+        aiInsight: {
+          status: "ms",
+          reasons: ["KTP valid dan masih berlaku", "Data sesuai dengan pendaftaran"],
+        },
+      },
+      {
+        id: "ijazah",
+        name: "Ijazah Terakhir",
+        filename: "ijazah_s1_statistika.pdf",
+        uploadedDate: "2024-01-13",
+        ocrText: "INSTITUT TEKNOLOGI BANDUNG\nIJAZAH SARJANA\nNama: Ahmad Wijaya\nProgram Studi: Statistika\nIPK: 3.82",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Program studi sesuai dengan formasi", "IPK sangat baik"],
+        },
+      },
+      {
+        id: "transkrip",
+        name: "Transkrip Nilai",
+        filename: "transkrip_statistika.pdf",
+        uploadedDate: "2024-01-13",
+        ocrText: "TRANSKRIP NILAI\nIPK: 3.82\nTotal SKS: 144",
+        aiInsight: {
+          status: "ms",
+          reasons: ["IPK konsisten", "SKS memenuhi standar"],
+        },
+      },
+      {
+        id: "surat_lamaran",
+        name: "Surat Lamaran",
+        filename: "surat_lamaran_ahmad.pdf",
+        uploadedDate: "2024-01-13",
+        ocrText: "Surat Lamaran lengkap dengan nomor formasi",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Format sesuai", "Lengkap"],
+        },
+      },
+      {
+        id: "skck",
+        name: "SKCK",
+        filename: "skck_ahmad.pdf",
+        uploadedDate: "2024-01-13",
+        ocrText: "SKCK valid",
+        aiInsight: {
+          status: "ms",
+          reasons: ["SKCK valid"],
+        },
+      },
+      {
+        id: "surat_sehat",
+        name: "Surat Keterangan Sehat",
+        filename: "surat_sehat_ahmad.pdf",
+        uploadedDate: "2024-01-13",
+        ocrText: "Sehat",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Sehat"],
+        },
+      },
+    ],
+  },
+  LAM004: {
+    id: "LAM004",
+    name: "Dewi Lestari",
+    email: "dewi.lestari@email.com",
+    phone: "084567890123",
+    position: "Pranata Komputer Ahli Pertama",
+    submittedDate: "2024-01-12",
+    status: "tms",
+    finalDecision: {
+      status: "tms",
+      decidedBy: "Admin Sistem",
+      decidedAt: "2024-01-16",
+      reason: "Kepada Yth.\nSdr/i Dewi Lestari\n\nBerdasarkan hasil verifikasi dan evaluasi dokumen persyaratan administrasi yang telah dilakukan oleh Panitia Seleksi CPNS, dengan ini kami sampaikan bahwa lamaran Saudara/i untuk formasi Pranata Komputer Ahli Pertama DINYATAKAN TIDAK MEMENUHI SYARAT (TMS) dan TIDAK DAPAT DIPROSES LEBIH LANJUT.\n\nHal ini dikarenakan terdapat beberapa kekurangan FATAL pada dokumen yang bersifat mandatory:\n\n1. IJAZAH TERAKHIR\n   - IPK tidak memenuhi syarat minimum (2.85 < 3.00)\n   - Tidak memenuhi standar kualifikasi yang ditetapkan\n\n2. SURAT KETERANGAN SEHAT\n   - Tanggal pemeriksaan sudah kadaluarsa (lebih dari 6 bulan)\n   - Dokumen tidak dapat digunakan untuk proses seleksi\n\nSesuai dengan Peraturan BKN dan ketentuan teknis seleksi CPNS, dokumen-dokumen di atas merupakan persyaratan MUTLAK yang harus dipenuhi. Ketidaklengkapan tersebut mengakibatkan lamaran Saudara/i tidak dapat dilanjutkan ke tahap selanjutnya.\n\nDemikian surat pemberitahuan ini kami sampaikan. Kami mengharapkan Saudara/i dapat mempersiapkan dokumen dengan lebih baik pada kesempatan seleksi berikutnya.\n\nHormat kami,\nPanitia Seleksi CPNS",
+    },
+    documents: [
+      {
+        id: "ktp",
+        name: "KTP",
+        filename: "ktp_dewi.pdf",
+        uploadedDate: "2024-01-12",
+        ocrText: "NIK: 3501234567890126\nNama: DEWI LESTARI",
+        aiInsight: {
+          status: "ms",
+          reasons: ["KTP valid"],
+        },
+      },
+      {
+        id: "ijazah",
+        name: "Ijazah Terakhir",
+        filename: "ijazah_s1_ti.pdf",
+        uploadedDate: "2024-01-12",
+        ocrText: "UNIVERSITAS BRAWIJAYA\nIJAZAH SARJANA\nNama: Dewi Lestari\nProgram Studi: Teknik Informatika\nIPK: 2.85",
+        aiInsight: {
+          status: "tms",
+          reasons: ["FATAL: IPK di bawah syarat minimum (2.85 < 3.00)", "Tidak memenuhi kualifikasi minimum"],
+        },
+      },
+      {
+        id: "transkrip",
+        name: "Transkrip Nilai",
+        filename: "transkrip_ti.pdf",
+        uploadedDate: "2024-01-12",
+        ocrText: "TRANSKRIP NILAI\nIPK: 2.85",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Konsisten dengan ijazah"],
+        },
+      },
+      {
+        id: "surat_lamaran",
+        name: "Surat Lamaran",
+        filename: "surat_lamaran_dewi.pdf",
+        uploadedDate: "2024-01-12",
+        ocrText: "Surat Lamaran",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Format sesuai"],
+        },
+      },
+      {
+        id: "skck",
+        name: "SKCK",
+        filename: "skck_dewi.pdf",
+        uploadedDate: "2024-01-12",
+        ocrText: "SKCK valid",
+        aiInsight: {
+          status: "ms",
+          reasons: ["SKCK valid"],
+        },
+      },
+      {
+        id: "surat_sehat",
+        name: "Surat Keterangan Sehat",
+        filename: "surat_sehat_dewi.pdf",
+        uploadedDate: "2024-01-12",
+        ocrText: "Tanggal Pemeriksaan: 15 Juni 2023",
+        aiInsight: {
+          status: "tms",
+          reasons: ["FATAL: Tanggal pemeriksaan sudah kadaluarsa (lebih dari 6 bulan)", "Dokumen tidak dapat digunakan"],
+        },
+      },
+    ],
+  },
+  LAM005: {
+    id: "LAM005",
+    name: "Rizki Pratama",
+    email: "rizki.pratama@email.com",
+    phone: "085678901234",
+    position: "Analis Kebijakan Ahli Pertama",
+    submittedDate: "2024-01-11",
+    status: "belum_verifikasi",
+    documents: [
+      {
+        id: "ktp",
+        name: "KTP",
+        filename: "ktp_rizki.pdf",
+        uploadedDate: "2024-01-11",
+        ocrText: "NIK: 3601234567890127\nNama: RIZKI PRATAMA",
+        aiInsight: {
+          status: "ms",
+          reasons: ["KTP valid"],
+        },
+      },
+      {
+        id: "ijazah",
+        name: "Ijazah Terakhir",
+        filename: "ijazah_s1_ap.pdf",
+        uploadedDate: "2024-01-11",
+        ocrText: "UNIVERSITAS DIPONEGORO\nIJAZAH SARJANA\nNama: Rizki Pratama\nProgram Studi: Administrasi Publik\nIPK: 3.45",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Program studi sesuai", "IPK memenuhi syarat"],
+        },
+      },
+      {
+        id: "transkrip",
+        name: "Transkrip Nilai",
+        filename: "transkrip_ap.pdf",
+        uploadedDate: "2024-01-11",
+        ocrText: "TRANSKRIP NILAI\nIPK: 3.45",
+        aiInsight: {
+          status: "ms",
+          reasons: ["IPK konsisten"],
+        },
+      },
+      {
+        id: "surat_lamaran",
+        name: "Surat Lamaran",
+        filename: "surat_lamaran_rizki.pdf",
+        uploadedDate: "2024-01-11",
+        ocrText: "Surat Lamaran",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Format sesuai"],
+        },
+      },
+      {
+        id: "skck",
+        name: "SKCK",
+        filename: "skck_rizki.pdf",
+        uploadedDate: "2024-01-11",
+        ocrText: "SKCK valid",
+        aiInsight: {
+          status: "ms",
+          reasons: ["SKCK valid"],
+        },
+      },
+      {
+        id: "surat_sehat",
+        name: "Surat Keterangan Sehat",
+        filename: "surat_sehat_rizki.pdf",
+        uploadedDate: "2024-01-11",
+        ocrText: "Sehat",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Sehat"],
+        },
+      },
+    ],
+  },
+  LAM006: {
+    id: "LAM006",
+    name: "Maya Kusuma",
+    email: "maya.kusuma@email.com",
+    phone: "086789012345",
+    position: "Auditor Ahli Pertama",
+    submittedDate: "2024-01-10",
+    status: "ms",
+    finalDecision: {
+      status: "ms",
+      decidedBy: "Admin Sistem",
+      decidedAt: "2024-01-15",
+    },
+    documents: [
+      {
+        id: "ktp",
+        name: "KTP",
+        filename: "ktp_maya.pdf",
+        uploadedDate: "2024-01-10",
+        ocrText: "NIK: 3701234567890128\nNama: MAYA KUSUMA",
+        aiInsight: {
+          status: "ms",
+          reasons: ["KTP valid"],
+        },
+      },
+      {
+        id: "ijazah",
+        name: "Ijazah Terakhir",
+        filename: "ijazah_s1_akuntansi.pdf",
+        uploadedDate: "2024-01-10",
+        ocrText: "UNIVERSITAS AIRLANGGA\nIJAZAH SARJANA\nNama: Maya Kusuma\nProgram Studi: Akuntansi\nIPK: 3.70",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Program studi sesuai", "IPK baik"],
+        },
+      },
+      {
+        id: "transkrip",
+        name: "Transkrip Nilai",
+        filename: "transkrip_akuntansi.pdf",
+        uploadedDate: "2024-01-10",
+        ocrText: "TRANSKRIP NILAI\nIPK: 3.70",
+        aiInsight: {
+          status: "ms",
+          reasons: ["IPK konsisten"],
+        },
+      },
+      {
+        id: "surat_lamaran",
+        name: "Surat Lamaran",
+        filename: "surat_lamaran_maya.pdf",
+        uploadedDate: "2024-01-10",
+        ocrText: "Surat Lamaran",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Format sesuai"],
+        },
+      },
+      {
+        id: "skck",
+        name: "SKCK",
+        filename: "skck_maya.pdf",
+        uploadedDate: "2024-01-10",
+        ocrText: "SKCK valid",
+        aiInsight: {
+          status: "ms",
+          reasons: ["SKCK valid"],
+        },
+      },
+      {
+        id: "surat_sehat",
+        name: "Surat Keterangan Sehat",
+        filename: "surat_sehat_maya.pdf",
+        uploadedDate: "2024-01-10",
+        ocrText: "Sehat",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Sehat"],
+        },
+      },
+    ],
+  },
+  LAM007: {
+    id: "LAM007",
+    name: "Agus Setiawan",
+    email: "agus.setiawan@email.com",
+    phone: "087890123456",
+    position: "Analis Keuangan",
+    submittedDate: "2024-01-09",
+    status: "tms",
+    finalDecision: {
+      status: "tms",
+      decidedBy: "Admin Sistem",
+      decidedAt: "2024-01-15",
+      reason: "Kepada Yth.\nSdr/i Agus Setiawan\n\nBerdasarkan hasil verifikasi dan evaluasi dokumen persyaratan administrasi yang telah dilakukan oleh Panitia Seleksi CPNS, dengan ini kami sampaikan bahwa lamaran Saudara/i untuk formasi Analis Keuangan DINYATAKAN TIDAK MEMENUHI SYARAT (TMS) dan TIDAK DAPAT DIPROSES LEBIH LANJUT.\n\nHal ini dikarenakan terdapat beberapa kekurangan FATAL pada dokumen yang bersifat mandatory:\n\n1. SKCK (Surat Keterangan Catatan Kepolisian)\n   - Dokumen sudah kadaluarsa (berlaku hingga Desember 2023)\n   - SKCK harus masih berlaku pada saat pendaftaran\n   - Merupakan persyaratan MUTLAK yang tidak dapat ditoleransi\n\nSesuai dengan Peraturan BKN dan ketentuan teknis seleksi CPNS, SKCK yang masih berlaku merupakan persyaratan MUTLAK yang harus dipenuhi. Ketidaklengkapan tersebut mengakibatkan lamaran Saudara/i tidak dapat dilanjutkan ke tahap selanjutnya.\n\nDemikian surat pemberitahuan ini kami sampaikan. Kami mengharapkan Saudara/i dapat mempersiapkan dokumen dengan lebih baik pada kesempatan seleksi berikutnya.\n\nHormat kami,\nPanitia Seleksi CPNS",
+    },
+    documents: [
+      {
+        id: "ktp",
+        name: "KTP",
+        filename: "ktp_agus.pdf",
+        uploadedDate: "2024-01-09",
+        ocrText: "NIK: 3801234567890129\nNama: AGUS SETIAWAN",
+        aiInsight: {
+          status: "ms",
+          reasons: ["KTP valid"],
+        },
+      },
+      {
+        id: "ijazah",
+        name: "Ijazah Terakhir",
+        filename: "ijazah_s1_ekonomi.pdf",
+        uploadedDate: "2024-01-09",
+        ocrText: "UNIVERSITAS PADJADJARAN\nIJAZAH SARJANA\nNama: Agus Setiawan\nProgram Studi: Ilmu Ekonomi\nIPK: 3.55",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Program studi sesuai", "IPK memenuhi syarat"],
+        },
+      },
+      {
+        id: "transkrip",
+        name: "Transkrip Nilai",
+        filename: "transkrip_ekonomi.pdf",
+        uploadedDate: "2024-01-09",
+        ocrText: "TRANSKRIP NILAI\nIPK: 3.55",
+        aiInsight: {
+          status: "ms",
+          reasons: ["IPK konsisten"],
+        },
+      },
+      {
+        id: "surat_lamaran",
+        name: "Surat Lamaran",
+        filename: "surat_lamaran_agus.pdf",
+        uploadedDate: "2024-01-09",
+        ocrText: "Surat Lamaran",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Format sesuai"],
+        },
+      },
+      {
+        id: "skck",
+        name: "SKCK",
+        filename: "skck_agus.pdf",
+        uploadedDate: "2024-01-09",
+        ocrText: "SKCK\nBerlaku hingga: 31 Desember 2023",
+        aiInsight: {
+          status: "tms",
+          reasons: ["FATAL: SKCK sudah kadaluarsa (berlaku hingga 31 Des 2023)", "SKCK harus masih berlaku saat pendaftaran"],
+        },
+      },
+      {
+        id: "surat_sehat",
+        name: "Surat Keterangan Sehat",
+        filename: "surat_sehat_agus.pdf",
+        uploadedDate: "2024-01-09",
+        ocrText: "Sehat",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Sehat"],
+        },
+      },
+    ],
+  },
+  LAM008: {
+    id: "LAM008",
+    name: "Rina Marlina",
+    email: "rina.marlina@email.com",
+    phone: "088901234567",
+    position: "Pranata Komputer Ahli Pertama",
+    submittedDate: "2024-01-08",
+    status: "belum_verifikasi",
+    documents: [
+      {
+        id: "ktp",
+        name: "KTP",
+        filename: "ktp_rina.pdf",
+        uploadedDate: "2024-01-08",
+        ocrText: "NIK: 3901234567890130\nNama: RINA MARLINA",
+        aiInsight: {
+          status: "ms",
+          reasons: ["KTP valid"],
+        },
+      },
+      {
+        id: "ijazah",
+        name: "Ijazah Terakhir",
+        filename: "ijazah_s1_si.pdf",
+        uploadedDate: "2024-01-08",
+        ocrText: "UNIVERSITAS HASANUDDIN\nIJAZAH SARJANA\nNama: Rina Marlina\nProgram Studi: Sistem Informasi\nIPK: 3.60",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Program studi sesuai", "IPK memenuhi syarat"],
+        },
+      },
+      {
+        id: "transkrip",
+        name: "Transkrip Nilai",
+        filename: "transkrip_si.pdf",
+        uploadedDate: "2024-01-08",
+        ocrText: "TRANSKRIP NILAI\nIPK: 3.60",
+        aiInsight: {
+          status: "ms",
+          reasons: ["IPK konsisten"],
+        },
+      },
+      {
+        id: "surat_lamaran",
+        name: "Surat Lamaran",
+        filename: "surat_lamaran_rina.pdf",
+        uploadedDate: "2024-01-08",
+        ocrText: "Surat Lamaran",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Format sesuai"],
+        },
+      },
+      {
+        id: "skck",
+        name: "SKCK",
+        filename: "skck_rina.pdf",
+        uploadedDate: "2024-01-08",
+        ocrText: "SKCK valid",
+        aiInsight: {
+          status: "ms",
+          reasons: ["SKCK valid"],
+        },
+      },
+      {
+        id: "surat_sehat",
+        name: "Surat Keterangan Sehat",
+        filename: "surat_sehat_rina.pdf",
+        uploadedDate: "2024-01-08",
+        ocrText: "Sehat",
+        aiInsight: {
+          status: "ms",
+          reasons: ["Sehat"],
+        },
+      },
+    ],
+  },
 };
 
 // Document Card Component
@@ -731,31 +1215,94 @@ export default function DetailLamaranPage() {
           {/* Overall AI Recommendation */}
           <OverallAIRecommendation documents={applicationData.documents} />
 
-          {/* Action Buttons */}
-          <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Keputusan Verifikasi
-            </h3>
-            <p className="text-sm text-gray-600 mb-6">
-              Berdasarkan dokumen yang telah diajukan dan analisis AI, berikan keputusan verifikasi Anda.
-            </p>
-            <div className="flex gap-4">
-              <button
-                onClick={() => setIsTMSModalOpen(true)}
-                className="flex-1 bg-red-500 hover:bg-red-600 text-white px-6 py-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
-              >
-                <ThumbsDown className="w-5 h-5" />
-                TMS (Tidak Memenuhi Syarat)
-              </button>
-              <button
-                onClick={() => setIsMSModalOpen(true)}
-                className="flex-1 bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
-              >
-                <ThumbsUp className="w-5 h-5" />
-                MS (Memenuhi Syarat)
-              </button>
+          {/* Final Decision (if already decided) */}
+          {applicationData.finalDecision && (
+            <div className={`bg-white border-2 rounded-xl p-6 ${
+              applicationData.finalDecision.status === "ms"
+                ? "border-green-300"
+                : "border-red-300"
+            }`}>
+              <div className="flex items-start gap-4 mb-4">
+                <div className={`p-3 rounded-lg ${
+                  applicationData.finalDecision.status === "ms"
+                    ? "bg-green-100"
+                    : "bg-red-100"
+                }`}>
+                  {applicationData.finalDecision.status === "ms" ? (
+                    <CheckCircle className="w-6 h-6 text-green-700" />
+                  ) : (
+                    <XCircle className="w-6 h-6 text-red-700" />
+                  )}
+                </div>
+                <div className="flex-grow">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Keputusan Final
+                  </h3>
+                  <div className={`inline-block px-4 py-2 rounded-lg font-bold text-lg mb-3 ${
+                    applicationData.finalDecision.status === "ms"
+                      ? "bg-green-100 text-green-900"
+                      : "bg-red-100 text-red-900"
+                  }`}>
+                    {applicationData.finalDecision.status === "ms"
+                      ? "MEMENUHI SYARAT (MS)"
+                      : "TIDAK MEMENUHI SYARAT (TMS)"}
+                  </div>
+                  <div className="text-sm text-gray-600 space-y-1">
+                    <p>Diputuskan oleh: <span className="font-semibold">{applicationData.finalDecision.decidedBy}</span></p>
+                    <p>Tanggal Keputusan: <span className="font-semibold">
+                      {new Date(applicationData.finalDecision.decidedAt).toLocaleDateString("id-ID", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </span></p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Show rejection reason if TMS */}
+              {applicationData.finalDecision.status === "tms" && applicationData.finalDecision.reason && (
+                <div className="mt-4 pt-4 border-t border-red-200">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-2">
+                    Alasan Penolakan (Email yang Dikirimkan):
+                  </h4>
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <pre className="text-sm text-red-900 whitespace-pre-wrap font-sans">
+                      {applicationData.finalDecision.reason}
+                    </pre>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          )}
+
+          {/* Action Buttons (only show if not decided yet) */}
+          {!applicationData.finalDecision && (
+            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Keputusan Verifikasi
+              </h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Berdasarkan dokumen yang telah diajukan dan analisis AI, berikan keputusan verifikasi Anda.
+              </p>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setIsTMSModalOpen(true)}
+                  className="flex-1 bg-red-500 hover:bg-red-600 text-white px-6 py-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+                >
+                  <ThumbsDown className="w-5 h-5" />
+                  TMS (Tidak Memenuhi Syarat)
+                </button>
+                <button
+                  onClick={() => setIsMSModalOpen(true)}
+                  className="flex-1 bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+                >
+                  <ThumbsUp className="w-5 h-5" />
+                  MS (Memenuhi Syarat)
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
