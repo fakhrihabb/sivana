@@ -20,6 +20,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  padding-top: 64px; /* Account for fixed navbar height (h-16 = 64px) */
 }
 
 /* Custom Animations */
