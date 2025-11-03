@@ -70,16 +70,16 @@ export default function AdminDashboard() {
     },
     {
       icon: Users,
-      title: "Lihat Data Pendaftar",
+      title: "Kelola Lamaran",
       description:
-        "Kelola dan lihat data lengkap peserta yang telah mendaftar dalam sistem SSCASN.",
+        "Lihat dan kelola data lamaran lengkap dari peserta yang telah mendaftar dalam sistem SSCASN.",
       onClick: () => setIsModalOpen(true),
     },
     {
       icon: MessageSquareWarning,
-      title: "Lihat Keluhan Pengguna",
+      title: "Keluhan Pengguna",
       description:
-        "Monitor dan tanggapi keluhan serta masukan dari pengguna sistem.",
+        "Monitor dan tanggapi keluhan serta masukan yang diterima dari pengguna sistem.",
       onClick: () => setIsModalOpen(true),
     },
   ];
