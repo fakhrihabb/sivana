@@ -8,11 +8,42 @@ export default function DocumentUpload({
   required,
   onUpload,
   uploaded,
+  requirementValidation, // Validation results from parent
 }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingStage, setProcessingStage] = useState("");
   const fileInputRef = useRef(null);
+
+  // Determine requirement status based on validation
+  const getRequirementStatus = (docId) => {
+    if (!requirementValidation || !requirementValidation.checks) {
+      console.log(`[${docId}] No validation data available`);
+      return "MS"; // Default to MS if no validation yet
+    }
+
+    // Check if this document type affects any failed requirement
+    const relevantChecks = requirementValidation.checks.filter(check => {
+      // Map document types to requirement categories
+      if (docId === "ijazah" && check.category === "Jurusan") return true;
+      if (docId === "transkrip" && check.category === "IPK") return true;
+      if (docId === "ktp" && check.category === "Usia") return true;
+      if (docId === "skck" && check.category === "Kelakuan Baik") return true;
+      if ((docId === "ktp" || docId === "ijazah" || docId === "transkrip") && check.category === "Konsistensi Data") return true;
+      if ((docId === "ijazah" || docId === "transkrip") && check.category === "Konsistensi Akademik") return true;
+      return false;
+    });
+
+    console.log(`[${docId}] Relevant checks:`, relevantChecks);
+
+    // If any relevant check failed, mark as TMS
+    const hasFailed = relevantChecks.some(check => check.status === "failed");
+    const status = hasFailed ? "TMS" : "MS";
+    
+    console.log(`[${docId}] Final status: ${status} (hasFailed: ${hasFailed})`);
+    
+    return status;
+  };
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -78,11 +109,15 @@ export default function DocumentUpload({
       uploadTime: new Date().toLocaleString("id-ID"),
     };
 
+    // Get dynamic requirement status based on validation
+    const reqStatus = getRequirementStatus(docId);
+
     switch (docId) {
       case "ktp":
         return {
           ...baseResult,
           status: "verified",
+          requirementStatus: reqStatus,
           extractedData: {
             nik: "3174XXXXXXXXX",
             nama: "NAMA LENGKAP",
@@ -108,6 +143,7 @@ export default function DocumentUpload({
         return {
           ...baseResult,
           status: "verified",
+          requirementStatus: reqStatus,
           extractedData: {
             nama: "NAMA LENGKAP",
             nim: "1234567890",
@@ -139,6 +175,7 @@ export default function DocumentUpload({
         return {
           ...baseResult,
           status: "verified",
+          requirementStatus: reqStatus,
           extractedData: {
             nama: "NAMA LENGKAP",
             nim: "1234567890",
@@ -164,6 +201,7 @@ export default function DocumentUpload({
         return {
           ...baseResult,
           status: "needs_review",
+          requirementStatus: reqStatus,
           extractedData: {
             nama: "NAMA LENGKAP",
             nik: "3174XXXXXXXXX",
@@ -187,6 +225,7 @@ export default function DocumentUpload({
         return {
           ...baseResult,
           status: "verified",
+          requirementStatus: reqStatus,
           extractedData: {
             nama: "NAMA LENGKAP",
             nik: "3174XXXXXXXXX",
@@ -332,17 +371,36 @@ export default function DocumentUpload({
           )}
         </div>
         {uploaded && (
-          <div
-            className={`flex items-center gap-2 px-3 py-1 rounded-full border ${getStatusColor(
-              uploaded.result.status
-            )}`}
-          >
-            {getStatusIcon(uploaded.result.status)}
-            <span className="text-sm font-medium capitalize">
-              {uploaded.result.status === "verified" && "Terverifikasi"}
-              {uploaded.result.status === "needs_review" && "Perlu Peninjauan"}
-              {uploaded.result.status === "rejected" && "Ditolak"}
-            </span>
+          <div className="flex items-center gap-2">
+            <div
+              className={`flex items-center gap-2 px-3 py-1 rounded-full border ${getStatusColor(
+                uploaded.result.status
+              )}`}
+            >
+              {getStatusIcon(uploaded.result.status)}
+              <span className="text-sm font-medium capitalize">
+                {uploaded.result.status === "verified" && "Terverifikasi"}
+                {uploaded.result.status === "needs_review" && "Perlu Peninjauan"}
+                {uploaded.result.status === "rejected" && "Ditolak"}
+              </span>
+            </div>
+            
+            {/* AI Requirement Status Badge - RECALCULATED ON EVERY RENDER */}
+            {(() => {
+              const currentStatus = getRequirementStatus(documentId);
+              return (
+                <div
+                  className={`px-2.5 py-1 rounded-full text-xs font-bold border-2 ${
+                    currentStatus === "MS"
+                      ? "bg-green-50 border-green-500 text-green-700"
+                      : "bg-red-50 border-red-500 text-red-700"
+                  }`}
+                  title={currentStatus === "MS" ? "Memenuhi Syarat (AI Analysis)" : "Tidak Memenuhi Syarat (AI Analysis)"}
+                >
+                  {currentStatus}
+                </div>
+              );
+            })()}
           </div>
         )}
       </div>
@@ -434,6 +492,27 @@ export default function DocumentUpload({
                 {uploaded.result.fileSize} • Diupload{" "}
                 {uploaded.result.uploadTime}
               </p>
+
+              {/* AI Analysis Note - RECALCULATED */}
+              {(() => {
+                const currentStatus = getRequirementStatus(documentId);
+                return (
+                  <div className="mt-2 flex items-start gap-2 text-xs text-gray-600 bg-blue-50 border border-blue-200 rounded p-2">
+                    <svg className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <p className="font-medium text-blue-900">
+                        Status {currentStatus === "MS" ? "MS (Memenuhi Syarat)" : "TMS (Tidak Memenuhi Syarat)"} adalah hasil analisis AI
+                      </p>
+                      <p className="text-blue-700 mt-0.5">
+                        Jika Anda yakin dokumen Anda memenuhi persyaratan, silakan lanjutkan pendaftaran. 
+                        Tim verifikator akan melakukan pengecekan manual.
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
 
               {uploaded.result.warnings && (
                 <div className="mt-3 bg-yellow-50 border border-yellow-200 rounded p-2">
