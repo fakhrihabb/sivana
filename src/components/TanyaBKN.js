@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { getGeminiResponse } from "@/lib/gemini";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function TanyaBKN() {
   const pathname = usePathname();
@@ -224,9 +226,15 @@ export default function TanyaBKN() {
                       : "bg-white text-gray-800 shadow-sm border border-gray-100"
                   }`}
                 >
-                  <p className="text-sm whitespace-pre-wrap leading-relaxed">
-                    {message.text}
-                  </p>
+                  <div className={`text-sm leading-relaxed prose prose-sm max-w-none ${
+                    message.type === "user"
+                      ? "prose-invert prose-p:text-white prose-strong:text-white prose-headings:text-white prose-li:text-white prose-a:text-white"
+                      : "prose-gray"
+                  }`}>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {message.text}
+                    </ReactMarkdown>
+                  </div>
                   <p
                     className={`text-xs mt-1 ${
                       message.type === "user"

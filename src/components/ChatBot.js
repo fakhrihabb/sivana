@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { getGeminiResponse } from "@/lib/gemini";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -167,7 +169,15 @@ export default function ChatBot() {
                       : "bg-white text-gray-900 rounded-bl-none border border-gray-200"
                   }`}
                 >
-                  <p className="text-sm">{msg.content}</p>
+                  <div className={`text-sm prose prose-sm max-w-none ${
+                    msg.type === "user"
+                      ? "prose-invert prose-p:text-white prose-strong:text-white prose-headings:text-white prose-li:text-white prose-a:text-white"
+                      : "prose-gray"
+                  }`}>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {msg.content}
+                    </ReactMarkdown>
+                  </div>
                   <span className="text-xs opacity-70 mt-1 block">
                     {msg.timestamp.toLocaleTimeString("id-ID", {
                       hour: "2-digit",
