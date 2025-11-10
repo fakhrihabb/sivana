@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
-// Sample data - in production this would come from an API
-const formasiData = [
+// Sample data - fallback jika Supabase gagal
+const formasiDataFallback = [
   {
     id: 1,
     name: "Analis Kebijakan",
@@ -307,6 +308,9 @@ const formasiData = [
 ];
 
 export default function DaftarPendaftar() {
+  const [formasiData, setFormasiData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     periode: "2025",
     jenjangPendidikan: "",
@@ -314,6 +318,47 @@ export default function DaftarPendaftar() {
     instansi: "",
     jenisPengadaan: ""
   });
+
+  // Fetch data from Supabase
+  useEffect(() => {
+    async function fetchFormasi() {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('formasi')
+          .select('*')
+          .order('id', { ascending: true });
+
+        if (error) throw error;
+
+        // Transform data dari snake_case ke camelCase untuk compatibility
+        const transformedData = data.map(item => ({
+          id: item.id,
+          name: item.name,
+          lembaga: item.lembaga,
+          lokasi: item.lokasi,
+          description: item.description,
+          quota: item.quota,
+          periode: item.periode,
+          jenjangPendidikan: item.jenjang_pendidikan,
+          programStudi: item.program_studi,
+          jenisPengadaan: item.jenis_pengadaan
+        }));
+
+        setFormasiData(transformedData);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching formasi:', err);
+        setError(err.message);
+        // Fallback ke data hardcoded jika gagal
+        setFormasiData(formasiDataFallback);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchFormasi();
+  }, []);
 
   // Get unique values for dropdowns
   const uniquePeriode = [...new Set(formasiData.map(f => f.periode))].sort((a, b) => b - a);
@@ -367,6 +412,20 @@ export default function DaftarPendaftar() {
     });
   };
 
+  // Loading state
+  if (loading) {
+    return (
+      <section id="daftar-formasi" className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-blue mx-auto mb-4"></div>
+            <p className="text-gray-600">Memuat data formasi...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="daftar-formasi" className="py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -377,6 +436,11 @@ export default function DaftarPendaftar() {
           <p className="text-lg text-gray-600">
             Pilih formasi yang sesuai dengan kualifikasi Anda
           </p>
+          {error && (
+            <div className="mt-4 bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg max-w-2xl mx-auto">
+              <p className="text-sm">⚠️ Menggunakan data fallback. Koneksi Supabase: {error}</p>
+            </div>
+          )}
         </div>
 
         {/* Filter Section */}
