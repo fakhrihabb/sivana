@@ -171,10 +171,18 @@ export default function ChatBot() {
                 >
                   <div className={`text-sm prose prose-sm max-w-none ${
                     msg.type === "user"
-                      ? "prose-invert prose-p:text-white prose-strong:text-white prose-headings:text-white prose-li:text-white prose-a:text-white"
-                      : "prose-gray"
+                      ? "prose-invert prose-p:text-white prose-strong:text-white prose-headings:text-white prose-li:text-white prose-a:text-white prose-ul:text-white prose-ol:text-white"
+                      : "prose-gray prose-a:text-brand-blue hover:prose-a:text-brand-pink"
                   }`}>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" />,
+                        ul: ({node, ...props}) => <ul {...props} className="list-disc pl-4 space-y-1" />,
+                        ol: ({node, ...props}) => <ol {...props} className="list-decimal pl-4 space-y-1" />,
+                        li: ({node, ...props}) => <li {...props} className="ml-2" />
+                      }}
+                    >
                       {msg.content}
                     </ReactMarkdown>
                   </div>
