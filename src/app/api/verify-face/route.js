@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { RekognitionClient, CompareFacesCommand } from '@aws-sdk/client-rekognition';
+import { RekognitionClient, CompareFacesCommand, DetectFacesCommand } from '@aws-sdk/client-rekognition';
 import { createClient } from '@supabase/supabase-js';
 
 const rekognitionClient = new RekognitionClient({
@@ -15,9 +15,121 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
+// Liveness detection function
+async function performLivenessCheck(frames) {
+  try {
+    const frameBuffers = frames.map(frame => {
+      const base64Data = frame.replace(/^data:image\/\w+;base64,/, '');
+      return Buffer.from(base64Data, 'base64');
+    });
+
+    // Detect faces in all frames
+    const faceDetections = [];
+
+    for (const frameBuffer of frameBuffers) {
+      const command = new DetectFacesCommand({
+        Image: { Bytes: frameBuffer },
+        Attributes: ['ALL'] // Get all face attributes including quality
+      });
+
+      const result = await rekognitionClient.send(command);
+
+      if (!result.FaceDetails || result.FaceDetails.length === 0) {
+        return {
+          isLive: false,
+          reason: 'Tidak ada wajah terdeteksi di beberapa frame'
+        };
+      }
+
+      faceDetections.push(result.FaceDetails[0]);
+    }
+
+    // Check 1: Multiple faces detected (someone showing a photo)
+    const multipleFacesDetected = faceDetections.some(face => face.length > 1);
+    if (multipleFacesDetected) {
+      return {
+        isLive: false,
+        reason: 'Terdeteksi lebih dari satu wajah'
+      };
+    }
+
+    // Check 2: Quality consistency - real faces should have consistent quality
+    const qualities = faceDetections.map(face => ({
+      brightness: face.Quality?.Brightness || 0,
+      sharpness: face.Quality?.Sharpness || 0
+    }));
+
+    const brightnessDiff = Math.max(...qualities.map(q => q.brightness)) -
+                           Math.min(...qualities.map(q => q.brightness));
+    const sharpnessDiff = Math.max(...qualities.map(q => q.sharpness)) -
+                          Math.min(...qualities.map(q => q.sharpness));
+
+    // Real faces should have some variation between frames (natural micro-movements)
+    // Photos/screens tend to have very consistent quality across frames
+    if (brightnessDiff < 2 && sharpnessDiff < 2) {
+      return {
+        isLive: false,
+        reason: 'Kualitas gambar terlalu konsisten (kemungkinan foto/layar)'
+      };
+    }
+
+    // Check 3: Face position consistency - face should move slightly between frames
+    const positions = faceDetections.map(face => face.BoundingBox);
+    const positionDiffs = [];
+
+    for (let i = 1; i < positions.length; i++) {
+      const diff = Math.abs(positions[i].Left - positions[i-1].Left) +
+                   Math.abs(positions[i].Top - positions[i-1].Top);
+      positionDiffs.push(diff);
+    }
+
+    const avgPositionDiff = positionDiffs.reduce((a, b) => a + b, 0) / positionDiffs.length;
+
+    // Face should move slightly (natural breathing/micro-movements) but not too much
+    if (avgPositionDiff < 0.001) {
+      return {
+        isLive: false,
+        reason: 'Tidak ada gerakan alami terdeteksi (kemungkinan foto statis)'
+      };
+    }
+
+    if (avgPositionDiff > 0.05) {
+      return {
+        isLive: false,
+        reason: 'Gerakan terlalu besar atau tidak stabil'
+      };
+    }
+
+    // Check 4: Confidence consistency - real faces should have high, consistent confidence
+    const confidences = faceDetections.map(face => face.Confidence);
+    const avgConfidence = confidences.reduce((a, b) => a + b, 0) / confidences.length;
+
+    if (avgConfidence < 95) {
+      return {
+        isLive: false,
+        reason: 'Kualitas deteksi wajah tidak memadai'
+      };
+    }
+
+    // All checks passed
+    return {
+      isLive: true,
+      confidence: avgConfidence,
+      qualityMetrics: qualities
+    };
+
+  } catch (error) {
+    console.error('Liveness check error:', error);
+    return {
+      isLive: false,
+      reason: 'Terjadi kesalahan saat memeriksa keaslian wajah'
+    };
+  }
+}
+
 export async function POST(request) {
   try {
-    const { image } = await request.json();
+    const { image, frames } = await request.json();
 
     if (!image) {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 });
@@ -26,6 +138,24 @@ export async function POST(request) {
     // Convert base64 image to buffer
     const base64Data = image.replace(/^data:image\/\w+;base64,/, '');
     const sourceImageBuffer = Buffer.from(base64Data, 'base64');
+
+    // === LIVENESS CHECK ===
+    if (frames && frames.length >= 3) {
+      console.log('🔍 Starting liveness check...');
+
+      const livenessCheck = await performLivenessCheck(frames);
+
+      if (!livenessCheck.isLive) {
+        console.log('❌ LIVENESS CHECK FAILED:', livenessCheck.reason);
+        return NextResponse.json({
+          matched: false,
+          message: 'Deteksi kecurangan: ' + livenessCheck.reason,
+          livenessCheck: false
+        });
+      }
+
+      console.log('✅ LIVENESS CHECK PASSED');
+    }
 
     // Get all face pictures from database
     const { data: facePictures, error: dbError } = await supabase

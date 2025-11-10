@@ -58,14 +58,25 @@ function ResultModal({ result, onClose }) {
           ) : (
             <>
               <div className="flex justify-center mb-4">
-                <XCircle className="w-24 h-24 text-red-500" />
+                {result.livenessCheck === false ? (
+                  <AlertCircle className="w-24 h-24 text-orange-500" />
+                ) : (
+                  <XCircle className="w-24 h-24 text-red-500" />
+                )}
               </div>
               <h3 className="text-3xl font-bold text-gray-900 mb-3">
-                Tidak Cocok
+                {result.livenessCheck === false ? 'Verifikasi Gagal' : 'Tidak Cocok'}
               </h3>
               <p className="text-gray-600 mb-4">
                 {result.message || 'Wajah Anda tidak cocok dengan data di database'}
               </p>
+              {result.livenessCheck === false && (
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4">
+                  <p className="text-xs text-orange-700">
+                    Pastikan Anda menggunakan wajah asli (bukan foto atau video).
+                  </p>
+                </div>
+              )}
             </>
           )}
           <button
@@ -282,14 +293,23 @@ export default function VerifikasiWajahCamera({ params }) {
     setCountdown(null);
 
     try {
-      // Capture snapshot
-      const imageSrc = webcamRef.current.getScreenshot();
+      // Capture multiple frames for liveness check (0.5 second apart)
+      const frame1 = webcamRef.current.getScreenshot();
 
-      // Call API to verify face
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const frame2 = webcamRef.current.getScreenshot();
+
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const frame3 = webcamRef.current.getScreenshot();
+
+      // Call API to verify face with liveness check
       const response = await fetch('/api/verify-face', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: imageSrc }),
+        body: JSON.stringify({
+          image: frame2, // Use middle frame as primary
+          frames: [frame1, frame2, frame3] // Send all frames for liveness analysis
+        }),
       });
 
       const result = await response.json();
@@ -490,7 +510,10 @@ export default function VerifikasiWajahCamera({ params }) {
                       <div className="absolute inset-0 border-4 border-white/30 rounded-full"></div>
                       <div className="absolute inset-0 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
                     </div>
-                    <p className="text-xl text-white">Memverifikasi wajah...</p>
+                    <p className="text-xl text-white mb-2">Memverifikasi wajah...</p>
+                    <p className="text-sm text-white/70">
+                      Memeriksa keaslian wajah & mencari kecocokan...
+                    </p>
                   </div>
                 </div>
               )}
