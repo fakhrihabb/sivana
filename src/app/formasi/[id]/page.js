@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 import DocumentUpload from "@/components/documents/DocumentUpload";
 import RequirementChecklist from "@/components/documents/RequirementChecklist";
 import { validateRequirements } from "@/components/documents/RequirementValidator";
 
-const formasiData = {
+const formasiDataFallback = {
   1: {
     name: "Analis Kebijakan",
     lembaga: "Kementerian Keuangan",
@@ -116,6 +117,8 @@ const formasiData = {
 export default function FormasiDetail() {
   const params = useParams();
   const router = useRouter();
+  const [formasi, setFormasi] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [uploadedDocs, setUploadedDocs] = useState({});
   const [processingStatus, setProcessingStatus] = useState(null);
@@ -126,7 +129,52 @@ export default function FormasiDetail() {
   const [sanggahSubmitted, setSanggahSubmitted] = useState(false);
   const [recommendedFormasi, setRecommendedFormasi] = useState([]);
 
-  const formasi = formasiData[params.id];
+  // Fetch formasi detail from Supabase
+  useEffect(() => {
+    async function fetchFormasi() {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('formasi')
+          .select('*')
+          .eq('id', params.id)
+          .single();
+
+        if (error) throw error;
+
+        if (data) {
+          // Transform dan set default documents & requirements
+          setFormasi({
+            name: data.name,
+            lembaga: data.lembaga,
+            lokasi: data.lokasi,
+            requirements: {
+              pendidikan: data.jenjang_pendidikan + ' ' + data.program_studi,
+              ipk: "3.0",
+              usia: "Maksimal 35 tahun",
+            },
+            documents: [
+              { id: "ktp", name: "KTP", required: true },
+              { id: "ijazah", name: "Ijazah", required: true },
+              { id: "transkrip", name: "Transkrip Nilai", required: true },
+              { id: "surat_pernyataan", name: "Surat Pernyataan", required: true },
+              { id: "skck", name: "SKCK", required: true },
+            ],
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching formasi:', err);
+        // Fallback ke data hardcoded
+        setFormasi(formasiDataFallback[params.id]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (params.id) {
+      fetchFormasi();
+    }
+  }, [params.id]);
 
   // Function to get user's data from uploaded documents
   const getUserData = () => {
@@ -352,6 +400,36 @@ export default function FormasiDetail() {
     const requiredDocs = formasi.documents.filter((doc) => doc.required);
     return requiredDocs.every((doc) => uploadedDocs[doc.id]);
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen gradient-bg pt-16 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-blue mx-auto mb-4"></div>
+          <p className="text-gray-600">Memuat detail formasi...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Not found state
+  if (!formasi) {
+    return (
+      <div className="min-h-screen gradient-bg pt-16 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Formasi Tidak Ditemukan</h1>
+          <p className="text-gray-600 mb-6">Formasi yang Anda cari tidak tersedia.</p>
+          <button
+            onClick={() => router.push("/")}
+            className="bg-brand-blue text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+          >
+            Kembali ke Beranda
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen gradient-bg pt-16">
