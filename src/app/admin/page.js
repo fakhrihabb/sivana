@@ -108,7 +108,7 @@ export default function AdminDashboard() {
           </Link>
           <div className="space-y-6 animate-slide-up max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-              Dashboard Admin
+              Dashboard Admin & Petugas SSCASN
             </h1>
             <p className="text-xl text-white/90 leading-relaxed">
               Kelola sistem SIVANA x SSCASN dengan mudah. Verifikasi identitas, monitor pendaftar, dan kelola keluhan pengguna dalam satu platform terpadu.

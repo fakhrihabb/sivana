@@ -58,7 +58,7 @@ export default function CobaSivanaModal({ isOpen, onClose }) {
               onClick={handleAdmin}
               className="w-full bg-white border-2 border-[#239DD7] text-[#239DD7] hover:bg-[#239DD7] hover:text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all hover:scale-105 shadow-md"
             >
-              Admin
+              Admin & Petugas SSCASN
             </button>
           </div>
         </div>

@@ -164,7 +164,7 @@ export default function KelolaLamaranPage() {
             href="/admin"
             className="inline-block text-brand-blue hover:text-brand-blue/80 transition-colors mb-4"
           >
-            ← Kembali ke Dashboard Admin
+            ← Kembali ke Dashboard
           </Link>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Kelola Lamaran
