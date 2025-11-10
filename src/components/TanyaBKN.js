@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { getGeminiResponse } from "@/lib/gemini";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import AudioMessage from "@/components/AudioMessage";
+import { createAudioRecorder, speechToText, textToSpeech, uploadAudio } from "@/lib/voice";
 
 export default function TanyaBKN() {
   const pathname = usePathname();
@@ -20,8 +22,11 @@ export default function TanyaBKN() {
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [conversationHistory, setConversationHistory] = useState([]);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isProcessingVoice, setIsProcessingVoice] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const audioRecorderRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -49,6 +54,110 @@ export default function TanyaBKN() {
     "Syarat pendaftaran",
     "Lupa password SSCASN",
   ];
+
+  const handleVoiceRecord = async () => {
+    if (isRecording) {
+      // Stop recording
+      setIsProcessingVoice(true);
+      const result = await audioRecorderRef.current.stop();
+      setIsRecording(false);
+
+      if (result.success && result.blob) {
+        // Upload audio to storage
+        const uploadResult = await uploadAudio(result.blob);
+
+        if (!uploadResult.success) {
+          console.error("Failed to upload audio:", uploadResult.error);
+          setIsProcessingVoice(false);
+          return;
+        }
+
+        // Transcribe audio
+        const transcriptResult = await speechToText(result.blob);
+
+        if (transcriptResult.success && transcriptResult.transcript) {
+          // Add user voice message
+          const userMessage = {
+            id: messages.length + 1,
+            type: "user",
+            text: transcriptResult.transcript,
+            audioUrl: uploadResult.url,
+            isVoice: true,
+            timestamp: new Date(),
+          };
+
+          setMessages((prev) => [...prev, userMessage]);
+          setIsProcessingVoice(false);
+
+          // Process the transcript to get bot response
+          await handleVoiceMessage(transcriptResult.transcript);
+        } else {
+          console.error("Failed to transcribe:", transcriptResult.error);
+          setIsProcessingVoice(false);
+        }
+      }
+    } else {
+      // Start recording
+      if (!audioRecorderRef.current) {
+        audioRecorderRef.current = createAudioRecorder();
+      }
+
+      const result = await audioRecorderRef.current.start();
+      if (result.success) {
+        setIsRecording(true);
+      } else {
+        alert("Tidak dapat mengakses mikrofon. Pastikan Anda memberikan izin akses mikrofon.");
+      }
+    }
+  };
+
+  const handleVoiceMessage = async (transcript) => {
+    setIsTyping(true);
+
+    // Add to conversation history
+    const newHistory = [...conversationHistory, { role: "user", content: transcript }];
+    setConversationHistory(newHistory);
+
+    try {
+      // Get text response from Gemini
+      const result = await getGeminiResponse(transcript, newHistory);
+
+      if (result.success && result.message) {
+        // Generate voice response
+        const ttsResult = await textToSpeech(result.message);
+
+        // Add bot response with voice
+        const botMessage = {
+          id: messages.length + 2,
+          type: "bot",
+          text: result.message,
+          audioUrl: ttsResult.success ? ttsResult.audioUrl : null,
+          isVoice: ttsResult.success,
+          timestamp: new Date(),
+        };
+
+        setMessages((prev) => [...prev, botMessage]);
+
+        // Update conversation history
+        setConversationHistory([...newHistory, { role: "assistant", content: result.message }]);
+      } else {
+        throw new Error(result.error || "API returned error");
+      }
+    } catch (error) {
+      console.error("Error processing voice message:", error);
+
+      const errorMessage = {
+        id: messages.length + 2,
+        type: "bot",
+        text: "Maaf, saya sedang mengalami kesulitan dalam memproses pertanyaan Anda. Silakan coba lagi.",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
 
   const handleSendMessage = async (text = inputValue) => {
     if (!text.trim()) return;
@@ -226,23 +335,34 @@ export default function TanyaBKN() {
                       : "bg-white text-gray-800 shadow-sm border border-gray-100"
                   }`}
                 >
-                  <div className={`text-sm leading-relaxed prose prose-sm max-w-none ${
-                    message.type === "user"
-                      ? "prose-invert prose-p:text-white prose-strong:text-white prose-headings:text-white prose-li:text-white prose-a:text-white prose-ul:text-white prose-ol:text-white"
-                      : "prose-gray prose-a:text-brand-blue hover:prose-a:text-brand-pink"
-                  }`}>
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" />,
-                        ul: ({node, ...props}) => <ul {...props} className="list-disc pl-4 space-y-1" />,
-                        ol: ({node, ...props}) => <ol {...props} className="list-decimal pl-4 space-y-1" />,
-                        li: ({node, ...props}) => <li {...props} className="ml-2" />
-                      }}
-                    >
-                      {message.text}
-                    </ReactMarkdown>
-                  </div>
+                  {/* Voice Message */}
+                  {message.isVoice && message.audioUrl ? (
+                    <AudioMessage
+                      audioUrl={message.audioUrl}
+                      transcript={message.text}
+                      isUser={message.type === "user"}
+                      autoplay={message.type === "bot"}
+                    />
+                  ) : (
+                    /* Text Message */
+                    <div className={`text-sm leading-relaxed prose prose-sm max-w-none ${
+                      message.type === "user"
+                        ? "prose-invert prose-p:text-white prose-strong:text-white prose-headings:text-white prose-li:text-white prose-a:text-white prose-ul:text-white prose-ol:text-white"
+                        : "prose-gray prose-a:text-brand-blue hover:prose-a:text-brand-pink"
+                    }`}>
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" />,
+                          ul: ({node, ...props}) => <ul {...props} className="list-disc pl-4 space-y-1" />,
+                          ol: ({node, ...props}) => <ol {...props} className="list-decimal pl-4 space-y-1" />,
+                          li: ({node, ...props}) => <li {...props} className="ml-2" />
+                        }}
+                      >
+                        {message.text}
+                      </ReactMarkdown>
+                    </div>
+                  )}
                   <p
                     className={`text-xs mt-1 ${
                       message.type === "user"
@@ -304,7 +424,37 @@ export default function TanyaBKN() {
 
           {/* Input */}
           <div className="p-4 bg-white border-t border-gray-200">
+            {isProcessingVoice && (
+              <div className="mb-3 flex items-center justify-center gap-2 text-sm text-gray-600">
+                <div className="w-2 h-2 bg-brand-blue rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                <div className="w-2 h-2 bg-brand-blue rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                <div className="w-2 h-2 bg-brand-blue rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                <span>Memproses audio...</span>
+              </div>
+            )}
             <div className="flex gap-2">
+              {/* Voice Recording Button */}
+              <button
+                onClick={handleVoiceRecord}
+                disabled={isTyping || isProcessingVoice}
+                className={`px-3 py-2.5 rounded-full font-medium transition-all ${
+                  isRecording
+                    ? "bg-red-500 text-white animate-pulse"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                } ${(isTyping || isProcessingVoice) ? "opacity-50 cursor-not-allowed" : ""}`}
+                title={isRecording ? "Stop recording" : "Start voice recording"}
+              >
+                {isRecording ? (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clipRule="evenodd" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                )}
+              </button>
+
               <input
                 ref={inputRef}
                 type="text"
@@ -312,13 +462,14 @@ export default function TanyaBKN() {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ketik pertanyaan Anda..."
-                className="flex-1 px-4 py-2.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm"
+                disabled={isRecording || isProcessingVoice}
+                className="flex-1 px-4 py-2.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
               />
               <button
                 onClick={() => handleSendMessage()}
-                disabled={!inputValue.trim() || isTyping}
+                disabled={!inputValue.trim() || isTyping || isRecording || isProcessingVoice}
                 className={`px-4 py-2.5 rounded-full font-medium transition-all ${
-                  inputValue.trim() && !isTyping
+                  inputValue.trim() && !isTyping && !isRecording && !isProcessingVoice
                     ? "bg-gradient-to-r from-brand-blue to-brand-pink text-white hover:shadow-lg"
                     : "bg-gray-200 text-gray-400 cursor-not-allowed"
                 }`}
