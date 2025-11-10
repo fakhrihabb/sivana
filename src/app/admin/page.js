@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ScanFace, Users, MessageSquareWarning } from "lucide-react";
+import { ScanFace, Users, MessageSquareWarning, ImagePlus } from "lucide-react";
 import Link from "next/link";
 
 // Modal Component
@@ -67,6 +67,13 @@ export default function AdminDashboard() {
       description:
         "Fitur verifikasi wajah berbasis CV untuk mencocokkan wajah peserta dengan database ID di lokasi ujian.",
       href: "/admin/verifikasi-wajah",
+    },
+    {
+      icon: ImagePlus,
+      title: "Upload Foto Wajah",
+      description:
+        "Upload dan kelola foto wajah untuk database sistem verifikasi identitas peserta ujian.",
+      href: "/admin/upload-wajah",
     },
     {
       icon: Users,
