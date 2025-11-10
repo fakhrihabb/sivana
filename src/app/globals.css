@@ -12,8 +12,8 @@
   --color-foreground: var(--foreground);
   --color-brand-blue: var(--brand-blue);
   --color-brand-pink: var(--brand-pink);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-roboto-mono);
 }
 
 body {

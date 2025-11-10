@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { getGeminiResponse } from "@/lib/gemini";
 
 export default function TanyaBKN() {
   const pathname = usePathname();
@@ -16,6 +17,7 @@ export default function TanyaBKN() {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [conversationHistory, setConversationHistory] = useState([]);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -46,79 +48,6 @@ export default function TanyaBKN() {
     "Lupa password SSCASN",
   ];
 
-  const mockResponses = {
-    default: [
-      "Terima kasih atas pertanyaan Anda. Saya akan membantu mencari informasi yang Anda butuhkan.",
-      "Untuk informasi lebih detail, Anda dapat mengunjungi portal resmi SSCASN di https://sscasn.bkn.go.id",
-      "Apakah ada yang bisa saya bantu lagi?",
-    ],
-    "cara mendaftar": [
-      "Berikut langkah-langkah pendaftaran CPNS 2025:",
-      "1. Buka portal SSCASN (https://sscasn.bkn.go.id)\n2. Registrasi akun menggunakan NIK dan email aktif\n3. Lengkapi data diri dan unggah pas foto\n4. Pilih formasi yang sesuai dengan kualifikasi Anda\n5. Upload dokumen persyaratan (KTP, Ijazah, Transkrip, SKCK, dll)\n6. Submit pendaftaran dan tunggu verifikasi",
-      "Sistem SIVANA akan memverifikasi dokumen Anda secara otomatis menggunakan AI untuk memastikan kelengkapan dan keaslian dokumen.",
-      "Apakah ada pertanyaan lain tentang proses pendaftaran?",
-    ],
-    "status verifikasi": [
-      "Untuk mengecek status verifikasi dokumen Anda:",
-      "1. Login ke akun SSCASN Anda\n2. Masuk ke menu 'Dashboard' atau 'Status Lamaran'\n3. Klik formasi yang telah Anda daftarkan\n4. Status verifikasi akan ditampilkan dengan detail",
-      "Status verifikasi meliputi:\n✓ Lolos Verifikasi: Dokumen sudah terverifikasi dan valid\n⏳ Dalam Proses: Sedang diverifikasi oleh sistem/verifikator\n⚠️ Perlu Perbaikan: Ada dokumen yang perlu diperbaiki\n✗ Tidak Lolos: Tidak memenuhi persyaratan",
-      "Proses verifikasi biasanya memakan waktu 1-3 hari kerja.",
-    ],
-    "jadwal ujian": [
-      "Informasi jadwal ujian SKD (Seleksi Kompetensi Dasar):",
-      "📅 Pengumuman jadwal ujian akan diberitahukan melalui:\n- Email yang terdaftar di SSCASN\n- SMS ke nomor HP yang terdaftar\n- Portal SSCASN (https://sscasn.bkn.go.id)\n- Laman instansi masing-masing",
-      "Umumnya, jadwal ujian diumumkan 7-14 hari sebelum pelaksanaan. Pastikan Anda:",
-      "✓ Mengecek email dan SMS secara berkala\n✓ Login ke SSCASN untuk melihat pengumuman\n✓ Cetak kartu ujian setelah diumumkan\n✓ Siapkan dokumen yang diperlukan saat ujian",
-    ],
-    "syarat pendaftaran": [
-      "Syarat Umum Pendaftaran CPNS 2025:",
-      "📋 Persyaratan Umum:\n- Warga Negara Indonesia\n- Usia minimal 18 tahun, maksimal sesuai ketentuan formasi (biasanya 35-40 tahun)\n- Tidak pernah dipidana dengan pidana penjara\n- Tidak pernah diberhentikan dengan hormat tidak atas permintaan sendiri\n- Tidak berkedudukan sebagai CPNS/PNS/Anggota TNI/Polri\n- Sehat jasmani dan rohani\n- Bersedia ditempatkan di seluruh wilayah Indonesia",
-      "📄 Dokumen yang diperlukan:\n- KTP yang masih berlaku\n- Ijazah dan Transkrip Nilai (sesuai kualifikasi)\n- SKCK yang masih berlaku\n- Surat Pernyataan\n- Dokumen pendukung lainnya sesuai formasi",
-      "Sistem SIVANA akan membantu verifikasi dokumen Anda secara otomatis!",
-    ],
-    "lupa password": [
-      "Jika Anda lupa password akun SSCASN:",
-      "🔑 Langkah Reset Password:\n1. Kunjungi halaman login SSCASN\n2. Klik 'Lupa Password'\n3. Masukkan NIK dan email yang terdaftar\n4. Cek email Anda untuk link reset password\n5. Klik link tersebut dan buat password baru\n6. Login dengan password baru",
-      "⚠️ Tips Keamanan:\n- Gunakan kombinasi huruf besar, kecil, angka, dan simbol\n- Minimal 8 karakter\n- Jangan gunakan password yang mudah ditebak\n- Jangan bagikan password ke siapapun",
-      "Jika tidak menerima email, cek folder spam atau hubungi helpdesk SSCASN.",
-    ],
-  };
-
-  const getBotResponse = (userMessage) => {
-    const lowerMessage = userMessage.toLowerCase();
-
-    if (
-      lowerMessage.includes("daftar") ||
-      lowerMessage.includes("registrasi") ||
-      lowerMessage.includes("mendaftar")
-    ) {
-      return mockResponses["cara mendaftar"];
-    } else if (
-      lowerMessage.includes("status") ||
-      lowerMessage.includes("verifikasi")
-    ) {
-      return mockResponses["status verifikasi"];
-    } else if (
-      lowerMessage.includes("jadwal") ||
-      lowerMessage.includes("ujian") ||
-      lowerMessage.includes("skd")
-    ) {
-      return mockResponses["jadwal ujian"];
-    } else if (
-      lowerMessage.includes("syarat") ||
-      lowerMessage.includes("persyaratan")
-    ) {
-      return mockResponses["syarat pendaftaran"];
-    } else if (
-      lowerMessage.includes("password") ||
-      lowerMessage.includes("lupa")
-    ) {
-      return mockResponses["lupa password"];
-    } else {
-      return mockResponses.default;
-    }
-  };
-
   const handleSendMessage = async (text = inputValue) => {
     if (!text.trim()) return;
 
@@ -134,31 +63,46 @@ export default function TanyaBKN() {
     setInputValue("");
     setIsTyping(true);
 
-    // Simulate bot typing delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Add to conversation history
+    const newHistory = [...conversationHistory, { role: "user", content: text.trim() }];
+    setConversationHistory(newHistory);
 
-    // Get bot responses
-    const responses = getBotResponse(text);
+    try {
+      // Call Gemini API
+      const result = await getGeminiResponse(text.trim(), newHistory);
 
-    // Add bot responses one by one with delays
-    for (let i = 0; i < responses.length; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      if (result.success && result.message) {
+        // Add bot response
+        const botMessage = {
+          id: messages.length + 2,
+          type: "bot",
+          text: result.message,
+          timestamp: new Date(),
+        };
 
-      const botMessage = {
-        id: messages.length + 2 + i,
+        setMessages((prev) => [...prev, botMessage]);
+
+        // Update conversation history with bot response
+        setConversationHistory([...newHistory, { role: "assistant", content: result.message }]);
+      } else {
+        // Error from API
+        throw new Error(result.error || "API returned error");
+      }
+    } catch (error) {
+      console.error("Error getting Gemini response:", error);
+
+      // Fallback error message
+      const errorMessage = {
+        id: messages.length + 2,
         type: "bot",
-        text: responses[i],
+        text: "Maaf, saya sedang mengalami kesulitan dalam memproses pertanyaan Anda. Silakan coba lagi.",
         timestamp: new Date(),
       };
 
-      setMessages((prev) => [...prev, botMessage]);
-
-      if (i < responses.length - 1) {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-      }
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
     }
-
-    setIsTyping(false);
   };
 
   const handleKeyPress = (e) => {

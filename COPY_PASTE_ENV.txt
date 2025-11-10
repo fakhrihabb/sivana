@@ -1,0 +1,78 @@
+================================================================================
+                    ⚡ COPY & PASTE YOUR .env.local ⚡
+================================================================================
+
+STEP 1: Copy everything below (the entire block with the dashes)
+
+================================================================================
+
+# ===================================
+# GEMINI 2.5 FLASH API CONFIGURATION
+# ===================================
+# Get your API key from: https://aistudio.google.com/app/apikeys
+# Then paste it below, replacing "your_gemini_api_key_here"
+
+NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
+
+================================================================================
+
+STEP 2: Open file ".env.local" in your project root
+
+STEP 3: Delete all existing content in .env.local
+
+STEP 4: Paste the content above (between the dashes) into .env.local
+
+STEP 5: Replace "your_gemini_api_key_here" with YOUR actual API key
+
+STEP 6: Save the file (Ctrl+S or Cmd+S)
+
+================================================================================
+
+YOUR API KEY SHOULD LOOK LIKE:
+  AIzaSyDexample1234567890abcdefghijklmnop
+  (starts with "AIza" and is about 40 characters long)
+
+GET YOUR API KEY FROM:
+  https://aistudio.google.com/app/apikeys
+
+HOW TO GET IT:
+  1. Visit the link above
+  2. Click "Create API Key"
+  3. Copy the generated key
+  4. Paste it in .env.local (replace the placeholder)
+
+================================================================================
+
+EXAMPLE OF COMPLETED .env.local:
+
+# ===================================
+# GEMINI 2.5 FLASH API CONFIGURATION
+# ===================================
+# Get your API key from: https://aistudio.google.com/app/apikeys
+# Then paste it below, replacing "your_gemini_api_key_here"
+
+NEXT_PUBLIC_GEMINI_API_KEY=AIzaSyDexample1234567890abcdefghijklmnop
+
+================================================================================
+
+NOW RUN:
+  npm run dev
+
+THEN VISIT:
+  http://localhost:3000
+
+THEN TEST:
+  Click the chatbot bubble and say "Halo"
+
+SUCCESS WHEN:
+  Bot responds in Indonesian within 2-5 seconds! ✨
+
+================================================================================
+
+HELP:
+  If something doesn't work, read:
+  - ENV_SETUP_GUIDE.md
+  - SETUP_CHECKLIST.md
+  - GEMINI_SETUP.md
+
+================================================================================

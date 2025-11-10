@@ -16,11 +16,11 @@ export function validateRequirements(uploadedDocs, requirements) {
   if (uploadedDocs.transkrip && requirements.ipk) {
     validationResults.totalChecks++;
     const extractedIPK = parseFloat(
-      uploadedDocs.transkrip.result.extractedData.ipk
+      uploadedDocs.transkrip.result.extractedData?.ipk || "0"
     );
     const requiredIPK = parseFloat(requirements.ipk);
 
-    if (extractedIPK >= requiredIPK) {
+    if (extractedIPK > 0 && extractedIPK >= requiredIPK) {
       validationResults.checks.push({
         category: "IPK",
         status: "passed",
@@ -30,6 +30,18 @@ export function validateRequirements(uploadedDocs, requirements) {
         requiredValue: requiredIPK,
       });
       validationResults.score++;
+    } else if (extractedIPK === 0) {
+      validationResults.checks.push({
+        category: "IPK",
+        status: "warning",
+        label: "IPK Tidak Terdeteksi",
+        detail: `IPK tidak dapat diekstrak dari dokumen, perlu ditinjau manual`,
+        extractedValue: extractedIPK,
+        requiredValue: requiredIPK,
+      });
+      if (validationResults.overall !== "failed") {
+        validationResults.overall = "warning";
+      }
     } else {
       validationResults.checks.push({
         category: "IPK",
@@ -47,7 +59,7 @@ export function validateRequirements(uploadedDocs, requirements) {
   if (uploadedDocs.ijazah && requirements.pendidikan) {
     validationResults.totalChecks++;
     const extractedProdi =
-      uploadedDocs.ijazah.result.extractedData.programStudi;
+      uploadedDocs.ijazah.result.extractedData?.programStudi || "";
     const requiredProdi = requirements.pendidikan;
 
     // Check if program studi matches
@@ -95,7 +107,7 @@ export function validateRequirements(uploadedDocs, requirements) {
   if (uploadedDocs.ktp && requirements.usia) {
     validationResults.totalChecks++;
     const birthDate = parseTanggalLahir(
-      uploadedDocs.ktp.result.extractedData.tanggalLahir
+      uploadedDocs.ktp.result.extractedData?.tanggalLahir || ""
     );
     const age = calculateAge(birthDate);
     const maxAge = extractMaxAge(requirements.usia);
@@ -155,9 +167,9 @@ export function validateRequirements(uploadedDocs, requirements) {
   // 5. Validate Konsistensi Data (Nama across documents)
   if (uploadedDocs.ktp && uploadedDocs.ijazah && uploadedDocs.transkrip) {
     validationResults.totalChecks++;
-    const namaKTP = uploadedDocs.ktp.result.extractedData.nama;
-    const namaIjazah = uploadedDocs.ijazah.result.extractedData.nama;
-    const namaTranskrip = uploadedDocs.transkrip.result.extractedData.nama;
+    const namaKTP = uploadedDocs.ktp.result.extractedData?.nama || "";
+    const namaIjazah = uploadedDocs.ijazah.result.extractedData?.nama || "";
+    const namaTranskrip = uploadedDocs.transkrip.result.extractedData?.nama || "";
 
     const nameSimilarity = checkNameConsistency([
       namaKTP,
@@ -204,10 +216,10 @@ export function validateRequirements(uploadedDocs, requirements) {
   if (uploadedDocs.transkrip && uploadedDocs.ijazah) {
     validationResults.totalChecks++;
     const prodiTranskrip =
-      uploadedDocs.transkrip.result.extractedData.programStudi;
-    const prodiIjazah = uploadedDocs.ijazah.result.extractedData.programStudi;
+      uploadedDocs.transkrip.result.extractedData?.programStudi || "";
+    const prodiIjazah = uploadedDocs.ijazah.result.extractedData?.programStudi || "";
 
-    if (prodiTranskrip === prodiIjazah) {
+    if (prodiTranskrip && prodiIjazah && prodiTranskrip === prodiIjazah) {
       validationResults.checks.push({
         category: "Konsistensi Akademik",
         status: "passed",
@@ -237,9 +249,14 @@ export function validateRequirements(uploadedDocs, requirements) {
 
 // Helper functions
 function checkProgramStudiMatch(extracted, required) {
+  // Handle undefined/null values
+  if (!extracted || !required) {
+    return { matched: false, similarity: 0 };
+  }
+
   // Normalize strings
-  const norm1 = extracted.toLowerCase().trim();
-  const norm2 = required.toLowerCase().trim();
+  const norm1 = String(extracted).toLowerCase().trim();
+  const norm2 = String(required).toLowerCase().trim();
 
   // Exact match
   if (norm1 === norm2) {
@@ -301,9 +318,16 @@ function extractMaxAge(usiaStr) {
 
 function checkNameConsistency(names) {
   // Simple similarity check - can be improved with better algorithm
-  const normalized = names.map((name) =>
-    name.toLowerCase().trim().replace(/\s+/g, " ")
-  );
+  const normalized = names
+    .filter((name) => name && name.trim().length > 0)
+    .map((name) =>
+      String(name).toLowerCase().trim().replace(/\s+/g, " ")
+    );
+
+  // If less than 2 names, can't check consistency
+  if (normalized.length < 2) {
+    return 100;
+  }
 
   // Check if all names are similar
   const firstName = normalized[0];
