@@ -235,10 +235,17 @@ export async function POST(request) {
     return Response.json(responseData);
   } catch (error) {
     console.error("Document verification error:", error);
+    console.error("Error stack:", error.stack);
     return Response.json(
       {
         error: "Gagal memverifikasi dokumen: " + error.message,
         success: false,
+        debug: {
+          message: error.message,
+          stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+          hasVisionApiKey: !!process.env.GOOGLE_VISION_API_KEY,
+          visionApiKeyLength: process.env.GOOGLE_VISION_API_KEY?.length || 0,
+        }
       },
       { status: 500 }
     );

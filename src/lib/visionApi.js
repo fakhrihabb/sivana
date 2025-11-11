@@ -8,6 +8,14 @@ const VISION_API_URL = "https://vision.googleapis.com/v1/images:annotate";
  * Helper function to make Vision API REST calls
  */
 async function callVisionAPI(imageContent, features) {
+  // Check if API key exists
+  if (!GOOGLE_VISION_API_KEY) {
+    console.error("[Vision API] ❌ GOOGLE_VISION_API_KEY is not set in environment variables");
+    throw new Error("GOOGLE_VISION_API_KEY is not configured. Please set environment variable in Vercel.");
+  }
+
+  console.log("[Vision API] ✅ API Key exists, length:", GOOGLE_VISION_API_KEY.length);
+
   try {
     const request = {
       requests: [
@@ -20,6 +28,7 @@ async function callVisionAPI(imageContent, features) {
       ],
     };
 
+    console.log("[Vision API] 🔄 Calling Vision API...");
     const response = await fetch(`${VISION_API_URL}?key=${GOOGLE_VISION_API_KEY}`, {
       method: "POST",
       headers: {
@@ -28,19 +37,25 @@ async function callVisionAPI(imageContent, features) {
       body: JSON.stringify(request),
     });
 
+    console.log("[Vision API] Response status:", response.status, response.statusText);
+
     if (!response.ok) {
-      throw new Error(`Vision API error: ${response.status} ${response.statusText}`);
+      const errorBody = await response.text();
+      console.error("[Vision API] Error response body:", errorBody);
+      throw new Error(`Vision API error: ${response.status} ${response.statusText} - ${errorBody}`);
     }
 
     const data = await response.json();
-    
+
     if (data.error) {
+      console.error("[Vision API] API returned error:", data.error);
       throw new Error(`Vision API error: ${data.error.message}`);
     }
 
+    console.log("[Vision API] ✅ Success");
     return data.responses[0];
   } catch (error) {
-    console.error("Vision API call error:", error);
+    console.error("[Vision API] ❌ Call error:", error.message);
     throw error;
   }
 }
@@ -51,8 +66,10 @@ async function callVisionAPI(imageContent, features) {
  */
 export async function performOCR(imagePath) {
   try {
+    console.log("[OCR] Reading image from:", imagePath);
     const imageBuffer = fs.readFileSync(imagePath);
     const base64Image = imageBuffer.toString("base64");
+    console.log("[OCR] Image size:", imageBuffer.length, "bytes");
 
     let response = {};
     try {
@@ -61,8 +78,14 @@ export async function performOCR(imagePath) {
         { type: "TEXT_DETECTION" },
       ]);
     } catch (apiError) {
-      console.warn("Vision API OCR call failed, using defaults:", apiError.message);
-      response = {};
+      console.error("[OCR] ❌ Vision API OCR call failed:", apiError.message);
+      // Don't swallow the error silently - return error details
+      return {
+        success: false,
+        text: null,
+        confidence: 0,
+        error: apiError.message,
+      };
     }
 
     // Try DOCUMENT_TEXT_DETECTION first (more accurate for documents)
