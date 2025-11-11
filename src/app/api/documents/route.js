@@ -2,7 +2,7 @@ import { writeFile, unlink } from "fs/promises";
 import path from "path";
 import { verifyDocument, detectDocumentTypeFromContent, performOCR } from "@/lib/visionApi";
 import { performTesseractOCR } from "@/lib/tesseractOcr";
-import { extractTextFromPDF, convertPDFToImages, cleanupPDFImages } from "@/lib/pdfParser";
+import { extractTextFromPDF } from "@/lib/pdfParser";
 import { 
   validateKTP, 
   validateIjazah, 
@@ -101,88 +101,12 @@ export async function POST(request) {
       console.log("[API] 📄 PDF detected, using PDF parser");
       ocrResult = await extractTextFromPDF(filepath);
       
-      // Check if PDF parser extracted sufficient text
-      const hasGoodText = ocrResult.success && 
-                          ocrResult.text && 
-                          ocrResult.text.length > 100 && 
-                          !ocrResult.text.includes('could not extract');
-      
-      if (!hasGoodText) {
-        console.log("[API] ⚠️ PDF parsing failed or insufficient text (likely scanned PDF)");
-        console.log("[API] �️ Converting PDF to images for OCR...");
-        
-        // This is likely a SCANNED PDF (image-based, not text-based)
-        // Convert PDF to images first, then use Vision API OCR
-        let convertedImages = [];
-        try {
-          const conversionResult = await convertPDFToImages(filepath);
-          
-          if (conversionResult.success && conversionResult.imagePaths.length > 0) {
-            convertedImages = conversionResult.imagePaths;
-            console.log("[API] ✅ PDF converted to", convertedImages.length, "images");
-            
-            // Perform OCR on each page and combine results
-            let combinedText = '';
-            let totalConfidence = 0;
-            let successfulPages = 0;
-            
-            for (let i = 0; i < convertedImages.length; i++) {
-              const imagePath = convertedImages[i];
-              console.log(`[API] 📸 OCR on page ${i + 1}/${convertedImages.length}...`);
-              
-              try {
-                const pageOcrResult = await performOCR(imagePath);
-                
-                if (pageOcrResult.success && pageOcrResult.text) {
-                  combinedText += `\n--- Page ${i + 1} ---\n${pageOcrResult.text}\n`;
-                  totalConfidence += pageOcrResult.confidence || 0.5;
-                  successfulPages++;
-                  console.log(`[API] ✅ Page ${i + 1} OCR completed (confidence: ${pageOcrResult.confidence})`);
-                }
-              } catch (pageOcrError) {
-                console.error(`[API] ❌ OCR failed for page ${i + 1}:`, pageOcrError.message);
-              }
-            }
-            
-            // Calculate average confidence
-            const avgConfidence = successfulPages > 0 ? totalConfidence / successfulPages : 0.5;
-            
-            if (combinedText.trim()) {
-              ocrResult = {
-                success: true,
-                text: combinedText.trim(),
-                confidence: avgConfidence,
-                pages: successfulPages,
-              };
-              console.log("[API] ✅ Combined OCR result:", combinedText.length, "characters");
-            } else {
-              throw new Error('OCR produced no text from converted images');
-            }
-            
-            // Clean up converted images
-            await cleanupPDFImages(convertedImages);
-          } else {
-            throw new Error('PDF to image conversion failed');
-          }
-        } catch (conversionError) {
-          console.error("[API] ❌ PDF conversion/OCR failed:", conversionError.message);
-          
-          // Clean up any converted images
-          if (convertedImages.length > 0) {
-            await cleanupPDFImages(convertedImages);
-          }
-          
-          // Last resort: Try to use whatever text we got from PDF parser
-          if (!ocrResult.text) {
-            ocrResult = {
-              success: false,
-              text: "Document image received but OCR could not extract readable text",
-              confidence: 0.1
-            };
-          }
-        }
-      } else {
-        console.log("[API] ✅ PDF parser extracted good text:", ocrResult.text.length, "characters");
+      if (!ocrResult.success || !ocrResult.text || ocrResult.text.length < 10) {
+        console.log("[API] ⚠️ PDF parsing failed or insufficient text, trying OCR fallback");
+        // Fallback to Vision API if PDF parsing fails
+        const visionResult = await verifyDocument(filepath, documentType);
+        ocrResult = visionResult.ocr;
+        visionAnalysis = visionResult.analysis;
       }
     } else if (documentType === 'ijazah' || documentType === 'sttb') {
       // Use Vision API for ijazah (can detect handwriting)

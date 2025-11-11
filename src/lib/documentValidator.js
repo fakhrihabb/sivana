@@ -525,23 +525,9 @@ export async function validateTranskrip(ocrText, ktpData, ijazahData) {
     console.log('[TRANSKRIP Validation] Contains "IPK":', ocrText.toLowerCase().includes('ipk'));
     console.log('[TRANSKRIP Validation] Contains "4.0":', ocrText.includes('4.0'));
 
-    // Check if OCR text is too short or empty (scanned PDF issue)
-    const isOcrTextInsufficient = !ocrText || ocrText.length < 50 || 
-                                   ocrText.includes('could not extract readable text') ||
-                                   ocrText.includes('Document image received');
-    
-    if (isOcrTextInsufficient) {
-      console.log('[TRANSKRIP Validation] ⚠️ OCR text insufficient or empty (likely scanned PDF)');
-      console.log('[TRANSKRIP Validation] 🤖 Skipping regex, using Gemini AI directly...');
-    }
-
-    // 1. Extract IPK dari OCR (try simple regex first, unless OCR failed)
-    let ipk = null;
+    // 1. Extract IPK dari OCR (try simple regex first)
+    let ipk = extractIPK(ocrText);
     let geminiData = null;
-    
-    if (!isOcrTextInsufficient) {
-      ipk = extractIPK(ocrText);
-    }
     
     if (!ipk) {
       console.log('[TRANSKRIP Validation] ⚠️ IPK extraction failed with regex');
