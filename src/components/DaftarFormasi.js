@@ -318,16 +318,21 @@ export default function DaftarPendaftar() {
     instansi: "",
     jenisPengadaan: ""
   });
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 9,
+    total: 0,
+    totalPages: 0
+  });
+  const [allFormasiData, setAllFormasiData] = useState([]);
 
-  // Fetch data from Supabase
+  // Fetch all data for filter dropdowns (without pagination)
   useEffect(() => {
-    async function fetchFormasi() {
+    async function fetchAllFormasi() {
       try {
-        setLoading(true);
         const { data, error } = await supabase
           .from('formasi')
-          .select('*')
-          .order('id', { ascending: true });
+          .select('*');
 
         if (error) throw error;
 
@@ -345,7 +350,49 @@ export default function DaftarPendaftar() {
           jenisPengadaan: item.jenis_pengadaan
         }));
 
-        setFormasiData(transformedData);
+        setAllFormasiData(transformedData);
+      } catch (err) {
+        console.error('Error fetching all formasi:', err);
+        // Fallback ke data hardcoded jika gagal
+        setAllFormasiData(formasiDataFallback);
+      }
+    }
+
+    fetchAllFormasi();
+  }, []);
+
+  // Fetch paginated data from API
+  useEffect(() => {
+    async function fetchFormasi() {
+      try {
+        setLoading(true);
+
+        // Build query params
+        const params = new URLSearchParams({
+          page: pagination.page.toString(),
+          limit: pagination.limit.toString(),
+        });
+
+        // Add filters to query params
+        if (filters.periode) params.append('periode', filters.periode);
+        if (filters.jenjangPendidikan) params.append('jenjangPendidikan', filters.jenjangPendidikan);
+        if (filters.programStudi) params.append('programStudi', filters.programStudi);
+        if (filters.instansi) params.append('instansi', filters.instansi);
+        if (filters.jenisPengadaan) params.append('jenisPengadaan', filters.jenisPengadaan);
+
+        const response = await fetch(`/api/formasi?${params.toString()}`);
+        const result = await response.json();
+
+        if (!result.success) {
+          throw new Error(result.error || 'Failed to fetch formasi');
+        }
+
+        setFormasiData(result.data);
+        setPagination(prev => ({
+          ...prev,
+          total: result.pagination.total,
+          totalPages: result.pagination.totalPages
+        }));
         setError(null);
       } catch (err) {
         console.error('Error fetching formasi:', err);
@@ -358,10 +405,10 @@ export default function DaftarPendaftar() {
     }
 
     fetchFormasi();
-  }, []);
+  }, [pagination.page, filters]);
 
-  // Get unique values for dropdowns
-  const uniquePeriode = [...new Set(formasiData.map(f => f.periode))].sort((a, b) => b - a);
+  // Get unique values for dropdowns from all data
+  const uniquePeriode = [...new Set(allFormasiData.map(f => f.periode))].sort((a, b) => b - a);
   const uniqueJenjang = [
     "SD",
     "SLTP",
@@ -376,8 +423,8 @@ export default function DaftarPendaftar() {
     "S-2",
     "S-3/Doktor"
   ];
-  const uniqueProdi = [...new Set(formasiData.map(f => f.programStudi))].sort();
-  const uniqueInstansi = [...new Set(formasiData.map(f => f.lembaga))].sort();
+  const uniqueProdi = [...new Set(allFormasiData.map(f => f.programStudi))].sort();
+  const uniqueInstansi = [...new Set(allFormasiData.map(f => f.lembaga))].sort();
   const uniqueJenisPengadaan = [
     "CPNS",
     "PPPK Guru",
@@ -385,21 +432,13 @@ export default function DaftarPendaftar() {
     "PPPK Tenaga Kesehatan"
   ];
 
-  // Filter the data
-  const filteredData = formasiData.filter(formasi => {
-    if (filters.periode && formasi.periode.toString() !== filters.periode) return false;
-    if (filters.jenjangPendidikan && formasi.jenjangPendidikan !== filters.jenjangPendidikan) return false;
-    if (filters.programStudi && formasi.programStudi !== filters.programStudi) return false;
-    if (filters.instansi && formasi.lembaga !== filters.instansi) return false;
-    if (filters.jenisPengadaan && formasi.jenisPengadaan !== filters.jenisPengadaan) return false;
-    return true;
-  });
-
   const handleFilterChange = (field, value) => {
     setFilters(prev => ({
       ...prev,
       [field]: value
     }));
+    // Reset to page 1 when filter changes
+    setPagination(prev => ({ ...prev, page: 1 }));
   };
 
   const resetFilters = () => {
@@ -410,6 +449,16 @@ export default function DaftarPendaftar() {
       instansi: "",
       jenisPengadaan: ""
     });
+    // Reset to page 1 when filters are reset
+    setPagination(prev => ({ ...prev, page: 1 }));
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= pagination.totalPages) {
+      setPagination(prev => ({ ...prev, page: newPage }));
+      // Scroll to top when page changes
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   // Loading state
@@ -544,13 +593,13 @@ export default function DaftarPendaftar() {
 
           {/* Results Count */}
           <div className="text-sm text-gray-600">
-            Menampilkan <span className="font-semibold">{filteredData.length}</span> dari <span className="font-semibold">{formasiData.length}</span> formasi
+            Menampilkan <span className="font-semibold">{((pagination.page - 1) * pagination.limit) + 1}-{Math.min(pagination.page * pagination.limit, pagination.total)}</span> dari <span className="font-semibold">{pagination.total}</span> formasi
           </div>
         </div>
 
         {/* Pendaftar Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredData.map((formasi) => (
+          {formasiData.map((formasi) => (
             <div
               key={formasi.id}
               className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col"
@@ -587,8 +636,113 @@ export default function DaftarPendaftar() {
           ))}
         </div>
 
+        {/* Pagination Controls */}
+        {formasiData.length > 0 && pagination.totalPages > 1 && (
+          <div className="mt-12 flex justify-center items-center gap-2">
+            {/* Previous Button */}
+            <button
+              onClick={() => handlePageChange(pagination.page - 1)}
+              disabled={pagination.page === 1}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                pagination.page === 1
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-brand-blue text-white hover:bg-opacity-90'
+              }`}
+            >
+              Sebelumnya
+            </button>
+
+            {/* Page Numbers */}
+            <div className="flex gap-2">
+              {(() => {
+                const pages = [];
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, pagination.page - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(pagination.totalPages, startPage + maxVisiblePages - 1);
+
+                // Adjust startPage if we're near the end
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                  startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+
+                // First page + ellipsis
+                if (startPage > 1) {
+                  pages.push(
+                    <button
+                      key={1}
+                      onClick={() => handlePageChange(1)}
+                      className="px-4 py-2 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                    >
+                      1
+                    </button>
+                  );
+                  if (startPage > 2) {
+                    pages.push(
+                      <span key="ellipsis-start" className="px-2 text-gray-500">
+                        ...
+                      </span>
+                    );
+                  }
+                }
+
+                // Page numbers
+                for (let i = startPage; i <= endPage; i++) {
+                  pages.push(
+                    <button
+                      key={i}
+                      onClick={() => handlePageChange(i)}
+                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                        i === pagination.page
+                          ? 'bg-brand-blue text-white'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {i}
+                    </button>
+                  );
+                }
+
+                // Ellipsis + last page
+                if (endPage < pagination.totalPages) {
+                  if (endPage < pagination.totalPages - 1) {
+                    pages.push(
+                      <span key="ellipsis-end" className="px-2 text-gray-500">
+                        ...
+                      </span>
+                    );
+                  }
+                  pages.push(
+                    <button
+                      key={pagination.totalPages}
+                      onClick={() => handlePageChange(pagination.totalPages)}
+                      className="px-4 py-2 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                    >
+                      {pagination.totalPages}
+                    </button>
+                  );
+                }
+
+                return pages;
+              })()}
+            </div>
+
+            {/* Next Button */}
+            <button
+              onClick={() => handlePageChange(pagination.page + 1)}
+              disabled={pagination.page === pagination.totalPages}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                pagination.page === pagination.totalPages
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-brand-blue text-white hover:bg-opacity-90'
+              }`}
+            >
+              Selanjutnya
+            </button>
+          </div>
+        )}
+
         {/* No Results Message */}
-        {filteredData.length === 0 && (
+        {formasiData.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">
               Tidak ada formasi yang sesuai dengan filter yang dipilih.
