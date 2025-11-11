@@ -228,16 +228,17 @@ export default function TanyaBKN() {
       {/* Chatbot Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 group transition-all duration-300 ${
+        className={`fixed bottom-8 right-8 z-50 group transition-all duration-300 ${
           isOpen ? "scale-0" : "scale-100"
         }`}
       >
         <div className="relative">
           {/* Pulse animation */}
-          <div className="absolute inset-0 bg-brand-blue rounded-full animate-ping opacity-20"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#239DD7] via-cyan-500 to-[#DE1B5D] rounded-full animate-pulse opacity-40"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#DE1B5D] to-pink-500 rounded-full animate-pulse opacity-20" style={{animationDelay: '1s'}}></div>
 
           {/* Main button */}
-          <div className="relative w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-pink rounded-full shadow-lg flex items-center justify-center hover:shadow-xl transition-shadow">
+          <div className="relative w-16 h-16 bg-gradient-to-br from-[#239DD7] to-cyan-500 rounded-full shadow-2xl flex items-center justify-center hover:shadow-3xl hover:shadow-blue-500/50 transition-all duration-300 group-hover:scale-110 cursor-pointer border-2 border-white">
             <svg
               className="w-8 h-8 text-white"
               fill="none"
@@ -253,17 +254,17 @@ export default function TanyaBKN() {
             </svg>
           </div>
 
-          {/* Notification badge */}
-          <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+          {/* Notification badge with animation */}
+          <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-[#DE1B5D] to-pink-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white animate-bounce">
             <span className="text-white text-xs font-bold">1</span>
           </div>
 
           {/* Tooltip */}
-          <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-            <div className="bg-gray-900 text-white text-sm px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
+          <div className="absolute bottom-full right-0 mb-4 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:mb-6">
+            <div className="bg-gradient-to-r from-[#239DD7] to-cyan-500 text-white text-sm px-4 py-2.5 rounded-xl whitespace-nowrap shadow-2xl font-semibold">
               Ada yang bisa dibantu?
-              <div className="absolute top-full right-4 -mt-1">
-                <div className="border-4 border-transparent border-t-gray-900"></div>
+              <div className="absolute top-full right-6 -mt-2">
+                <div className="border-4 border-transparent border-t-cyan-500"></div>
               </div>
             </div>
           </div>
@@ -272,39 +273,39 @@ export default function TanyaBKN() {
 
       {/* Chatbot Window */}
       <div
-        className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
+        className={`fixed bottom-8 right-8 z-50 transition-all duration-300 ${
           isOpen
             ? "scale-100 opacity-100"
             : "scale-95 opacity-0 pointer-events-none"
         }`}
       >
-        <div className="w-[400px] h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-brand-blue to-brand-pink p-4 flex items-center justify-between">
+        <div className="w-[400px] h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-[#239DD7]/10">
+          {/* Header - Gradient Background */}
+          <div className="bg-gradient-to-r from-[#239DD7] via-cyan-500 to-[#DE1B5D] p-5 flex items-center justify-between border-b border-white/20">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                  <svg
-                    className="w-6 h-6 text-brand-blue"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+                <div className="absolute -inset-1 bg-white/30 rounded-full blur-md"></div>
+                <div className="relative w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 shadow-lg">
+                  <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10.5 1.5H5.75A2.75 2.75 0 003 4.25v11.5A2.75 2.75 0 005.75 18.5h8.5a2.75 2.75 0 002.75-2.75V10M10.5 1.5v3.25a2.75 2.75 0 002.75 2.75h3.25m-6-6v6m-3-3h6" />
                   </svg>
                 </div>
-                <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-white"></div>
+                <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-400 rounded-full border-2 border-white shadow-lg animate-pulse"></div>
               </div>
               <div>
-                <h3 className="text-white font-semibold">TanyaBKN</h3>
-                <p className="text-white/80 text-xs">Asisten Virtual • Online</p>
+                <h3 className="text-white font-bold text-lg">TanyaBKN</h3>
+                <p className="text-white/80 text-xs font-medium flex items-center gap-1">
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                  Asisten Virtual • Online
+                </p>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
+              className="group text-white/70 hover:text-white hover:bg-white/20 p-2 rounded-lg transition-all duration-300 group-hover:scale-110"
             >
               <svg
-                className="w-5 h-5"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

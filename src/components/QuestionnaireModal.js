@@ -242,35 +242,37 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
       <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl transform animate-scale-in">
-        {/* Modal Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-brand-blue to-brand-pink px-6 py-5 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
+      <div className="bg-gradient-to-r from-[#239DD7] via-cyan-500 to-[#DE1B5D] px-8 py-6 flex justify-between items-center border-b border-white/20">
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <div className="absolute -inset-2 bg-white/30 rounded-xl blur-md"></div>
+            <div className="relative bg-white/20 backdrop-blur-xl p-3 rounded-xl border border-white/30">
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
               </svg>
             </div>
-            <div>
-              <h2 className="text-xl font-bold text-white">
-                Temukan Formasi Ideal Anda
-              </h2>
-              <p className="text-xs text-white/80">
-                {step === 0 && 'Siap memulai?'}
-                {step >= 1 && step <= 5 && `Pertanyaan ${step} dari 5`}
-                {step === 6 && 'Menganalisis jawaban...'}
-                {step === 7 && 'Hasil Rekomendasi'}
-              </p>
-            </div>
           </div>
-          <button
-            onClick={handleClose}
-            className="text-white/80 hover:text-white hover:bg-white/20 w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          <div>
+            <h2 className="text-xl font-bold text-white">
+              Temukan Formasi Ideal Anda
+            </h2>
+            <p className="text-xs text-white/80 font-medium">
+              {step === 0 && 'Siap memulai?'}
+              {step >= 1 && step <= 5 && `Pertanyaan ${step} dari 5`}
+              {step === 6 && 'Menganalisis jawaban...'}
+              {step === 7 && 'Hasil Rekomendasi'}
+            </p>
+          </div>
         </div>
+        <button
+          onClick={handleClose}
+          className="group text-white/80 hover:text-white bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
 
         {/* Progress Bar */}
         {step >= 1 && step <= 5 && (
@@ -292,39 +294,47 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
 
           {/* Step 0: Opening */}
           {step === 0 && (
-            <div className="text-center space-y-6 py-8">
-              <div className="w-24 h-24 bg-gradient-to-br from-brand-blue/20 to-brand-pink/20 rounded-full flex items-center justify-center mx-auto">
-                <svg className="w-12 h-12 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
+            <div className="text-center space-y-8 py-12">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#239DD7]/20 via-purple-500/20 to-[#DE1B5D]/20 rounded-full blur-3xl"></div>
+                <div className="relative w-28 h-28 bg-gradient-to-br from-[#239DD7]/10 to-[#DE1B5D]/10 rounded-full flex items-center justify-center mx-auto border-2 border-[#239DD7]/30">
+                  <div className="bg-gradient-to-br from-[#239DD7] to-cyan-500 p-6 rounded-2xl shadow-lg">
+                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                <h3 className="text-3xl font-bold text-gray-900 mb-3">
                   Jawab 5 Pertanyaan Singkat
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  AI kami akan menganalisis jawaban Anda dan merekomendasikan 10 formasi ASN yang paling sesuai dengan latar belakang, keahlian, dan preferensi Anda.
+                <p className="text-gray-600 leading-relaxed text-lg max-w-2xl mx-auto">
+                  AI kami akan menganalisis jawaban Anda dan merekomendasikan formasi ASN yang paling sesuai dengan latar belakang, keahlian, dan preferensi Anda.
                 </p>
               </div>
-              <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-brand-blue text-white rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">1</div>
-                  <p className="text-sm text-gray-700 text-left">Pertanyaan akan disesuaikan dengan jawaban Anda sebelumnya</p>
+              <div className="bg-gradient-to-br from-[#239DD7]/5 via-purple-50/5 to-[#DE1B5D]/5 rounded-2xl p-8 space-y-4 border border-[#239DD7]/20 backdrop-blur">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#DE1B5D] to-pink-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0 mt-1">1</div>
+                  <p className="text-gray-700 text-left text-lg font-medium">Pertanyaan akan disesuaikan dengan jawaban Anda sebelumnya</p>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-brand-blue text-white rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">2</div>
-                  <p className="text-sm text-gray-700 text-left">Lokasi kerja dipersonalisasi berdasarkan lokasi Anda saat ini</p>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#DE1B5D] to-pink-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0 mt-1">2</div>
+                  <p className="text-gray-700 text-left text-lg font-medium">Lokasi kerja dipersonalisasi berdasarkan lokasi Anda saat ini</p>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-brand-blue text-white rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">3</div>
-                  <p className="text-sm text-gray-700 text-left">AI akan mencocokkan dengan {'>'}300 formasi tersedia</p>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#DE1B5D] to-pink-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0 mt-1">3</div>
+                  <p className="text-gray-700 text-left text-lg font-medium">AI akan mencocokkan dengan {'>'}300 formasi tersedia</p>
                 </div>
               </div>
               <button
                 onClick={handleNext}
-                className="w-full py-4 bg-gradient-to-r from-brand-blue to-brand-pink text-white rounded-xl font-semibold hover:shadow-xl transition-all transform hover:scale-105"
+                className="group relative w-full sm:max-w-sm mx-auto"
               >
-                Mulai Sekarang
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#DE1B5D] to-pink-500 rounded-xl blur opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative bg-gradient-to-r from-[#DE1B5D] to-pink-500 text-white py-4 rounded-xl font-bold text-lg transition-all duration-500 group-hover:scale-[1.08] group-hover:shadow-2xl group-hover:shadow-pink-500/50 group-hover:-translate-y-2">
+                  <span className="group-hover:scale-110 inline-block transition-transform duration-300">Mulai Sekarang</span>
+                </div>
               </button>
             </div>
           )}
