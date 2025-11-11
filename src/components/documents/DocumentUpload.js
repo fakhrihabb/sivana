@@ -588,7 +588,7 @@ export default function DocumentUpload({
             <span className="text-xs text-gray-500">Opsional</span>
           )}
         </div>
-        {uploaded && (
+        {uploaded && uploaded.result && (
           <div className="flex items-center gap-2">
             <div
               className={`flex items-center gap-2 px-3 py-1 rounded-full border ${getStatusColor(
@@ -623,7 +623,7 @@ export default function DocumentUpload({
         )}
       </div>
 
-      {!uploaded && !isProcessing && (
+      {(!uploaded || !uploaded.result) && !isProcessing && (
         <div
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -716,7 +716,7 @@ export default function DocumentUpload({
         </div>
       )}
 
-      {uploaded && (
+      {uploaded && uploaded.result && (
         <div className="bg-gray-50 rounded-lg p-4">
           <div className="flex items-start gap-3">
             <svg

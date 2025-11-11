@@ -157,9 +157,9 @@ export async function validateRequirements(uploadedDocs, requirements) {
   // 3. Validate Usia from KTP (use validation result from database, not OCR)
   if (uploadedDocs.ktp && requirements.usia) {
     validationResults.totalChecks++;
-    
+
     // Get age from validation result (from database, not OCR)
-    const ktpValidation = uploadedDocs.ktp.result.validation;
+    const ktpValidation = uploadedDocs.ktp?.result?.validation;
     const age = ktpValidation?.umur || null;
     const maxAge = extractMaxAge(requirements.usia);
 
