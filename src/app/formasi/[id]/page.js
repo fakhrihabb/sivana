@@ -284,15 +284,15 @@ export default function FormasiDetail() {
         console.log("=".repeat(80));
         console.log("[PAGE] Uploaded Docs:", Object.keys(uploadedDocs));
         console.log("[PAGE] Formasi Requirements:", formasi.requirements);
-        
+
         const validation = await validateRequirements(uploadedDocs, formasi.requirements);
-        
+
         console.log("[PAGE] Validation Result:", validation);
         console.log("[PAGE] Name Inconsistencies:", validation.nameInconsistencies);
         console.log("=".repeat(80) + "\n");
-        
+
         setRequirementValidation(validation);
-        
+
         // If validation failed, find recommendations
         if (validation.overall === "failed") {
           const recommendations = await findRecommendedFormasi();
@@ -302,7 +302,7 @@ export default function FormasiDetail() {
         }
       }
     }
-    
+
     runValidation();
   }, [uploadedDocs, formasi]);
 
@@ -311,7 +311,7 @@ export default function FormasiDetail() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Formasi tidak ditemukan
+            Memuat formasi. Harap menunggu...
           </h1>
           <button
             onClick={() => router.push("/")}
@@ -324,11 +324,62 @@ export default function FormasiDetail() {
     );
   }
 
-  const handleDocumentUpload = (docId, file, result) => {
+  const handleDocumentUpload = async (docId, file, result) => {
     setUploadedDocs((prev) => ({
       ...prev,
       [docId]: { file, result },
     }));
+
+    // If KTP or Ijazah is uploaded, revalidate documents that might have warnings about missing data
+    if (docId === 'ktp' || docId === 'ijazah') {
+      console.log(`[PAGE] ${docId} uploaded, checking for documents to revalidate...`);
+
+      // Find documents with missing data warnings
+      const docsToRevalidate = Object.entries(uploadedDocs).filter(([id, doc]) => {
+        const warnings = doc?.result?.warnings || [];
+        return warnings.some(warning =>
+          warning.includes('Data KTP belum tersedia') ||
+          warning.includes('Data Ijazah belum tersedia')
+        );
+      });
+
+      if (docsToRevalidate.length > 0) {
+        console.log(`[PAGE] Revalidating ${docsToRevalidate.length} document(s)...`);
+
+        // Revalidate each document by calling the API again with all current uploaded docs
+        for (const [id, doc] of docsToRevalidate) {
+          try {
+            const formData = new FormData();
+            formData.append("file", doc.file);
+            formData.append("documentType", id);
+
+            // Include current uploaded docs data for cross-validation
+            const docsData = { ...uploadedDocs };
+            if (docId === 'ktp') docsData.ktp = { file, result };
+            if (docId === 'ijazah') docsData.ijazah = { file, result };
+
+            formData.append("uploadedDocs", JSON.stringify(docsData));
+            formData.append("formasiData", JSON.stringify(formasi));
+
+            const response = await fetch("/api/documents", {
+              method: "POST",
+              body: formData,
+            });
+
+            if (response.ok) {
+              const newResult = await response.json();
+              console.log(`[PAGE] Revalidated ${id}, updating result`);
+              setUploadedDocs((prev) => ({
+                ...prev,
+                [id]: { file: doc.file, result: newResult },
+              }));
+            }
+          } catch (error) {
+            console.error(`[PAGE] Error revalidating ${id}:`, error);
+          }
+        }
+      }
+    }
   };
 
   // DEMO: Auto-fix documents to meet requirements

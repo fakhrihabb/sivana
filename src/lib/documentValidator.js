@@ -958,7 +958,7 @@ export async function validateSuratLamaran(ocrText, ktpData, ijazahData) {
         console.log('[SURAT LAMARAN Validation] ✅ Name found in document');
       } else {
         validation.errors.push(
-          `❌ Nama pada KTP "${ktpData.nama}" tidak ditemukan di dokumen Surat Lamaran. Pastikan dokumen Surat Lamaran adalah milik "${ktpData.nama}".`
+          `❌ Nama pada KTP "${ktpData.nama}" tidak sesuai dengan nama di dokumen Surat Lamaran. Pastikan dokumen Surat Lamaran adalah milik "${ktpData.nama}".`
         );
         console.log('[SURAT LAMARAN Validation] ❌ Name not found in document');
       }
@@ -1140,61 +1140,20 @@ export async function validateSuratPernyataan(ocrText, ktpData, ijazahData) {
 
     const suratLower = ocrText.toLowerCase();
 
-    // 1. Validasi judul surat
+    // 1. Validasi judul surat (optional check - just warning)
     console.log('[SURAT PERNYATAAN Validation] Checking document title...');
     const judulPattern = /surat\s+pernyataan/i;
     if (!judulPattern.test(ocrText)) {
-      validation.errors.push('❌ Judul "SURAT PERNYATAAN" tidak ditemukan. Pastikan dokumen adalah Surat Pernyataan yang benar.');
-      console.log('[SURAT PERNYATAAN Validation] ❌ Title not found');
+      validation.warnings.push('⚠️ Judul "SURAT PERNYATAAN" tidak terdeteksi dengan jelas.');
+      console.log('[SURAT PERNYATAAN Validation] ⚠️ Title not clearly detected');
     } else {
       console.log('[SURAT PERNYATAAN Validation] ✅ Title found');
     }
 
-    // 2. Validasi 5 poin pernyataan CASN
-    console.log('[SURAT PERNYATAAN Validation] Checking 5 statement points...');
-    
-    const poinKeywords = [
-      // Poin 1: Tidak menjadi anggota partai politik
-      ['tidak menjadi', 'tidak pernah menjadi', 'anggota', 'partai politik', 'parpol'],
-      // Poin 2: Tidak pernah diberhentikan dengan hormat tidak atas permintaan sendiri
-      ['diberhentikan', 'tidak atas permintaan sendiri', 'pegawai negeri', 'pns', 'asn'],
-      // Poin 3: Tidak pernah diberhentikan tidak dengan hormat
-      ['diberhentikan tidak dengan hormat', 'tidak dengan hormat', 'pegawai swasta'],
-      // Poin 4: Tidak pernah dihukum penjara
-      ['dihukum penjara', 'pidana penjara', 'hukuman penjara', 'tidak pernah dihukum'],
-      // Poin 5: Tidak berkedudukan sebagai CPNS/PNS/Prajurit atau anggota Polri
-      ['tidak berkedudukan', 'cpns', 'pns', 'prajurit', 'tni', 'polri']
-    ];
-
-    let poinFound = 0;
-    poinKeywords.forEach((keywords, index) => {
-      const hasPoin = keywords.some(keyword => suratLower.includes(keyword.toLowerCase()));
-      if (hasPoin) {
-        poinFound++;
-        console.log(`[SURAT PERNYATAAN Validation] ✅ Point ${index + 1} keyword found`);
-      } else {
-        console.log(`[SURAT PERNYATAAN Validation] ⚠️ Point ${index + 1} keyword not found`);
-      }
-    });
-
-    validation.poinDitemukan = poinFound;
-    
-    if (poinFound >= 3) {
-      validation.has5PoinStatement = true;
-      console.log('[SURAT PERNYATAAN Validation] ✅ Statement points adequate');
-      if (poinFound < 5) {
-        validation.warnings.push(
-          `⚠️ Hanya ${poinFound} dari 5 poin pernyataan yang terdeteksi. ` +
-          `Pastikan surat berisi 5 poin pernyataan CASN yang lengkap.`
-        );
-      }
-    } else {
-      validation.errors.push(
-        `❌ Hanya ${poinFound} dari 5 poin pernyataan yang terdeteksi. ` +
-        `Surat harus berisi 5 poin pernyataan untuk CASN/PPPK.`
-      );
-      console.log('[SURAT PERNYATAAN Validation] ❌ Insufficient statement points');
-    }
+    // 2. Set has5PoinStatement to true by default (skip strict validation)
+    console.log('[SURAT PERNYATAAN Validation] Skipping strict 5-point validation per user request');
+    validation.has5PoinStatement = true;
+    validation.poinDitemukan = 5; // Assume all points present
 
     // 3. Validasi nama dengan KTP - Simple substring check
     if (ktpData && ktpData.nama && ocrText) {
@@ -1211,7 +1170,7 @@ export async function validateSuratPernyataan(ocrText, ktpData, ijazahData) {
         console.log('[SURAT PERNYATAAN Validation] ✅ Name found in document');
       } else {
         validation.errors.push(
-          `❌ Nama pada KTP "${ktpData.nama}" tidak ditemukan di dokumen Surat Pernyataan. Pastikan dokumen Surat Pernyataan adalah milik "${ktpData.nama}".`
+          `❌ Nama pada KTP "${ktpData.nama}" tidak sesuai dengan nama di dokumen Surat Pernyataan. Pastikan dokumen Surat Pernyataan adalah milik "${ktpData.nama}".`
         );
         console.log('[SURAT PERNYATAAN Validation] ❌ Name not found in document');
       }
@@ -1226,118 +1185,20 @@ export async function validateSuratPernyataan(ocrText, ktpData, ijazahData) {
       console.log('[SURAT PERNYATAAN Validation] ⚠️ No KTP data available');
     }
 
-        // 4. Cross-check dengan Ijazah (optional, for consistency)
-    if (ijazahData && ijazahData.nama && ktpData && ktpData.nama) {
-      console.log('[SURAT PERNYATAAN Validation] Cross-checking with Ijazah...');
-      const similarity = nameSimilarity(ktpData.nama, ijazahData.nama);
-      console.log('  - KTP vs Ijazah Similarity:', (similarity * 100).toFixed(1) + '%');
-      
-      if (similarity >= 0.7) {
-        validation.namaMatchIjazah = true;
-        console.log('[SURAT PERNYATAAN Validation] ✅ Name consistency across documents');
-      } else {
-        validation.warnings.push(
-          `⚠️ Nama di Ijazah (${ijazahData.nama}) berbeda dengan KTP (${ktpData.nama}). ` +
-          `Pastikan konsistensi nama di semua dokumen.`
-        );
-      }
-    }
+    // 4. Skip cross-check with Ijazah (per user request for simpler validation)
+    console.log('[SURAT PERNYATAAN Validation] Skipping Ijazah cross-check per user request');
 
-    // 5. Validasi format surat (tempat/tanggal, tanda tangan, dll)
-    console.log('[SURAT PERNYATAAN Validation] Checking letter format...');
-    
-    const formatChecks = {
-      hasTempat: false,
-      hasYangBertandaTangan: false,
-      hasTandaTangan: false
-    };
+    // 5. Skip format validation (per user request for simpler validation)
+    console.log('[SURAT PERNYATAAN Validation] Skipping format checks per user request');
+    validation.formatLengkap = true; // Assume format is OK
 
-    // Check tempat & tanggal
-    const tempatPattern = /(jakarta|bandung|surabaya|medan|makassar|yogyakarta|semarang|palembang|denpasar),?\s*\d{1,2}\s+(januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember)/i;
-    if (tempatPattern.test(ocrText)) {
-      formatChecks.hasTempat = true;
-      console.log('[SURAT PERNYATAAN Validation] ✅ Place & date found');
-    } else {
-      validation.warnings.push('⚠️ Tempat dan tanggal tidak terdeteksi. Pastikan format: "[Kota], [DD] [Bulan] [YYYY]".');
-    }
-
-    // Check "Yang bertanda tangan di bawah ini"
-    const yangBertandaTanganPattern = /yang\s+bertanda\s*tangan\s+di\s*bawah\s+ini/i;
-    if (yangBertandaTanganPattern.test(ocrText)) {
-      formatChecks.hasYangBertandaTangan = true;
-      console.log('[SURAT PERNYATAAN Validation] ✅ Statement opening found');
-    } else {
-      validation.warnings.push('⚠️ Kalimat pembuka "Yang bertanda tangan di bawah ini" tidak terdeteksi.');
-    }
-
-    // Check tanda tangan section
-    const tandaTanganPattern = /(yang membuat pernyataan|yang menyatakan|pembuat pernyataan|tanda tangan|ttd)/i;
-    if (tandaTanganPattern.test(ocrText)) {
-      formatChecks.hasTandaTangan = true;
-      console.log('[SURAT PERNYATAAN Validation] ✅ Signature section found');
-    }
-
-    const formatScore = Object.values(formatChecks).filter(Boolean).length;
-    if (formatScore >= 2) {
-      validation.formatLengkap = true;
-      console.log('[SURAT PERNYATAAN Validation] ✅ Letter format is adequate');
-    } else {
-      validation.warnings.push(
-        `⚠️ Format surat tidak lengkap (${formatScore}/3 elemen terdeteksi). ` +
-        `Pastikan surat memiliki: tempat/tanggal, "Yang bertanda tangan di bawah ini", dan tanda tangan.`
-      );
-    }
-
-    // 6. Check for materai keywords (future: will use image detection)
+    // 6. Check for materai keywords only
     console.log('[SURAT PERNYATAAN Validation] Checking materai...');
-    const materaiKeywordsPernyataan = ['materai', 'meterai', 'rp 10.000', 'rp10000', 'rp 10000'];
-    const hasMateraiKeywordPernyataan = materaiKeywordsPernyataan.some(keyword => 
+    const materaiKeywords = ['materai', 'meterai', 'rp 10.000', 'rp10000', 'rp 10000'];
+    const hasMateraiKeyword = materaiKeywords.some(keyword =>
       suratLower.includes(keyword)
     );
-    
-    if (hasMateraiKeywordPernyataan) {
-      validation.hasMaterai = true;
-      validation.warnings.push('⚠️ Keyword materai terdeteksi. Verifikasi manual diperlukan untuk memastikan materai asli.');
-      console.log('[SURAT PERNYATAAN Validation] ⚠️ Materai keyword detected (needs manual verification)');
-    } else {
-      validation.warnings.push('⚠️ Materai tidak terdeteksi. Pastikan surat pernyataan bermaterai Rp 10.000.');
-      console.log('[SURAT PERNYATAAN Validation] ⚠️ No materai keyword detected');
-    }
 
-    // 3. Check for "5 poin" statement keywords
-    const pernyataanKeywords = [
-      '5 poin', 'lima poin', '5 point', 'lima point',
-      'tidak pernah', 'tidak sedang', 'tidak terlibat',
-      'tidak menjadi anggota', 'tidak diberhentikan',
-      'bersedia ditempatkan'
-    ];
-    
-    let keywordCount = 0;
-    pernyataanKeywords.forEach(keyword => {
-      if (ocrText.toLowerCase().includes(keyword)) {
-        keywordCount++;
-      }
-    });
-
-    console.log('[SURAT PERNYATAAN Validation] Statement keywords found:', keywordCount, '/', pernyataanKeywords.length);
-
-    if (keywordCount >= 3) {
-      validation.has5PoinStatement = true;
-      console.log('[SURAT PERNYATAAN Validation] ✅ Statement content detected');
-    } else {
-      validation.warnings.push(
-        '⚠️ Isi surat pernyataan tidak lengkap atau tidak terbaca dengan jelas. ' +
-        'Pastikan surat memuat pernyataan 5 poin sesuai persyaratan CPNS.'
-      );
-      console.log('[SURAT PERNYATAAN Validation] ⚠️ Statement content incomplete');
-    }
-
-    // 4. Check for materai keywords (future: will use image detection)
-    const materaiKeywords = ['materai', 'meterai', 'rp 10.000', 'rp10000', 'rp 10000'];
-    const hasMateraiKeyword = materaiKeywords.some(keyword => 
-      ocrText.toLowerCase().includes(keyword)
-    );
-    
     if (hasMateraiKeyword) {
       validation.hasMaterai = true;
       validation.warnings.push('⚠️ Keyword materai terdeteksi. Verifikasi manual diperlukan untuk memastikan materai asli.');

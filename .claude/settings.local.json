@@ -10,7 +10,8 @@
       "mcp__supabase__list_tables",
       "Bash(npm run dev:*)",
       "Bash(open \"http://localhost:3000/formasi/1\")",
-      "Read(//var/folders/nw/drsvmffs05lc8_1lk9yn3v_40000gn/T/TemporaryItems/NSIRD_screencaptureui_vdCiAp/**)"
+      "Read(//var/folders/nw/drsvmffs05lc8_1lk9yn3v_40000gn/T/TemporaryItems/NSIRD_screencaptureui_vdCiAp/**)",
+      "Read(//Users/macbookair/Downloads/**)"
     ],
     "deny": [],
     "ask": []
