@@ -320,7 +320,7 @@ export default function DaftarPendaftar() {
   });
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: 9,
+    limit: 15,
     total: 0,
     totalPages: 0
   });
