@@ -85,9 +85,57 @@ export const educationProgramMapping = {
     ]
   },
 
-  // D4/S1 (Diploma IV / Bachelor's Degree)
+  // D4 (Diploma IV)
+  'D-4': {
+    displayName: 'D4 (Diploma IV)',
+    programs: [
+      // Computer Science & IT
+      { id: "a", text: "Ilmu Komputer", value: "Ilmu Komputer" },
+      { id: "b", text: "Teknik Informatika", value: "Teknik Informatika" },
+      { id: "c", text: "Sistem Informasi", value: "Sistem Informasi" },
+      { id: "d", text: "Teknik Komputer", value: "Teknik Komputer" },
+      { id: "e", text: "Teknologi Informasi", value: "Teknologi Informasi" },
+
+      // Engineering
+      { id: "f", text: "Teknik Elektro", value: "Teknik Elektro" },
+      { id: "g", text: "Teknik Mesin", value: "Teknik Mesin" },
+      { id: "h", text: "Teknik Sipil", value: "Teknik Sipil" },
+      { id: "i", text: "Teknik Industri", value: "Teknik Industri" },
+      { id: "j", text: "Teknik Kimia", value: "Teknik Kimia" },
+
+      // Health Sciences
+      { id: "k", text: "Keperawatan", value: "Keperawatan" },
+      { id: "l", text: "Kebidanan", value: "Kebidanan" },
+      { id: "m", text: "Farmasi", value: "Farmasi" },
+      { id: "n", text: "Kesehatan Masyarakat", value: "Kesehatan Masyarakat" },
+      { id: "o", text: "Gizi", value: "Gizi" },
+
+      // Business & Economics
+      { id: "p", text: "Akuntansi", value: "Akuntansi" },
+      { id: "q", text: "Manajemen", value: "Manajemen" },
+      { id: "r", text: "Administrasi Bisnis", value: "Administrasi Bisnis" },
+      { id: "s", text: "Ekonomi", value: "Ekonomi" },
+
+      // Agriculture & Environment
+      { id: "t", text: "Agroteknologi", value: "Agroteknologi" },
+      { id: "u", text: "Peternakan", value: "Peternakan" },
+      { id: "v", text: "Kehutanan", value: "Kehutanan" },
+
+      // Social Sciences
+      { id: "w", text: "Administrasi Publik", value: "Administrasi Publik" },
+      { id: "x", text: "Ilmu Komunikasi", value: "Ilmu Komunikasi" },
+
+      // Education & Arts
+      { id: "y", text: "Pendidikan", value: "Pendidikan" },
+      { id: "z", text: "Desain", value: "Desain" },
+      { id: "aa", text: "Pariwisata", value: "Pariwisata" },
+      { id: "ab", text: "Lainnya", value: "Lainnya" }
+    ]
+  },
+
+  // S1 (Bachelor's Degree)
   'S-1/Sarjana': {
-    displayName: 'D4/S1 (Sarjana)',
+    displayName: 'S1 (Sarjana)',
     programs: [
       // Computer Science & IT
       { id: "a", text: "Ilmu Komputer", value: "Ilmu Komputer" },

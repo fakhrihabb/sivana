@@ -33,9 +33,10 @@ export async function POST(request) {
             { id: "b", text: "SMP (Sekolah Menengah Pertama)", value: "SMP" },
             { id: "c", text: "SMA/SMK (Sekolah Menengah Atas/Kejuruan)", value: "SMA/SMK" },
             { id: "d", text: "D3 (Diploma III/Sarjana Muda)", value: "Diploma III/Sarjana Muda" },
-            { id: "e", text: "D4/S1 (Diploma IV/Sarjana)", value: "S-1/Sarjana" },
-            { id: "f", text: "S2 (Magister)", value: "S-2" },
-            { id: "g", text: "S3 (Doktor)", value: "S-3" }
+            { id: "e", text: "D4 (Diploma IV)", value: "D-4" },
+            { id: "f", text: "S1 (Sarjana)", value: "S-1/Sarjana" },
+            { id: "g", text: "S2 (Magister)", value: "S-2" },
+            { id: "h", text: "S3 (Doktor)", value: "S-3" }
           ]
         }
       });
@@ -83,8 +84,7 @@ export async function POST(request) {
             { id: "b", text: "Pemerintah Daerah (Provinsi/Kabupaten/Kota)", value: "pemda" },
             { id: "c", text: "Lembaga Pendidikan (Sekolah/Universitas)", value: "pendidikan" },
             { id: "d", text: "Fasilitas Kesehatan (Rumah Sakit/Puskesmas)", value: "kesehatan" },
-            { id: "e", text: "Lembaga Independen (BPK, KPK, dll)", value: "independen" },
-            { id: "f", text: "Tidak ada preferensi khusus", value: "any" }
+            { id: "e", text: "Tidak ada preferensi khusus", value: "any" }
           ]
         }
       });

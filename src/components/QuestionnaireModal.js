@@ -14,6 +14,8 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
   const [userLocation, setUserLocation] = useState(null);
   const [filteredFormasi, setFilteredFormasi] = useState([]); // Progressive filtering
   const [filteringInProgress, setFilteringInProgress] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(''); // For searchable dropdown
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Get user's location on mount
   useEffect(() => {
@@ -74,6 +76,9 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
   useEffect(() => {
     if (step >= 1 && step <= 5) {
       fetchQuestion(step);
+      // Reset search dropdown when changing questions
+      setSearchTerm('');
+      setIsDropdownOpen(false);
     }
   }, [step]);
 
@@ -375,38 +380,112 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
                     </div>
                   </div>
 
-                  <div className="space-y-3">
-                    {currentQuestion.options.map((option) => (
-                      <button
-                        key={option.id}
-                        onClick={() => handleAnswerSelect(option)}
-                        className={`w-full text-left p-4 rounded-xl border-2 transition-all transform hover:scale-102 ${
-                          currentAnswer?.id === option.id
-                            ? 'border-brand-blue bg-gradient-to-br from-brand-blue/10 to-brand-pink/10 shadow-lg'
-                            : 'border-gray-200 hover:border-brand-blue/50 hover:bg-gray-50'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                            currentAnswer?.id === option.id
-                              ? 'border-brand-blue bg-brand-blue'
-                              : 'border-gray-300'
-                          }`}>
-                            {currentAnswer?.id === option.id && (
-                              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                              </svg>
-                            )}
+                  {/* Question 2 gets a searchable dropdown */}
+                  {step === 2 ? (
+                    <div className="relative">
+                      {/* Search Input */}
+                      <div className="relative">
+                        <input
+                          type="text"
+                          placeholder="Cari jurusan Anda..."
+                          value={searchTerm}
+                          onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setIsDropdownOpen(true);
+                          }}
+                          onFocus={() => setIsDropdownOpen(true)}
+                          className="w-full p-3 pl-10 border-2 border-gray-300 rounded-lg focus:border-brand-blue focus:outline-none"
+                        />
+                        <svg className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </div>
+
+                      {/* Selected Option Display */}
+                      {currentAnswer && !isDropdownOpen && (
+                        <div className="mt-2 p-3 bg-gradient-to-br from-brand-blue/10 to-brand-pink/10 border-2 border-brand-blue rounded-lg">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-brand-blue">{currentAnswer.text}</span>
+                            <button
+                              onClick={() => {
+                                setSearchTerm('');
+                                setIsDropdownOpen(true);
+                              }}
+                              className="text-xs text-brand-blue hover:underline"
+                            >
+                              Ubah
+                            </button>
                           </div>
-                          <span className={`font-medium ${
-                            currentAnswer?.id === option.id ? 'text-brand-blue' : 'text-gray-700'
-                          }`}>
-                            {option.text}
-                          </span>
                         </div>
-                      </button>
-                    ))}
-                  </div>
+                      )}
+
+                      {/* Dropdown Options */}
+                      {isDropdownOpen && (
+                        <div className="mt-2 max-h-60 overflow-y-auto border-2 border-gray-300 rounded-lg bg-white shadow-lg">
+                          {currentQuestion.options
+                            .filter(option =>
+                              option.text.toLowerCase().includes(searchTerm.toLowerCase())
+                            )
+                            .map((option) => (
+                              <button
+                                key={option.id}
+                                onClick={() => {
+                                  handleAnswerSelect(option);
+                                  setIsDropdownOpen(false);
+                                  setSearchTerm(option.text);
+                                }}
+                                className={`w-full text-left p-2 text-sm hover:bg-gray-50 transition-colors ${
+                                  currentAnswer?.id === option.id ? 'bg-brand-blue/10 text-brand-blue font-medium' : 'text-gray-700'
+                                }`}
+                              >
+                                {option.text}
+                              </button>
+                            ))}
+                          {currentQuestion.options.filter(option =>
+                            option.text.toLowerCase().includes(searchTerm.toLowerCase())
+                          ).length === 0 && (
+                            <div className="p-4 text-center text-gray-500 text-sm">
+                              Tidak ada hasil untuk &ldquo;{searchTerm}&rdquo;
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    /* Other questions use regular buttons */
+                    <div className="space-y-2">
+                      {currentQuestion.options.map((option) => (
+                        <button
+                          key={option.id}
+                          onClick={() => handleAnswerSelect(option)}
+                          className={`w-full text-left p-3 rounded-lg border-2 transition-all transform hover:scale-102 ${
+                            currentAnswer?.id === option.id
+                              ? 'border-brand-blue bg-gradient-to-br from-brand-blue/10 to-brand-pink/10 shadow-lg'
+                              : 'border-gray-200 hover:border-brand-blue/50 hover:bg-gray-50'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                              currentAnswer?.id === option.id
+                                ? 'border-brand-blue bg-brand-blue'
+                                : 'border-gray-300'
+                            }`}>
+                              {currentAnswer?.id === option.id && (
+                                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              )}
+                            </div>
+                            <span className={`text-sm font-medium ${
+                              currentAnswer?.id === option.id ? 'text-brand-blue' : 'text-gray-700'
+                            }`}>
+                              {option.text}
+                            </span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
 
                   <div className="flex gap-3 pt-4">
                     {step > 1 && (
