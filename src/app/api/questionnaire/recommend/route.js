@@ -83,6 +83,26 @@ export async function POST(request) {
       }).slice(0, 50);
     }
 
+    // Check if we have enough formasi
+    if (filteredFormasi.length < 3) {
+      console.warn(`Only ${filteredFormasi.length} formasi available - fetching more from database`);
+
+      // Fetch more formasi with relaxed filters
+      const { data: additionalFormasi, error: fetchError } = await supabase
+        .from('formasi')
+        .select('*')
+        .order('id', { ascending: true })
+        .limit(30);
+
+      if (!fetchError && additionalFormasi && additionalFormasi.length > 0) {
+        // Merge and deduplicate
+        const existingIds = new Set(filteredFormasi.map(f => f.id));
+        const newFormasi = additionalFormasi.filter(f => !existingIds.has(f.id));
+        filteredFormasi = [...filteredFormasi, ...newFormasi];
+        console.log(`Added ${newFormasi.length} more formasi, total: ${filteredFormasi.length}`);
+      }
+    }
+
     // Limit to top 15 for AI processing
     filteredFormasi = filteredFormasi.slice(0, 15);
 
@@ -106,42 +126,54 @@ export async function POST(request) {
 
     // Use Gemini to analyze and recommend
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
+      model: "gemini-2.0-flash-exp", // Using 2.0 flash for speed
       generationConfig: {
-        temperature: 0.7,
-        topK: 40,
-        topP: 0.9,
+        temperature: 0.5, // Lower temperature for faster, more deterministic responses
+        topK: 20,
+        topP: 0.8,
+        maxOutputTokens: 2048, // Limit response size
       }
     });
 
-    const prompt = `Analisis profil user dan rekomendasikan TOP 10 formasi ASN dari ${formasiSummaries.length} yang tersedia.
+    // Determine how many recommendations to ask for
+    const numRecommendations = Math.min(10, filteredFormasi.length);
+    console.log(`Will request ${numRecommendations} recommendations from ${filteredFormasi.length} formasi`);
+
+    const prompt = `Analisis profil user dan rekomendasikan TOP ${numRecommendations} formasi ASN dari ${formasiSummaries.length} yang tersedia.
 
 PROFIL USER:
 ${userProfile}
 
-FORMASI (pre-filtered, ${formasiSummaries.length} tersedia):
+FORMASI (${formasiSummaries.length} tersedia):
 ${JSON.stringify(formasiSummaries)}
 
 OUTPUT JSON (no markdown):
 {
   "recommendations": [
-    {"formasi_id": 123, "match_score": 92, "reasons": ["...", "..."]},
-    // ... total 10
+    {"formasi_id": 123, "match_score": 92, "reasons": ["Sesuai pendidikan", "Lokasi dekat"]},
+    // ... total ${numRecommendations}
   ],
-  "analysis_summary": "2-3 kalimat profil & rekomendasi"
+  "analysis_summary": "Ringkasan 2 kalimat"
 }
 
 RULES:
-- Tepat 10 rekomendasi, sorted by score DESC
-- Score realistis & bervariasi: Rank 1-2 (85-95%), 3-5 (75-84%), 6-8 (65-74%), 9-10 (55-64%)
+- Tepat ${numRecommendations} rekomendasi, sorted by score DESC
+- Score: Rank 1-2 (85-95%), 3-5 (75-84%), sisanya (65-74%)
 - NO score 100%, NO duplicate scores
-- 2-3 reasons per formasi (konkret & spesifik)
-- Match berdasarkan: pendidikan (35%), program studi (35%), lokasi (20%), instansi (10%)`;
+- 2 reasons per formasi (singkat)`;
 
     console.log('Calling Gemini API...');
     console.log('Gemini API Key exists:', !!process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 
-    const result = await model.generateContent(prompt);
+    // Add timeout wrapper
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Gemini API timeout after 45 seconds')), 45000);
+    });
+
+    const result = await Promise.race([
+      model.generateContent(prompt),
+      timeoutPromise
+    ]);
     console.log('Gemini API response received');
 
     const response = await result.response;
@@ -153,13 +185,15 @@ RULES:
 
     const aiResponse = JSON.parse(text);
 
-    // Validate we got 10 recommendations
-    if (!aiResponse.recommendations || aiResponse.recommendations.length < 10) {
-      throw new Error('AI did not return 10 recommendations');
+    // Validate we got recommendations
+    const minRecommendations = Math.min(5, filteredFormasi.length);
+    if (!aiResponse.recommendations || aiResponse.recommendations.length < minRecommendations) {
+      console.warn(`AI returned ${aiResponse.recommendations?.length || 0} recommendations, expected at least ${minRecommendations}`);
+      throw new Error(`AI did not return enough recommendations (got ${aiResponse.recommendations?.length || 0}, needed ${minRecommendations})`);
     }
 
     // Enrich recommendations with full formasi data
-    const enrichedRecommendations = aiResponse.recommendations.slice(0, 10).map(rec => {
+    const enrichedRecommendations = aiResponse.recommendations.slice(0, numRecommendations).map(rec => {
       const formasi = filteredFormasi.find(f => f.id === rec.formasi_id);
       if (!formasi) {
         return null;
@@ -171,17 +205,21 @@ RULES:
       };
     }).filter(Boolean);
 
-    // If we don't have at least 5 valid recommendations, throw error
-    if (enrichedRecommendations.length < 5) {
+    // If we don't have at least minimum valid recommendations, throw error
+    const absoluteMinimum = Math.min(3, filteredFormasi.length);
+    if (enrichedRecommendations.length < absoluteMinimum) {
+      console.error(`Only got ${enrichedRecommendations.length} valid recommendations, needed at least ${absoluteMinimum}`);
       throw new Error('Could not get enough valid recommendations');
     }
 
-    // Pad with random formasi if we don't have 10 (fallback)
-    if (enrichedRecommendations.length < 10) {
+    // Pad with remaining formasi if we don't have enough (fallback)
+    const targetCount = Math.min(10, filteredFormasi.length);
+    if (enrichedRecommendations.length < targetCount) {
+      console.log(`Padding recommendations from ${enrichedRecommendations.length} to ${targetCount}`);
       const usedIds = new Set(enrichedRecommendations.map(r => r.id));
       const remainingFormasi = filteredFormasi.filter(f => !usedIds.has(f.id));
 
-      while (enrichedRecommendations.length < 10 && remainingFormasi.length > 0) {
+      while (enrichedRecommendations.length < targetCount && remainingFormasi.length > 0) {
         const randomIndex = Math.floor(Math.random() * remainingFormasi.length);
         const formasi = remainingFormasi.splice(randomIndex, 1)[0];
         enrichedRecommendations.push({
