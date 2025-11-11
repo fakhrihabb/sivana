@@ -272,7 +272,19 @@ EKSTRAK DATA SEKARANG:`;
     };
 
   } catch (error) {
-    console.error('[Gemini Extractor] ❌ Error:', error);
+    // Check if it's a rate limit error (suppress detailed logging)
+    if (error.message && (error.message.includes('429') || error.message.includes('quota'))) {
+      console.log('[Gemini Extractor] ⚠️ API rate limit - will use fallback OCR extraction');
+      return {
+        success: false,
+        data: null,
+        source: 'RATE_LIMIT',
+        error: 'rate_limit',
+      };
+    }
+    
+    // For other errors, log but don't crash
+    console.error('[Gemini Extractor] ❌ Error:', error.message);
     return {
       success: false,
       data: null,
@@ -428,10 +440,552 @@ EXTRACT DATA NOW (respond with JSON only):`;
   }
 }
 
+/**
+ * GEMINI PROGRAM STUDI MATCHER - Intelligent Major/Field Matching
+ * Uses Gemini AI to determine if two majors/fields are compatible
+ */
+export async function matchProgramStudiWithGemini(extractedMajor, requiredMajor) {
+  try {
+    console.log('[Gemini Matcher] Matching program studi...');
+    console.log(`[Gemini Matcher] Extracted: "${extractedMajor}"`);
+    console.log(`[Gemini Matcher] Required: "${requiredMajor}"`);
+
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('NEXT_PUBLIC_GEMINI_API_KEY not found');
+    }
+    
+    const matcherGenAI = new GoogleGenerativeAI(apiKey);
+    const matcherModel = matcherGenAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+      generationConfig: {
+        temperature: 0.2,
+        topP: 0.8,
+        topK: 20,
+        maxOutputTokens: 1024,
+      },
+    });
+
+    const prompt = `Anda adalah AI expert dalam menilai kecocokan program studi/jurusan untuk penerimaan CPNS.
+
+TUGAS:
+Tentukan apakah dua program studi berikut COCOK/COMPATIBLE atau TIDAK COCOK untuk persyaratan CPNS.
+
+PROGRAM STUDI DI IJAZAH PELAMAR:
+"${extractedMajor}"
+
+PROGRAM STUDI YANG DIBUTUHKAN:
+"${requiredMajor}"
+
+ATURAN PENILAIAN:
+1. EXACT MATCH (100% similarity):
+   - Nama persis sama
+   - Contoh: "Akuntansi" = "Akuntansi"
+
+2. VERY CLOSE MATCH (90-95% similarity):
+   - Nama hampir sama dengan variasi kecil
+   - Contoh: "Akuntansi Syariah" ≈ "Akuntansi" (95%)
+   - Contoh: "Teknik Informatika" ≈ "Informatika" (95%)
+   - Contoh: "Manajemen Bisnis" ≈ "Manajemen" (90%)
+
+3. SAME FIELD/COMPATIBLE (75-85% similarity):
+   - Masih dalam bidang yang sama dan relevan
+   - **PENTING**: Akuntansi, Ilmu Ekonomi, Manajemen, Ekonomi Pembangunan = SEMUA EKONOMI (80%)
+   - Contoh: "Teknik Informatika" ≈ "Sistem Informasi" (80%)
+   - Contoh: "Ilmu Komunikasi" ≈ "Komunikasi" (85%)
+   - Contoh: "Pendidikan Matematika" ≈ "Matematika" (75%)
+
+4. RELATED BUT DIFFERENT (50-70% similarity):
+   - Masih ada keterkaitan tapi berbeda fokus
+   - Contoh: "Ekonomi" vs "Akuntansi" jika persyaratan sangat spesifik (60%)
+
+5. NOT COMPATIBLE (0-40% similarity):
+   - Bidang berbeda total
+   - Contoh: "Teknik Informatika" vs "Ekonomi" (0%)
+   - Contoh: "Hukum" vs "Kedokteran" (0%)
+
+CONTEXT INDONESIA:
+- Ekonomi = bidang luas yang mencakup Akuntansi, Manajemen, Ekonomi Pembangunan
+- Teknik = mencakup berbagai cabang (Sipil, Elektro, Informatika, dll)
+- Pendidikan X biasanya compatible dengan X
+- Perhatikan jenjang: S-1/S1/Sarjana itu sama
+
+OUTPUT FORMAT: JSON dengan struktur berikut:
+{
+  "matched": true/false,
+  "similarity": 0-100 (integer),
+  "category": "exact"|"very_close"|"same_field"|"related"|"not_compatible",
+  "reasoning": "Penjelasan singkat mengapa cocok/tidak cocok (1-2 kalimat)",
+  "recommendation": "accept"|"review"|"reject"
+}
+
+RECOMMENDATION LOGIC:
+- accept: similarity >= 75% (cocok untuk formasi)
+- review: similarity 50-74% (butuh review manual)
+- reject: similarity < 50% (tidak cocok)
+
+RESPOND WITH JSON ONLY:`;
+
+    const result = await matcherModel.generateContent(prompt);
+    const response = await result.response;
+    const jsonText = response.text();
+
+    console.log('[Gemini Matcher] Raw response length:', jsonText.length);
+    console.log('[Gemini Matcher] Raw response:', jsonText);
+
+    // Parse JSON with better error handling
+    let matchResult;
+    try {
+      // Remove markdown code blocks if present
+      let cleanJson = jsonText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      
+      // Check if response is too short or empty
+      if (!cleanJson || cleanJson.length < 20) {
+        console.error('[Gemini Matcher] Response too short or empty:', cleanJson);
+        throw new Error('Gemini response is empty or incomplete');
+      }
+      
+      // Try to extract JSON if surrounded by other text
+      const jsonMatch = cleanJson.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        cleanJson = jsonMatch[0];
+      } else {
+        console.error('[Gemini Matcher] No JSON found in response');
+        throw new Error('No valid JSON found in Gemini response');
+      }
+      
+      matchResult = JSON.parse(cleanJson);
+      
+      // Validate required fields
+      if (!matchResult.hasOwnProperty('matched') || 
+          !matchResult.hasOwnProperty('similarity') || 
+          !matchResult.hasOwnProperty('recommendation')) {
+        console.error('[Gemini Matcher] Missing required fields in response:', matchResult);
+        throw new Error('Gemini response missing required fields');
+      }
+      
+    } catch (parseError) {
+      console.error('[Gemini Matcher] JSON parse error:', parseError);
+      console.error('[Gemini Matcher] Failed text:', jsonText.substring(0, 500));
+      
+      // Return a safe fallback with "review" recommendation
+      return {
+        success: false,
+        matched: false,
+        similarity: 0,
+        category: 'error',
+        reasoning: 'Error parsing Gemini response. Silakan review manual.',
+        recommendation: 'review',
+        source: 'GEMINI_AI_ERROR',
+        error: parseError.message,
+      };
+    }
+
+    console.log('[Gemini Matcher] ✅ Match result:');
+    console.log(`  - Matched: ${matchResult.matched}`);
+    console.log(`  - Similarity: ${matchResult.similarity}%`);
+    console.log(`  - Category: ${matchResult.category}`);
+    console.log(`  - Recommendation: ${matchResult.recommendation}`);
+    console.log(`  - Reasoning: ${matchResult.reasoning}`);
+
+    return {
+      success: true,
+      matched: matchResult.matched,
+      similarity: matchResult.similarity,
+      category: matchResult.category,
+      reasoning: matchResult.reasoning,
+      recommendation: matchResult.recommendation,
+      source: 'GEMINI_AI',
+      error: null,
+    };
+
+  } catch (error) {
+    // Check if it's a rate limit error (suppress detailed logging)
+    if (error.message && (error.message.includes('429') || error.message.includes('quota'))) {
+      console.log('[Gemini Matcher] ⚠️ API rate limit - using fallback algorithm');
+      return {
+        success: false,
+        matched: false,
+        similarity: 0,
+        category: 'rate_limit',
+        reasoning: 'Menggunakan algoritma manual',
+        recommendation: 'review',
+        source: 'RATE_LIMIT',
+        error: 'rate_limit',
+      };
+    }
+    
+    // For other errors, log but don't crash
+    console.error('[Gemini Matcher] ❌ Error:', error.message);
+    
+    return {
+      success: false,
+      matched: false,
+      similarity: 0,
+      category: 'error',
+      reasoning: 'Sistem menggunakan algoritma manual',
+      recommendation: 'review',
+      source: 'ERROR',
+      error: error.message,
+    };
+  }
+}
+
+/**
+ * GEMINI SURAT LAMARAN EXTRACTOR - Lightweight extraction for job application letter
+ * Uses Gemini Flash 1.5 (fastest, most cost-effective)
+ */
+export async function extractSuratLamaranWithGemini(ocrText) {
+  try {
+    console.log('[Gemini Surat Lamaran] Starting extraction...');
+    console.log('[Gemini Surat Lamaran] OCR Text length:', ocrText.length);
+
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('NEXT_PUBLIC_GEMINI_API_KEY not found');
+    }
+    
+    const extractorGenAI = new GoogleGenerativeAI(apiKey);
+    
+    // Use LIGHTWEIGHT MODEL: gemini-1.5-flash (fastest & cheapest)
+    const extractorModel = extractorGenAI.getGenerativeModel({
+      model: "gemini-1.5-flash", // Lightweight model
+      generationConfig: {
+        temperature: 0.1,
+        topP: 0.8,
+        topK: 20,
+        maxOutputTokens: 512, // Reduced tokens for faster response
+      },
+    });
+
+    const prompt = `Ekstrak data berikut dari surat lamaran. TEKS MUNGKIN TERPISAH-PISAH ATAU DALAM FORMAT COLON-SEPARATED.
+
+DATA:
+1. nama_lengkap: Nama pelamar lengkap
+   - Bisa di bagian "Nama:" atau setelah kolon pertama
+   - Bisa di bagian bawah setelah "Hormat saya," atau di signature
+   - Contoh format: "RAHMAN GUNAWAN: BEKASI..." berarti nama = "RAHMAN GUNAWAN"
+   - Jika ada kolon (:), nama biasanya SEBELUM kolon pertama
+   - Jangan ambil data setelah kolon (tempat lahir, NIK, dll)
+
+2. posisi_dilamar: Posisi/formasi yang dilamar
+   - Cari setelah "Jabatan yang dilamar:", "posisi", "melamar sebagai"
+   - Bisa dalam format colon-separated setelah beberapa field
+
+3. tanggal_surat: Tanggal surat (format YYYY-MM-DD)
+   - Parse dari format Indonesia jika perlu
+   - Contoh: "11 November 2024" → "2024-11-11"
+
+ATURAN PENTING:
+- TEKS MUNGKIN TERPISAH OLEH COLON (:) - ekstrak dengan hati-hati
+- Format seperti "RAHMAN GUNAWAN: BEKASI: 327508..." berarti:
+  * nama_lengkap = "RAHMAN GUNAWAN" (sebelum kolon pertama)
+  * JANGAN ambil "BEKASI" atau "327508" sebagai nama
+- Jika nama ada di beberapa tempat, pilih yang paling lengkap
+- Jangan buat data yang tidak ada
+- Jika tidak ditemukan, beri null
+
+OUTPUT JSON:
+{
+  "nama_lengkap": "string or null",
+  "posisi_dilamar": "string or null",
+  "tanggal_surat": "YYYY-MM-DD or null"
+}
+
+TEKS SURAT LAMARAN (FULL TEXT):
+${ocrText}
+
+JSON:`;
+
+    const result = await extractorModel.generateContent(prompt);
+    const response = await result.response;
+    const jsonText = response.text();
+
+    console.log('[Gemini Surat Lamaran] Raw response:', jsonText.substring(0, 200));
+
+    // Parse JSON
+    let extractedData;
+    try {
+      let cleanJson = jsonText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      
+      if (!cleanJson || cleanJson.length < 10) {
+        throw new Error('Response too short');
+      }
+      
+      const jsonMatch = cleanJson.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        cleanJson = jsonMatch[0];
+      }
+      
+      extractedData = JSON.parse(cleanJson);
+    } catch (parseError) {
+      console.error('[Gemini Surat Lamaran] Parse error:', parseError);
+      throw new Error('Failed to parse Gemini response');
+    }
+
+    console.log('[Gemini Surat Lamaran] ✅ Extracted:', extractedData);
+
+    return {
+      success: true,
+      data: extractedData,
+      source: 'GEMINI_AI',
+      error: null,
+    };
+
+  } catch (error) {
+    // Rate limit handling
+    if (error.message && (error.message.includes('429') || error.message.includes('quota'))) {
+      console.log('[Gemini Surat Lamaran] ⚠️ Rate limit - fallback to OCR');
+      return {
+        success: false,
+        data: null,
+        source: 'RATE_LIMIT',
+        error: 'rate_limit',
+      };
+    }
+    
+    console.error('[Gemini Surat Lamaran] ❌ Error:', error.message);
+    return {
+      success: false,
+      data: null,
+      source: null,
+      error: error.message,
+    };
+  }
+}
+
+/**
+ * GEMINI SURAT PERNYATAAN EXTRACTOR - Lightweight extraction for declaration letter
+ * Uses Gemini Flash 1.5 (fastest, most cost-effective)
+ */
+export async function extractSuratPernyataanWithGemini(ocrText) {
+  try {
+    console.log('[Gemini Surat Pernyataan] Starting extraction...');
+    console.log('[Gemini Surat Pernyataan] OCR Text length:', ocrText.length);
+
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('NEXT_PUBLIC_GEMINI_API_KEY not found');
+    }
+    
+    const extractorGenAI = new GoogleGenerativeAI(apiKey);
+    
+    // Use LIGHTWEIGHT MODEL: gemini-1.5-flash
+    const extractorModel = extractorGenAI.getGenerativeModel({
+      model: "gemini-1.5-flash", // Lightweight model
+      generationConfig: {
+        temperature: 0.1,
+        topP: 0.8,
+        topK: 20,
+        maxOutputTokens: 512,
+      },
+    });
+
+    const prompt = `Ekstrak data berikut dari surat pernyataan:
+
+DATA:
+1. nama_lengkap: Nama yang membuat pernyataan (biasanya setelah "Yang bertanda tangan di bawah ini," atau di signature)
+2. nik: NIK/Nomor KTP (16 digit)
+3. tanggal_surat: Tanggal surat (format YYYY-MM-DD)
+4. jenis_pernyataan: Jenis pernyataan (contoh: "tidak pernah dihukum", "tidak terlibat narkoba", dll)
+
+ATURAN:
+- Jangan buat data yang tidak ada
+- Jika tidak ditemukan, beri null
+- Nama biasanya di awal atau bagian bawah
+
+OUTPUT JSON:
+{
+  "nama_lengkap": "string or null",
+  "nik": "string or null",
+  "tanggal_surat": "YYYY-MM-DD or null",
+  "jenis_pernyataan": "string or null"
+}
+
+TEKS SURAT PERNYATAAN:
+${ocrText}
+
+JSON:`;
+
+    const result = await extractorModel.generateContent(prompt);
+    const response = await result.response;
+    const jsonText = response.text();
+
+    console.log('[Gemini Surat Pernyataan] Raw response:', jsonText.substring(0, 200));
+
+    // Parse JSON
+    let extractedData;
+    try {
+      let cleanJson = jsonText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      
+      if (!cleanJson || cleanJson.length < 10) {
+        throw new Error('Response too short');
+      }
+      
+      const jsonMatch = cleanJson.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        cleanJson = jsonMatch[0];
+      }
+      
+      extractedData = JSON.parse(cleanJson);
+    } catch (parseError) {
+      console.error('[Gemini Surat Pernyataan] Parse error:', parseError);
+      throw new Error('Failed to parse Gemini response');
+    }
+
+    console.log('[Gemini Surat Pernyataan] ✅ Extracted:', extractedData);
+
+    return {
+      success: true,
+      data: extractedData,
+      source: 'GEMINI_AI',
+      error: null,
+    };
+
+  } catch (error) {
+    // Rate limit handling
+    if (error.message && (error.message.includes('429') || error.message.includes('quota'))) {
+      console.log('[Gemini Surat Pernyataan] ⚠️ Rate limit - fallback to OCR');
+      return {
+        success: false,
+        data: null,
+        source: 'RATE_LIMIT',
+        error: 'rate_limit',
+      };
+    }
+    
+    console.error('[Gemini Surat Pernyataan] ❌ Error:', error.message);
+    return {
+      success: false,
+      data: null,
+      source: null,
+      error: error.message,
+    };
+  }
+}
+
+/**
+ * GEMINI TRANSKRIP NAME EXTRACTOR - Lightweight extraction for transcript name only
+ * Uses Gemini Flash 1.5 (fastest, most cost-effective)
+ * ONLY extracts name, not IPK (IPK uses manual pattern matching)
+ */
+export async function extractTranskripNameWithGemini(ocrText) {
+  try {
+    console.log('[Gemini Transkrip Name] Starting name extraction...');
+    console.log('[Gemini Transkrip Name] OCR Text length:', ocrText.length);
+
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('NEXT_PUBLIC_GEMINI_API_KEY not found');
+    }
+    
+    const extractorGenAI = new GoogleGenerativeAI(apiKey);
+    
+    // Use LIGHTWEIGHT MODEL: gemini-1.5-flash
+    const extractorModel = extractorGenAI.getGenerativeModel({
+      model: "gemini-1.5-flash", // Lightweight model
+      generationConfig: {
+        temperature: 0.1,
+        topP: 0.8,
+        topK: 20,
+        maxOutputTokens: 256, // Very small, only need name
+      },
+    });
+
+    const prompt = `Ekstrak HANYA nama mahasiswa dari transkrip nilai ini. TEKS MUNGKIN TERPISAH-PISAH ATAU DALAM FORMAT COLON-SEPARATED.
+
+ATURAN:
+- Hanya ekstrak nama lengkap mahasiswa
+- Jangan ekstrak nama universitas, fakultas, program studi, atau data lain
+- Jika tidak ditemukan, beri null
+- Nama biasanya ada setelah "Nama:", "Name:", atau di bagian atas dokumen
+
+FORMAT COLON-SEPARATED:
+- Jika teks dalam format "NAMA: DATA LAIN: DATA LAIN..."
+  * Ambil bagian SEBELUM kolon pertama sebagai nama
+  * Contoh: "RAHMAN GUNAWAN: BEKASI: 327508..." → nama = "RAHMAN GUNAWAN"
+  * JANGAN ambil data setelah kolon (tempat, NIM, dll)
+
+PENTING:
+- TEKS MUNGKIN TERPISAH OLEH COLON (:) - ekstrak dengan hati-hati
+- Nama mahasiswa TIDAK mengandung kolon, angka NIM, atau tempat lahir
+- Jika ada beberapa kemungkinan nama, pilih yang paling lengkap dan paling masuk akal sebagai nama orang
+
+OUTPUT JSON:
+{
+  "nama_lengkap": "string or null"
+}
+
+TEKS TRANSKRIP (FULL TEXT):
+${ocrText}
+
+JSON:`;
+
+    const result = await extractorModel.generateContent(prompt);
+    const response = await result.response;
+    const jsonText = response.text();
+
+    console.log('[Gemini Transkrip Name] Raw response:', jsonText.substring(0, 200));
+
+    // Parse JSON
+    let extractedData;
+    try {
+      let cleanJson = jsonText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      
+      if (!cleanJson || cleanJson.length < 10) {
+        throw new Error('Response too short');
+      }
+      
+      const jsonMatch = cleanJson.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        cleanJson = jsonMatch[0];
+      }
+      
+      extractedData = JSON.parse(cleanJson);
+    } catch (parseError) {
+      console.error('[Gemini Transkrip Name] Parse error:', parseError);
+      throw new Error('Failed to parse Gemini response');
+    }
+
+    console.log('[Gemini Transkrip Name] ✅ Extracted:', extractedData);
+
+    return {
+      success: true,
+      nama: extractedData.nama_lengkap,
+      source: 'GEMINI_AI',
+      error: null,
+    };
+
+  } catch (error) {
+    // Rate limit handling
+    if (error.message && (error.message.includes('429') || error.message.includes('quota'))) {
+      console.log('[Gemini Transkrip Name] ⚠️ Rate limit - fallback to OCR');
+      return {
+        success: false,
+        nama: null,
+        source: 'RATE_LIMIT',
+        error: 'rate_limit',
+      };
+    }
+    
+    console.error('[Gemini Transkrip Name] ❌ Error:', error.message);
+    return {
+      success: false,
+      nama: null,
+      source: null,
+      error: error.message,
+    };
+  }
+}
+
 export default {
   getGeminiResponse,
   getGeminiQuickResponse,
   analyzeDocumentWithGemini,
   extractIjazahWithGemini,
   extractTranskripWithGemini,
+  matchProgramStudiWithGemini,
+  extractSuratLamaranWithGemini,
+  extractSuratPernyataanWithGemini,
+  extractTranskripNameWithGemini,
 };

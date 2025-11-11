@@ -4,7 +4,9 @@
  * Checks: IPK, Jurusan, Usia, Surat Lamaran validity, etc.
  */
 
-export function validateRequirements(uploadedDocs, requirements) {
+import { matchProgramStudiWithGemini } from '@/lib/gemini';
+
+export async function validateRequirements(uploadedDocs, requirements) {
   const validationResults = {
     overall: "passed", // passed, warning, failed
     checks: [],
@@ -55,36 +57,84 @@ export function validateRequirements(uploadedDocs, requirements) {
     }
   }
 
-  // 2. Validate Jurusan/Program Studi from ijazah
+  // 2. Validate Jurusan/Program Studi from ijazah - HYBRID (GEMINI + FALLBACK)
   if (uploadedDocs.ijazah && requirements.pendidikan) {
     validationResults.totalChecks++;
     const extractedProdi =
       uploadedDocs.ijazah.result.extractedData?.programStudi || "";
     const requiredProdi = requirements.pendidikan;
 
-    // Check if program studi matches
-    const isMatch = checkProgramStudiMatch(extractedProdi, requiredProdi);
+    console.log("[RequirementValidator] 🎓 Validating Program Studi...");
+    console.log(`[RequirementValidator] Extracted: "${extractedProdi}"`);
+    console.log(`[RequirementValidator] Required: "${requiredProdi}"`);
 
-    if (isMatch.matched) {
+    let matchResult;
+    let useGemini = true;
+
+    // Try GEMINI AI first
+    try {
+      console.log("[RequirementValidator] Trying GEMINI AI...");
+      const geminiMatch = await matchProgramStudiWithGemini(extractedProdi, requiredProdi);
+      
+      if (geminiMatch.success) {
+        matchResult = {
+          matched: geminiMatch.recommendation === "accept",
+          similarity: geminiMatch.similarity,
+          reasoning: geminiMatch.reasoning,
+          source: 'GEMINI_AI',
+        };
+        console.log(`[RequirementValidator] ✅ Gemini Success: ${matchResult.similarity}%`);
+      } else {
+        // Gemini failed (parse error, etc)
+        console.log("[RequirementValidator] ⚠️ Gemini failed, using fallback algorithm");
+        useGemini = false;
+      }
+    } catch (error) {
+      // Gemini error (rate limit, network, etc)
+      console.log("[RequirementValidator] ⚠️ Gemini error:", error.message);
+      console.log("[RequirementValidator] Using fallback algorithm");
+      useGemini = false;
+    }
+
+    // FALLBACK: Manual algorithm if Gemini fails
+    if (!useGemini) {
+      const manualMatch = checkProgramStudiMatch(extractedProdi, requiredProdi);
+      matchResult = {
+        matched: manualMatch.matched,
+        similarity: manualMatch.similarity,
+        reasoning: manualMatch.matched 
+          ? `${extractedProdi} dan ${requiredProdi} berada dalam bidang yang sama`
+          : `${extractedProdi} tidak sesuai dengan ${requiredProdi}`,
+        source: 'MANUAL_ALGORITHM',
+      };
+      console.log(`[RequirementValidator] ✅ Manual Algorithm: ${matchResult.similarity}%`);
+    }
+
+    console.log(`[RequirementValidator] Final Result: ${matchResult.similarity}% (${matchResult.source})`);
+
+    // Build validation result based on similarity
+    if (matchResult.similarity >= 75 && matchResult.matched) {
       validationResults.checks.push({
         category: "Jurusan",
         status: "passed",
         label: "Program Studi Sesuai",
-        detail: `${extractedProdi} sesuai dengan ${requiredProdi}`,
+        detail: `${extractedProdi} sesuai dengan ${requiredProdi}. ${matchResult.reasoning}`,
         extractedValue: extractedProdi,
         requiredValue: requiredProdi,
-        similarity: isMatch.similarity,
+        similarity: matchResult.similarity,
+        validationSource: matchResult.source,
       });
       validationResults.score++;
-    } else if (isMatch.similarity >= 50) {
+    } else if (matchResult.similarity >= 50) {
       validationResults.checks.push({
         category: "Jurusan",
         status: "warning",
         label: "Program Studi Perlu Ditinjau",
-        detail: `${extractedProdi} mungkin sesuai dengan ${requiredProdi} (${isMatch.similarity}% kecocokan)`,
+        detail: `${extractedProdi} mungkin sesuai dengan ${requiredProdi} (${matchResult.similarity}% kecocokan). ${matchResult.reasoning}`,
         extractedValue: extractedProdi,
         requiredValue: requiredProdi,
-        similarity: isMatch.similarity,
+        similarity: matchResult.similarity,
+        validationSource: matchResult.source,
       });
       if (validationResults.overall !== "failed") {
         validationResults.overall = "warning";
@@ -94,10 +144,11 @@ export function validateRequirements(uploadedDocs, requirements) {
         category: "Jurusan",
         status: "failed",
         label: "Program Studi Tidak Sesuai",
-        detail: `${extractedProdi} tidak sesuai dengan ${requiredProdi}`,
+        detail: `${extractedProdi} tidak sesuai dengan ${requiredProdi}. ${matchResult.reasoning}`,
         extractedValue: extractedProdi,
         requiredValue: requiredProdi,
-        similarity: isMatch.similarity,
+        similarity: matchResult.similarity,
+        validationSource: matchResult.source,
       });
       validationResults.overall = "failed";
     }
@@ -176,90 +227,216 @@ export function validateRequirements(uploadedDocs, requirements) {
     }
   }
 
-  // 5. Validate Konsistensi Data (Nama across documents)
-  if (uploadedDocs.ktp && uploadedDocs.ijazah && uploadedDocs.transkrip) {
-    validationResults.totalChecks++;
-    const namaKTP = uploadedDocs.ktp.result.extractedData?.nama || "";
-    const namaIjazah = uploadedDocs.ijazah.result.extractedData?.nama || "";
-    const namaTranskrip = uploadedDocs.transkrip.result.extractedData?.nama || "";
-
-    const nameSimilarity = checkNameConsistency([
-      namaKTP,
-      namaIjazah,
-      namaTranskrip,
-    ]);
-
-    if (nameSimilarity >= 90) {
-      validationResults.checks.push({
-        category: "Konsistensi Data",
-        status: "passed",
-        label: "Nama Konsisten di Semua Dokumen",
-        detail: "Nama di KTP, Ijazah, dan Transkrip konsisten",
-        extractedValue: "Konsisten",
-        requiredValue: "Data konsisten",
-      });
-      validationResults.score++;
-    } else if (nameSimilarity >= 70) {
-      validationResults.checks.push({
-        category: "Konsistensi Data",
-        status: "warning",
-        label: "Nama Perlu Ditinjau",
-        detail: "Ada perbedaan kecil pada nama di beberapa dokumen",
-        extractedValue: "Mirip",
-        requiredValue: "Data konsisten",
-      });
-      if (validationResults.overall !== "failed") {
-        validationResults.overall = "warning";
-      }
-    } else {
-      validationResults.checks.push({
-        category: "Konsistensi Data",
-        status: "failed",
-        label: "Nama Tidak Konsisten",
-        detail: "Nama di dokumen tidak konsisten, mohon periksa kembali",
-        extractedValue: "Tidak Konsisten",
-        requiredValue: "Data konsisten",
-      });
-      validationResults.overall = "failed";
-    }
-  }
-
-  // 6. Validate Transkrip consistency with Ijazah
-  if (uploadedDocs.transkrip && uploadedDocs.ijazah) {
-    validationResults.totalChecks++;
-    const prodiTranskrip =
-      uploadedDocs.transkrip.result.extractedData?.programStudi || "";
-    const prodiIjazah = uploadedDocs.ijazah.result.extractedData?.programStudi || "";
-
-    if (prodiTranskrip && prodiIjazah && prodiTranskrip === prodiIjazah) {
-      validationResults.checks.push({
-        category: "Konsistensi Akademik",
-        status: "passed",
-        label: "Program Studi Konsisten",
-        detail: "Program Studi di Ijazah dan Transkrip sama",
-        extractedValue: prodiTranskrip,
-        requiredValue: prodiIjazah,
-      });
-      validationResults.score++;
-    } else {
-      validationResults.checks.push({
-        category: "Konsistensi Akademik",
-        status: "warning",
-        label: "Program Studi Berbeda",
-        detail: `Transkrip: ${prodiTranskrip}, Ijazah: ${prodiIjazah}`,
-        extractedValue: prodiTranskrip,
-        requiredValue: prodiIjazah,
-      });
-      if (validationResults.overall !== "failed") {
-        validationResults.overall = "warning";
+  // 5. Validate Konsistensi Data (Nama across documents) - INDIVIDUAL PER DOCUMENT
+  // Store nama inconsistencies per document for display
+  validationResults.nameInconsistencies = {};
+  
+  if (uploadedDocs.ktp) {
+    // Try to get nama from validation (database) first, then extractedData (OCR)
+    const namaKTP = uploadedDocs.ktp.result.validation?.nama || 
+                    uploadedDocs.ktp.result.extractedData?.nama || "";
+    
+    console.log("[RequirementValidator] 👤 NAME VALIDATION CHECK");
+    console.log("[RequirementValidator] KTP Name (validation):", uploadedDocs.ktp.result.validation?.nama);
+    console.log("[RequirementValidator] KTP Name (extractedData):", uploadedDocs.ktp.result.extractedData?.nama);
+    console.log("[RequirementValidator] KTP Name (used):", namaKTP);
+    
+    // Check Ijazah vs KTP
+    if (uploadedDocs.ijazah) {
+      // Try validation first (Gemini), then extractedData (OCR)
+      const namaIjazahFromGemini = uploadedDocs.ijazah.result.validation?.nama || "";
+      const namaIjazahFromOCR = uploadedDocs.ijazah.result.extractedData?.nama || "";
+      const namaIjazah = namaIjazahFromGemini || namaIjazahFromOCR;
+      
+      console.log("[RequirementValidator] === IJAZAH NAME CHECK ===");
+      console.log("[RequirementValidator] Ijazah Name (from Gemini):", namaIjazahFromGemini);
+      console.log("[RequirementValidator] Ijazah Name (from OCR):", namaIjazahFromOCR);
+      console.log("[RequirementValidator] Ijazah Name (final used):", namaIjazah);
+      console.log("[RequirementValidator] KTP Name (reference):", namaKTP);
+      
+      if (namaKTP && namaIjazah) {
+        const similarity = calculateStringSimilarity(
+          namaKTP.toLowerCase().trim(),
+          namaIjazah.toLowerCase().trim()
+        );
+        
+        console.log("[RequirementValidator] 📊 Ijazah vs KTP Similarity:", Math.round(similarity) + "%");
+        
+        if (similarity < 90) {
+          validationResults.nameInconsistencies.ijazah = {
+            documentName: "Ijazah",
+            namaDoc: namaIjazah,
+            namaKTP: namaKTP,
+            similarity: Math.round(similarity),
+          };
+          console.log("[RequirementValidator] ❌ Ijazah name inconsistency detected!");
+        } else {
+          console.log("[RequirementValidator] ✅ Ijazah name consistent (similarity >= 90%)");
+        }
+      } else {
+        console.log("[RequirementValidator] ⚠️ SKIPPING Ijazah check:");
+        console.log("   - KTP name empty?", !namaKTP);
+        console.log("   - Ijazah name empty?", !namaIjazah);
+        
+        // If Ijazah name extraction failed, still flag it as inconsistency
+        if (namaKTP && !namaIjazah) {
+          validationResults.nameInconsistencies.ijazah = {
+            documentName: "Ijazah",
+            namaDoc: "(tidak terdeteksi)",
+            namaKTP: namaKTP,
+            similarity: 0,
+            extractionFailed: true,
+          };
+          console.log("[RequirementValidator] ⚠️ Ijazah name extraction failed - flagged as inconsistency");
+        }
       }
     }
+    
+    // Check Transkrip vs KTP
+    if (uploadedDocs.transkrip) {
+      // Try validation first (manual pattern), then extractedData (OCR)
+      const namaTranskripFromValidation = uploadedDocs.transkrip.result.validation?.nama || "";
+      const namaTranskripFromOCR = uploadedDocs.transkrip.result.extractedData?.nama || "";
+      const namaTranskrip = namaTranskripFromValidation || namaTranskripFromOCR;
+      
+      console.log("[RequirementValidator] === TRANSKRIP NAME CHECK ===");
+      console.log("[RequirementValidator] Transkrip Name (from validation):", namaTranskripFromValidation);
+      console.log("[RequirementValidator] Transkrip Name (from OCR):", namaTranskripFromOCR);
+      console.log("[RequirementValidator] Transkrip Name (final used):", namaTranskrip);
+      console.log("[RequirementValidator] KTP Name (reference):", namaKTP);
+      
+      if (namaKTP && namaTranskrip) {
+        const similarity = calculateStringSimilarity(
+          namaKTP.toLowerCase().trim(),
+          namaTranskrip.toLowerCase().trim()
+        );
+        
+        console.log("[RequirementValidator] 📊 Transkrip vs KTP Similarity:", Math.round(similarity) + "%");
+        
+        if (similarity < 90) {
+          validationResults.nameInconsistencies.transkrip = {
+            documentName: "Transkrip Nilai",
+            namaDoc: namaTranskrip,
+            namaKTP: namaKTP,
+            similarity: Math.round(similarity),
+          };
+          console.log("[RequirementValidator] ❌ Transkrip name inconsistency detected!");
+        } else {
+          console.log("[RequirementValidator] ✅ Transkrip name consistent (similarity >= 90%)");
+        }
+      } else {
+        console.log("[RequirementValidator] ⚠️ SKIPPING Transkrip check:");
+        console.log("   - KTP name empty?", !namaKTP);
+        console.log("   - Transkrip name empty?", !namaTranskrip);
+        
+        // If Transkrip name extraction failed, still flag it as inconsistency
+        if (namaKTP && !namaTranskrip) {
+          validationResults.nameInconsistencies.transkrip = {
+            documentName: "Transkrip Nilai",
+            namaDoc: "(tidak terdeteksi)",
+            namaKTP: namaKTP,
+            similarity: 0,
+            extractionFailed: true,
+          };
+          console.log("[RequirementValidator] ⚠️ Transkrip name extraction failed - flagged as inconsistency");
+        }
+      }
+    }
+    
+    // Check Surat Lamaran vs KTP
+    if (uploadedDocs.surat_lamaran) {
+      // Try validation first (Gemini), then extractedData (OCR)
+      const namaSuratLamaranFromGemini = uploadedDocs.surat_lamaran.result.validation?.nama || "";
+      const namaSuratLamaranFromOCR = uploadedDocs.surat_lamaran.result.extractedData?.nama || "";
+      const namaSuratLamaran = namaSuratLamaranFromGemini || namaSuratLamaranFromOCR;
+      
+      console.log("[RequirementValidator] === SURAT LAMARAN NAME CHECK ===");
+      console.log("[RequirementValidator] Surat Lamaran Name (from Gemini):", namaSuratLamaranFromGemini);
+      console.log("[RequirementValidator] Surat Lamaran Name (from OCR):", namaSuratLamaranFromOCR);
+      console.log("[RequirementValidator] Surat Lamaran Name (final used):", namaSuratLamaran);
+      console.log("[RequirementValidator] KTP Name (reference):", namaKTP);
+      
+      if (namaKTP && namaSuratLamaran) {
+        const similarity = calculateStringSimilarity(
+          namaKTP.toLowerCase().trim(),
+          namaSuratLamaran.toLowerCase().trim()
+        );
+        
+        console.log("[RequirementValidator] 📊 Surat Lamaran vs KTP Similarity:", Math.round(similarity) + "%");
+        
+        if (similarity < 90) {
+          validationResults.nameInconsistencies.surat_lamaran = {
+            documentName: "Surat Lamaran",
+            namaDoc: namaSuratLamaran,
+            namaKTP: namaKTP,
+            similarity: Math.round(similarity),
+          };
+          console.log("[RequirementValidator] ❌ Surat Lamaran name inconsistency detected!");
+        } else {
+          console.log("[RequirementValidator] ✅ Surat Lamaran name consistent (similarity >= 90%)");
+        }
+      } else {
+        console.log("[RequirementValidator] ⚠️ SKIPPING Surat Lamaran check:");
+        console.log("   - KTP name empty?", !namaKTP);
+        console.log("   - Surat Lamaran name empty?", !namaSuratLamaran);
+        
+        // If Surat Lamaran name extraction failed, still flag it as inconsistency
+        if (namaKTP && !namaSuratLamaran) {
+          validationResults.nameInconsistencies.surat_lamaran = {
+            documentName: "Surat Lamaran",
+            namaDoc: "(tidak terdeteksi)",
+            namaKTP: namaKTP,
+            similarity: 0,
+            extractionFailed: true,
+          };
+          console.log("[RequirementValidator] ⚠️ Surat Lamaran name extraction failed - flagged as inconsistency");
+        }
+      }
+    }
   }
+  
+  console.log("[RequirementValidator] Final nameInconsistencies:", validationResults.nameInconsistencies);
+
+  // NOTE: Transkrip vs Ijazah program studi consistency check has been REMOVED
+  // Only check required program studi vs Ijazah (done in step 2 above)
 
   return validationResults;
 }
 
 // Helper functions
+
+// Program Studi Mapping - Related fields/majors
+const PROGRAM_STUDI_GROUPS = {
+  ekonomi: [
+    "ekonomi", "akuntansi", "manajemen", "keuangan", "perbankan", 
+    "bisnis", "administrasi bisnis", "ilmu ekonomi", "ekonomi pembangunan",
+    "ekonomi syariah", "akuntansi syariah"
+  ],
+  teknik: [
+    "teknik", "engineering", "sipil", "mesin", "elektro", "industri",
+    "informatika", "komputer", "sistem informasi", "teknologi informasi"
+  ],
+  pendidikan: [
+    "pendidikan", "keguruan", "pgsd", "paud", "bimbingan konseling",
+    "pendidikan guru", "teacher", "education"
+  ],
+  kesehatan: [
+    "kesehatan", "kedokteran", "keperawatan", "farmasi", "gizi",
+    "kesehatan masyarakat", "kebidanan", "medical", "health"
+  ],
+  hukum: [
+    "hukum", "law", "ilmu hukum", "syariah"
+  ],
+  sains: [
+    "matematika", "fisika", "kimia", "biologi", "sains", "science",
+    "statistika", "actuarial"
+  ],
+  sosial: [
+    "sosiologi", "komunikasi", "ilmu komunikasi", "hubungan internasional",
+    "ilmu politik", "administrasi publik", "administrasi negara"
+  ]
+};
+
 function checkProgramStudiMatch(extracted, required) {
   // Handle undefined/null values
   if (!extracted || !required) {
@@ -270,19 +447,35 @@ function checkProgramStudiMatch(extracted, required) {
   const norm1 = String(extracted).toLowerCase().trim();
   const norm2 = String(required).toLowerCase().trim();
 
+  console.log("[checkProgramStudiMatch] Comparing:", norm1, "vs", norm2);
+
   // Exact match
   if (norm1 === norm2) {
+    console.log("[checkProgramStudiMatch] ✓ Exact match!");
     return { matched: true, similarity: 100 };
   }
 
   // Check if one contains the other
   if (norm1.includes(norm2) || norm2.includes(norm1)) {
-    return { matched: true, similarity: 90 };
+    console.log("[checkProgramStudiMatch] ✓ Partial match (contains)!");
+    return { matched: true, similarity: 95 };
   }
 
-  // Check for common variations
-  const keywords1 = norm1.split(/[\s\/]+/);
-  const keywords2 = norm2.split(/[\s\/]+/);
+  // Check for related fields in the same group
+  for (const [group, keywords] of Object.entries(PROGRAM_STUDI_GROUPS)) {
+    const inGroup1 = keywords.some(kw => norm1.includes(kw));
+    const inGroup2 = keywords.some(kw => norm2.includes(kw));
+    
+    if (inGroup1 && inGroup2) {
+      console.log(`[checkProgramStudiMatch] ✓ Both in same group: ${group}`);
+      // Same group but not exact match = 80% similarity
+      return { matched: true, similarity: 80 };
+    }
+  }
+
+  // Check for common variations (split by / or space)
+  const keywords1 = norm1.split(/[\s\/\-]+/).filter(k => k.length > 2);
+  const keywords2 = norm2.split(/[\s\/\-]+/).filter(k => k.length > 2);
 
   let matchCount = 0;
   keywords1.forEach((kw1) => {
@@ -294,6 +487,7 @@ function checkProgramStudiMatch(extracted, required) {
   });
 
   const similarity = (matchCount / Math.max(keywords1.length, keywords2.length)) * 100;
+  console.log(`[checkProgramStudiMatch] Keyword similarity: ${Math.round(similarity)}%`);
 
   return {
     matched: similarity >= 70,

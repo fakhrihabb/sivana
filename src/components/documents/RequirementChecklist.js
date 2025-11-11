@@ -136,7 +136,9 @@ export default function RequirementChecklist({ validationResults }) {
       {getOverallStatusBadge()}
 
       <div className="space-y-3">
-        {validationResults.checks.map((check, index) => (
+        {validationResults.checks
+          .filter(check => check.category !== "Konsistensi Data") // Filter out name consistency (shown per document)
+          .map((check, index) => (
           <div
             key={index}
             className={`border rounded-lg p-4 ${getStatusColor(check.status)}`}

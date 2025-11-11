@@ -193,17 +193,17 @@ export default function FormasiDetail() {
   };
 
   // Function to find recommended formasi
-  const findRecommendedFormasi = () => {
+  const findRecommendedFormasi = async () => {
     const userData = getUserData();
     const recommendations = [];
 
     console.log("User Data:", userData);
 
     // Check all formasi except current one
-    Object.entries(formasiDataFallback).forEach(([id, formasiItem]) => {
-      if (id === params.id) return; // Skip current formasi
+    for (const [id, formasiItem] of Object.entries(formasiDataFallback)) {
+      if (id === params.id) continue; // Skip current formasi
 
-      const validation = validateRequirements(uploadedDocs, formasiItem.requirements);
+      const validation = await validateRequirements(uploadedDocs, formasiItem.requirements);
       const matchScore = {
         total: 0,
         details: {
@@ -237,7 +237,7 @@ export default function FormasiDetail() {
           matchDetails: matchScore.details,
         });
       }
-    });
+    }
 
     // Sort by match score (highest first)
     recommendations.sort((a, b) => b.matchScore - a.matchScore);
@@ -249,18 +249,33 @@ export default function FormasiDetail() {
 
   // Validate requirements whenever documents change
   useEffect(() => {
-    if (Object.keys(uploadedDocs).length > 0 && formasi) {
-      const validation = validateRequirements(uploadedDocs, formasi.requirements);
-      setRequirementValidation(validation);
-      
-      // If validation failed, find recommendations
-      if (validation.overall === "failed") {
-        const recommendations = findRecommendedFormasi();
-        setRecommendedFormasi(recommendations);
-      } else {
-        setRecommendedFormasi([]);
+    async function runValidation() {
+      if (Object.keys(uploadedDocs).length > 0 && formasi) {
+        console.log("\n" + "=".repeat(80));
+        console.log("[PAGE] VALIDATING REQUIREMENTS WITH GEMINI AI");
+        console.log("=".repeat(80));
+        console.log("[PAGE] Uploaded Docs:", Object.keys(uploadedDocs));
+        console.log("[PAGE] Formasi Requirements:", formasi.requirements);
+        
+        const validation = await validateRequirements(uploadedDocs, formasi.requirements);
+        
+        console.log("[PAGE] Validation Result:", validation);
+        console.log("[PAGE] Name Inconsistencies:", validation.nameInconsistencies);
+        console.log("=".repeat(80) + "\n");
+        
+        setRequirementValidation(validation);
+        
+        // If validation failed, find recommendations
+        if (validation.overall === "failed") {
+          const recommendations = await findRecommendedFormasi();
+          setRecommendedFormasi(recommendations);
+        } else {
+          setRecommendedFormasi([]);
+        }
       }
     }
+    
+    runValidation();
   }, [uploadedDocs, formasi]);
 
   if (!formasi) {
@@ -604,19 +619,23 @@ export default function FormasiDetail() {
               </p>
 
               <div className="space-y-6">
-                {formasi.documents.map((doc) => (
-                  <DocumentUpload
-                    key={doc.id}
-                    documentId={doc.id}
-                    documentName={doc.name}
-                    required={doc.required}
-                    onUpload={(file, result) =>
-                      handleDocumentUpload(doc.id, file, result)
-                    }
-                    uploaded={uploadedDocs[doc.id]}
-                    requirementValidation={requirementValidation}
-                  />
-                ))}
+                {formasi.documents.map((doc) => {
+                  return (
+                    <DocumentUpload
+                      key={doc.id}
+                      documentId={doc.id}
+                      documentName={doc.name}
+                      required={doc.required}
+                      onUpload={(file, result) =>
+                        handleDocumentUpload(doc.id, file, result)
+                      }
+                      uploaded={uploadedDocs[doc.id]}
+                      requirementValidation={requirementValidation}
+                      uploadedDocs={uploadedDocs}
+                      formasiData={formasi}
+                    />
+                  );
+                })}
               </div>
             </div>
 

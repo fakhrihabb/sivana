@@ -18,6 +18,9 @@ export default function DocumentUpload({
   onUpload,
   uploaded,
   requirementValidation,
+  sessionData, // NEW: Cross-document data for validation
+  uploadedDocs, // NEW: All uploaded documents for extracting latest data
+  formasiData, // NEW: Formasi data for validation
 }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -134,6 +137,23 @@ export default function DocumentUpload({
       const formData = new FormData();
       formData.append("file", file);
       formData.append("documentType", documentId);
+      
+      // Prepare fresh session data from latest uploadedDocs state
+      const freshSessionData = {
+        ktpData: uploadedDocs?.ktp?.result?.extractedData || null,
+        ijazahData: uploadedDocs?.ijazah?.result?.extractedData || null,
+        formasiData: formasiData || null,
+      };
+      
+      console.log("[DocumentUpload] Preparing fresh session data for", documentId);
+      console.log("[DocumentUpload] - Has KTP data:", !!freshSessionData.ktpData);
+      console.log("[DocumentUpload] - KTP nama:", freshSessionData.ktpData?.nama);
+      console.log("[DocumentUpload] - Has Ijazah data:", !!freshSessionData.ijazahData);
+      console.log("[DocumentUpload] - Has Formasi data:", !!freshSessionData.formasiData);
+      
+      // Add session data for cross-document validation
+      formData.append("sessionData", JSON.stringify(freshSessionData));
+      console.log("[DocumentUpload] Session data sent to API:", freshSessionData);
 
       // Check document type match for warnings
       const { detected } = detectDocumentType(file.name);
@@ -741,6 +761,54 @@ export default function DocumentUpload({
                   </div>
                 );
               })()}
+
+              {/* Name Inconsistency Warning - CRITICAL - SHOWN FIRST */}
+              {(() => {
+                console.log(`[DocumentUpload-${documentId}] Checking name inconsistency...`);
+                console.log(`[DocumentUpload-${documentId}] requirementValidation:`, requirementValidation);
+                console.log(`[DocumentUpload-${documentId}] nameInconsistencies:`, requirementValidation?.nameInconsistencies);
+                console.log(`[DocumentUpload-${documentId}] For this doc:`, requirementValidation?.nameInconsistencies?.[documentId]);
+                return null;
+              })()}
+              {requirementValidation?.nameInconsistencies?.[documentId] && (
+                <div className="mt-3 bg-red-50 border-2 border-red-400 rounded-lg p-3 shadow-sm">
+                  <div className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-sm font-bold text-red-900 mb-1">
+                        ❌ {requirementValidation.nameInconsistencies[documentId].extractionFailed 
+                          ? `Nama Tidak Terdeteksi di ${requirementValidation.nameInconsistencies[documentId].documentName}`
+                          : `Nama KTP dan ${requirementValidation.nameInconsistencies[documentId].documentName} Tidak Sesuai`
+                        }
+                      </p>
+                      <div className="bg-white rounded p-2 space-y-1">
+                        <p className="text-xs text-gray-700">
+                          <strong className="text-red-700">Nama di KTP:</strong>{" "}
+                          <span className="font-medium">{requirementValidation.nameInconsistencies[documentId].namaKTP}</span>
+                        </p>
+                        <p className="text-xs text-gray-700">
+                          <strong className="text-red-700">Nama di {requirementValidation.nameInconsistencies[documentId].documentName}:</strong>{" "}
+                          <span className={`font-medium ${requirementValidation.nameInconsistencies[documentId].extractionFailed ? 'italic text-gray-500' : ''}`}>
+                            {requirementValidation.nameInconsistencies[documentId].namaDoc}
+                          </span>
+                        </p>
+                        {!requirementValidation.nameInconsistencies[documentId].extractionFailed && (
+                          <p className="text-xs text-red-600 italic border-t border-gray-200 pt-1 mt-1">
+                            Tingkat kesamaan: {requirementValidation.nameInconsistencies[documentId].similarity}%
+                          </p>
+                        )}
+                        {requirementValidation.nameInconsistencies[documentId].extractionFailed && (
+                          <p className="text-xs text-orange-600 italic border-t border-gray-200 pt-1 mt-1">
+                            ⚠️ Nama tidak dapat diekstrak dari dokumen. Pastikan dokumen jelas dan terbaca. Verifikasi manual diperlukan.
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {uploaded.result.warnings && (
                 <div className="mt-3 bg-yellow-50 border border-yellow-200 rounded p-2">

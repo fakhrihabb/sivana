@@ -152,6 +152,88 @@ export function extractNamaKTP(text) {
 }
 
 /**
+ * Extract nama from Ijazah/Transkrip using OCR patterns
+ * More aggressive patterns for extracting names from academic documents
+ */
+export function extractNamaFromDocument(text) {
+  console.log('[Extract] Extracting nama from academic document...');
+  
+  // FIRST: Handle colon-separated format (e.g., "RAHMAN GUNAWAN: BEKASI: 327508...")
+  // This is common when OCR outputs data in a structured format
+  const colonSeparatedPattern = /(?:^|\n|Nama|NAMA|Name)\s*:?\s*([A-Z][A-Z\s]{3,40}?)\s*:\s*(?:[A-Z]|\d)/;
+  const colonMatch = text.match(colonSeparatedPattern);
+  if (colonMatch && colonMatch[1]) {
+    let nama = colonMatch[1].trim();
+    
+    // Clean up colon-separated name
+    nama = nama.replace(/\s+/g, ' '); // Normalize spaces
+    nama = nama.replace(/[:\.,;]+$/, ''); // Remove trailing punctuation
+    
+    // Validation: must be at least 2 words, reasonable length
+    const words = nama.split(' ').filter(w => w.length > 0);
+    if (words.length >= 2 && words.length <= 6 && nama.length > 5 && nama.length < 100) {
+      // Additional false positive filters
+      const falsePositives = [
+        'PROVINSI', 'KOTA', 'KABUPATEN', 'UNIVERSITAS', 'INSTITUT', 'SEKOLAH',
+        'FAKULTAS', 'JURUSAN', 'PROGRAM', 'INDONESIA', 'REPUBLIK', 'NEGERI',
+        'SURAT', 'IJAZAH', 'TRANSKRIP', 'NILAI', 'STTB', 'DEKAN', 'REKTOR',
+        'BEKASI', 'JAKARTA', 'BANDUNG', 'SURABAYA' // Common cities that might appear
+      ];
+      
+      if (!falsePositives.some(fp => nama.toUpperCase().includes(fp))) {
+        console.log('[Extract] ✅ Found Nama from colon-separated format:', nama);
+        return nama;
+      }
+    }
+  }
+  
+  // SECOND: Try standard patterns (original logic)
+  const namaPatterns = [
+    // Pattern 1: "Nama :" atau "NAMA :" diikuti nama (before colon or newline)
+    /(?:NAMA|Nama|Name)\s*:?\s*([A-Z][A-Za-z\s\.]+?)(?:\s*:\s*[A-Z]|\n|NIM|NPM|Tempat|Tanggal|Program|Fakultas|$)/i,
+    // Pattern 2: Cari ALL CAPS name (common in formal documents) - before colon
+    /(?:^|\n)([A-Z]{2,}\s+[A-Z]{2,}(?:\s+[A-Z]{2,})?)\s*(?:\s*:\s*[A-Z]|\n|NIM|NPM)/m,
+    // Pattern 3: After "telah menyelesaikan" or "has completed"
+    /(?:telah menyelesaikan|has completed|yang bertanda tangan|Yang bertanda tangan)\s+.*?(?:atas nama|saudara|saudari|yakni|namely)?\s*:?\s*([A-Z][A-Za-z\s\.]+?)(?:\s*:\s*[A-Z]|\n|Program|telah|dengan|pada)/i,
+    // Pattern 4: Before "telah lulus" or "has graduated"
+    /([A-Z][A-Za-z\s\.]+?)\s+(?:telah lulus|telah menyelesaikan|has graduated|has completed)/i,
+    // Pattern 5: Any capitalized name-like pattern (2-4 words, each starting with capital) - but not followed by colon and city/data
+    /\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,3})\b(?:\s*:)?(?!\s*[A-Z]{4,}|\s*\d)/,
+  ];
+  
+  for (const pattern of namaPatterns) {
+    const match = text.match(pattern);
+    if (match && match[1]) {
+      let nama = match[1].trim();
+      
+      // Clean up
+      nama = nama.replace(/\s+/g, ' '); // Normalize spaces
+      nama = nama.replace(/[:\.,;]+$/, ''); // Remove trailing punctuation
+      
+      // Validation: must be at least 2 words, reasonable length
+      const words = nama.split(' ').filter(w => w.length > 0);
+      if (words.length >= 2 && words.length <= 6 && nama.length > 5 && nama.length < 100) {
+        // Additional false positive filters
+        const falsePositives = [
+          'PROVINSI', 'KOTA', 'KABUPATEN', 'UNIVERSITAS', 'INSTITUT', 'SEKOLAH',
+          'FAKULTAS', 'JURUSAN', 'PROGRAM', 'INDONESIA', 'REPUBLIK', 'NEGERI',
+          'SURAT', 'IJAZAH', 'TRANSKRIP', 'NILAI', 'STTB', 'DEKAN', 'REKTOR',
+          'BEKASI', 'JAKARTA', 'BANDUNG', 'SURABAYA' // Common cities
+        ];
+        
+        if (!falsePositives.some(fp => nama.toUpperCase().includes(fp))) {
+          console.log('[Extract] ✅ Found Nama from document (pattern match):', nama);
+          return nama;
+        }
+      }
+    }
+  }
+  
+  console.log('[Extract] ⚠️ No valid nama found in document');
+  return null;
+}
+
+/**
  * Extract tanggal lahir dari teks KTP
  */
 export function extractTanggalLahir(text) {
