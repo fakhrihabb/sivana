@@ -2,15 +2,13 @@
 
 import { useState, useRef, useEffect } from "react";
 
-// Document validation keywords
+// Document validation keywords (updated requirements)
 const DOCUMENT_KEYWORDS = {
   ktp: ["ktp", "tanda penduduk", "nomer identitas", "nik", "kartu tanda", "republic indonesia"],
-  ijazah: ["ijazah", "diploma", "sarjana", "s1", "s2", "s3", "universitas", "akademi"],
-  transkrip: ["transkrip", "transcript", "nilai", "grade", "semester", "gpa"],
-  skck: ["skck", "kepolisian", "keterangan catatan", "polri"],
-  surat_pernyataan: ["surat pernyataan", "pernyataan", "statement"],
-  str: ["str", "tanda registrasi", "registrasi"],
-  sertifikat: ["sertifikat", "certificate", "kompetensi"],
+  ijazah: ["ijazah", "diploma", "sarjana", "s1", "s2", "s3", "universitas", "akademi", "sttb"],
+  transkrip: ["transkrip", "transcript", "nilai", "grade", "semester", "gpa", "ipk"],
+  surat_lamaran: ["surat lamaran", "lamaran", "application", "permohonan", "melamar"],
+  surat_pernyataan: ["surat pernyataan", "pernyataan", "statement", "5 poin", "lima poin"],
 };
 
 export default function DocumentUpload({
@@ -40,7 +38,7 @@ export default function DocumentUpload({
       if (docId === "ijazah" && check.category === "Jurusan") return true;
       if (docId === "transkrip" && check.category === "IPK") return true;
       if (docId === "ktp" && check.category === "Usia") return true;
-      if (docId === "skck" && check.category === "Kelakuan Baik") return true;
+      if (docId === "surat_lamaran" && check.category === "Kelengkapan Dokumen") return true;
       if ((docId === "ktp" || docId === "ijazah" || docId === "transkrip") && check.category === "Konsistensi Data") return true;
       if ((docId === "ijazah" || docId === "transkrip") && check.category === "Konsistensi Akademik") return true;
       return false;
@@ -185,6 +183,29 @@ export default function DocumentUpload({
             // Parse Vision API response
             result.status = data.data.verdict?.status === "APPROVED" ? "MS" : "TMS";
             result.verdict = data.data.verdict;
+            
+            // **IMPORTANT: Store validation result for RequirementValidator**
+            if (data.data.validation) {
+              result.validation = data.data.validation;
+              console.log("[Frontend] Validation data stored:", result.validation);
+              
+              // Extract important fields from validation to extractedData
+              if (data.data.validation.nama) {
+                result.extractedData.nama = data.data.validation.nama;
+              }
+              if (data.data.validation.nik) {
+                result.extractedData.nik = data.data.validation.nik;
+              }
+              if (data.data.validation.umur !== undefined) {
+                result.extractedData.umur = data.data.validation.umur;
+              }
+              if (data.data.validation.programStudi) {
+                result.extractedData.programStudi = data.data.validation.programStudi;
+              }
+              if (data.data.validation.ipk !== undefined) {
+                result.extractedData.ipk = data.data.validation.ipk;
+              }
+            }
             
             // Extract OCR text
             if (data.data.ocr?.text) {
@@ -399,29 +420,28 @@ export default function DocumentUpload({
           warnings: ["Meterai tidak terdeteksi, mohon periksa manual"],
         };
 
-      case "skck":
+      case "surat_lamaran":
         return {
           ...baseResult,
           status: "verified",
           requirementStatus: reqStatus,
           extractedData: {
             nama: "NAMA LENGKAP",
-            nik: "3174XXXXXXXXX",
-            nomorSKCK: "SKCK/123/2025",
-            tanggalTerbit: "10-01-2025",
-            masaBerlaku: "10-01-2026",
-            penerbit: "POLRES JAKARTA SELATAN",
+            tanggalSurat: "10-01-2025",
+            ditujukanKepada: "Kepala Badan Kepegawaian Negara",
+            posisiYangDilamar: "CPNS - Analis Kebijakan",
+            alamat: "Jl. Contoh No. 123",
           },
           verificationChecks: {
             formatValid: true,
-            masihBerlaku: true,
-            capStempelJelas: true,
-            nomorValid: true,
+            bermaterai: true,
+            namaSesuai: true,
+            lengkap: true,
           },
           forensics: {
             metadataConsistent: true,
             noTampering: true,
-            authenticity: 97.2,
+            authenticity: 95.0,
           },
         };
 
@@ -808,8 +828,8 @@ export default function DocumentUpload({
                       </div>
                     )}
 
-                    {/* Forensics */}
-                    {uploaded.result.forensics && (
+                    {/* Forensics - DISABLED */}
+                    {false && uploaded.result.forensics && (
                       <div>
                         <p className="font-medium text-gray-700 mb-2">
                           Analisis Forensik:

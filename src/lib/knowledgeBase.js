@@ -16,8 +16,9 @@ export const knowledgeBase = {
 2. **Registrasi akun**: Gunakan NIK dan email aktif
 3. **Lengkapi data diri**: Unggah pas foto dan informasi pribadi
 4. **Pilih formasi**: Sesuaikan dengan kualifikasi dan minat Anda
-5. **Upload dokumen**: KTP, Ijazah, Transkrip, SKCK, dan dokumen lainnya
-6. **Verifikasi wajah**: Melalui sistem SIVANA (Face Recognition)
+4. **Buat akun SSCASN**: Daftar di portal sscasn.bkn.go.id
+5. **Upload dokumen**: KTP, Ijazah, Transkrip, Surat Lamaran, Surat Pernyataan, dan dokumen lainnya
+6. **Verifikasi dokumen**: Sistem akan melakukan verifikasi otomatis
 7. **Submit pendaftaran**: Tunggu konfirmasi dan verifikasi
 
 ⏱️ **Timeline**: Pendaftaran biasanya dibuka selama 2-3 minggu
@@ -69,8 +70,8 @@ export const knowledgeBase = {
 • Kartu Keluarga (KK)
 • Ijazah & Transkrip Nilai
 • Sertifikat Kompetensi (jika ada)
-• SKCK dari kepolisian
-• Surat Pernyataan
+• Surat Lamaran bermaterai Rp 10.000
+• Surat Pernyataan 5 poin bermaterai Rp 10.000
 • Pas foto 4x6 berwarna
 
 ⚠️ **Catatan**: Setiap formasi memiliki syarat khusus yang berbeda.`,
@@ -126,7 +127,8 @@ export const knowledgeBase = {
 ⚠️ Foto pas foto tidak jelas
 ⚠️ Ijazah/transkrip tidak lengkap atau blur
 ⚠️ KTP sudah expired
-⚠️ SKCK sudah lama (> 6 bulan)
+⚠️ Surat lamaran/pernyataan tidak bermaterai
+⚠️ Nama di dokumen tidak konsisten
 ⚠️ Format file tidak sesuai
 
 ❓ **JIKA MASIH BERMASALAH:**

@@ -44,15 +44,15 @@ const DOCUMENT_KEYWORDS = {
       "hasil studi",
     ],
   },
-  skck: {
-    name: "Surat Keterangan Catatan Kepolisian",
+  surat_lamaran: {
+    name: "Surat Lamaran",
     keywords: [
-      "skck",
-      "kepolisian",
-      "keterangan catatan",
-      "polri",
-      "surat keterangan",
-      "tidak ada catatan",
+      "surat lamaran",
+      "lamaran",
+      "permohonan",
+      "application",
+      "melamar",
+      "kepada yth",
     ],
   },
 };
@@ -198,7 +198,8 @@ export default function DocumentVerification({ onVerificationComplete }) {
             <option value="ktp">KTP</option>
             <option value="ijazah">Ijazah</option>
             <option value="transkrip">Transkrip Nilai</option>
-            <option value="skck">SKCK</option>
+            <option value="surat_lamaran">Surat Lamaran</option>
+            <option value="surat_pernyataan">Surat Pernyataan</option>
             <option value="other">Dokumen Lainnya</option>
           </select>
         </div>

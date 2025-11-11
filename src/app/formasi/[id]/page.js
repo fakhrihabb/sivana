@@ -21,8 +21,8 @@ const formasiDataFallback = {
       { id: "ktp", name: "KTP", required: true },
       { id: "ijazah", name: "Ijazah", required: true },
       { id: "transkrip", name: "Transkrip Nilai", required: true },
+      { id: "surat_lamaran", name: "Surat Lamaran", required: true },
       { id: "surat_pernyataan", name: "Surat Pernyataan", required: true },
-      { id: "skck", name: "SKCK", required: true },
     ],
   },
   2: {
@@ -38,8 +38,8 @@ const formasiDataFallback = {
       { id: "ktp", name: "KTP", required: true },
       { id: "ijazah", name: "Ijazah", required: true },
       { id: "transkrip", name: "Transkrip Nilai", required: true },
+      { id: "surat_lamaran", name: "Surat Lamaran", required: true },
       { id: "surat_pernyataan", name: "Surat Pernyataan", required: true },
-      { id: "skck", name: "SKCK", required: true },
     ],
   },
   3: {
@@ -56,7 +56,7 @@ const formasiDataFallback = {
       { id: "ijazah", name: "Ijazah", required: true },
       { id: "transkrip", name: "Transkrip Nilai", required: true },
       { id: "surat_pernyataan", name: "Surat Pernyataan", required: true },
-      { id: "skck", name: "SKCK", required: true },
+      { id: "surat_lamaran", name: "Surat Lamaran", required: true },
     ],
   },
   4: {
@@ -73,7 +73,7 @@ const formasiDataFallback = {
       { id: "ijazah", name: "Ijazah", required: true },
       { id: "transkrip", name: "Transkrip Nilai", required: true },
       { id: "surat_pernyataan", name: "Surat Pernyataan", required: true },
-      { id: "skck", name: "SKCK", required: true },
+      { id: "surat_lamaran", name: "Surat Lamaran", required: true },
       { id: "str", name: "STR (Surat Tanda Registrasi)", required: true },
     ],
   },
@@ -91,7 +91,7 @@ const formasiDataFallback = {
       { id: "ijazah", name: "Ijazah", required: true },
       { id: "transkrip", name: "Transkrip Nilai", required: true },
       { id: "surat_pernyataan", name: "Surat Pernyataan", required: true },
-      { id: "skck", name: "SKCK", required: true },
+      { id: "surat_lamaran", name: "Surat Lamaran", required: true },
       { id: "sertifikat", name: "Sertifikat Kompetensi (opsional)", required: false },
     ],
   },
@@ -109,7 +109,7 @@ const formasiDataFallback = {
       { id: "ijazah", name: "Ijazah", required: true },
       { id: "transkrip", name: "Transkrip Nilai", required: true },
       { id: "surat_pernyataan", name: "Surat Pernyataan", required: true },
-      { id: "skck", name: "SKCK", required: true },
+      { id: "surat_lamaran", name: "Surat Lamaran", required: true },
     ],
   },
 };
@@ -158,7 +158,7 @@ export default function FormasiDetail() {
               { id: "ijazah", name: "Ijazah", required: true },
               { id: "transkrip", name: "Transkrip Nilai", required: true },
               { id: "surat_pernyataan", name: "Surat Pernyataan", required: true },
-              { id: "skck", name: "SKCK", required: true },
+              { id: "surat_lamaran", name: "Surat Lamaran", required: true },
             ],
           });
         }
@@ -184,14 +184,9 @@ export default function FormasiDetail() {
       age: 0,
     };
 
-    // Calculate age from KTP
-    if (uploadedDocs.ktp?.result?.extractedData?.tanggalLahir) {
-      const birthDate = uploadedDocs.ktp.result.extractedData.tanggalLahir;
-      const parts = birthDate.split('-');
-      if (parts.length === 3) {
-        const birthYear = parseInt(parts[2]);
-        userData.age = new Date().getFullYear() - birthYear;
-      }
+    // Get age from KTP VALIDATION (from database, NOT from OCR)
+    if (uploadedDocs.ktp?.result?.validation?.umur) {
+      userData.age = uploadedDocs.ktp.result.validation.umur;
     }
 
     return userData;
@@ -205,7 +200,7 @@ export default function FormasiDetail() {
     console.log("User Data:", userData);
 
     // Check all formasi except current one
-    Object.entries(formasiData).forEach(([id, formasiItem]) => {
+    Object.entries(formasiDataFallback).forEach(([id, formasiItem]) => {
       if (id === params.id) return; // Skip current formasi
 
       const validation = validateRequirements(uploadedDocs, formasiItem.requirements);
@@ -344,22 +339,15 @@ export default function FormasiDetail() {
       };
     }
 
-    // Fix SKCK validity
-    if (fixedDocs.skck) {
-      const today = new Date();
-      const futureDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
-      fixedDocs.skck = {
-        ...fixedDocs.skck,
+    // Fix Surat Lamaran - ensure name consistency
+    if (fixedDocs.surat_lamaran) {
+      fixedDocs.surat_lamaran = {
+        ...fixedDocs.surat_lamaran,
         result: {
-          ...fixedDocs.skck.result,
+          ...fixedDocs.surat_lamaran.result,
           extractedData: {
-            ...fixedDocs.skck.result.extractedData,
-            tanggalTerbit: today.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-'),
-            masaBerlaku: futureDate.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-'),
-          },
-          verificationChecks: {
-            ...fixedDocs.skck.result.verificationChecks,
-            masihBerlaku: true,
+            ...fixedDocs.surat_lamaran.result.extractedData,
+            nama: consistentName,
           },
         },
       };

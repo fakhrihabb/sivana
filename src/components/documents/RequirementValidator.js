@@ -1,7 +1,7 @@
 /**
  * Requirement Validator
  * Validates uploaded documents against formasi requirements
- * Checks: IPK, Jurusan, Usia, SKCK validity, etc.
+ * Checks: IPK, Jurusan, Usia, Surat Lamaran validity, etc.
  */
 
 export function validateRequirements(uploadedDocs, requirements) {
@@ -103,21 +103,32 @@ export function validateRequirements(uploadedDocs, requirements) {
     }
   }
 
-  // 3. Validate Usia from KTP
+  // 3. Validate Usia from KTP (use validation result from database, not OCR)
   if (uploadedDocs.ktp && requirements.usia) {
     validationResults.totalChecks++;
-    const birthDate = parseTanggalLahir(
-      uploadedDocs.ktp.result.extractedData?.tanggalLahir || ""
-    );
-    const age = calculateAge(birthDate);
+    
+    // Get age from validation result (from database, not OCR)
+    const ktpValidation = uploadedDocs.ktp.result.validation;
+    const age = ktpValidation?.umur || null;
     const maxAge = extractMaxAge(requirements.usia);
 
-    if (age <= maxAge) {
+    if (age === null) {
+      // Age not available from database
+      validationResults.checks.push({
+        category: "Usia",
+        status: "failed",
+        label: "Usia Tidak Tersedia",
+        detail: `Data usia tidak dapat diverifikasi. Pastikan NIK terdaftar di database.`,
+        extractedValue: null,
+        requiredValue: maxAge,
+      });
+      validationResults.overall = "failed";
+    } else if (age <= maxAge) {
       validationResults.checks.push({
         category: "Usia",
         status: "passed",
         label: "Usia Memenuhi Syarat",
-        detail: `Usia Anda: ${age} tahun (max. ${maxAge} tahun)`,
+        detail: `Usia Anda: ${age} tahun (max. ${maxAge} tahun) - dari database Dukcapil`,
         extractedValue: age,
         requiredValue: maxAge,
       });
@@ -127,7 +138,7 @@ export function validateRequirements(uploadedDocs, requirements) {
         category: "Usia",
         status: "failed",
         label: "Usia Melebihi Batas",
-        detail: `Usia Anda: ${age} tahun, maksimal ${maxAge} tahun`,
+        detail: `Usia Anda: ${age} tahun (max. ${maxAge} tahun) - dari database Dukcapil`,
         extractedValue: age,
         requiredValue: maxAge,
       });
@@ -135,30 +146,31 @@ export function validateRequirements(uploadedDocs, requirements) {
     }
   }
 
-  // 4. Validate SKCK (Kelakuan Baik)
-  if (uploadedDocs.skck) {
+  // 4. Validate Surat Lamaran (Kelengkapan Dokumen)
+  if (uploadedDocs.surat_lamaran) {
     validationResults.totalChecks++;
-    const skckData = uploadedDocs.skck.result.extractedData;
-    const masihBerlaku = uploadedDocs.skck.result.verificationChecks.masihBerlaku;
+    const suratData = uploadedDocs.surat_lamaran.result.extractedData;
+    const validation = uploadedDocs.surat_lamaran.result.validation;
+    const namaSesuai = validation?.namaMatchKTP || false;
 
-    if (masihBerlaku) {
+    if (namaSesuai) {
       validationResults.checks.push({
-        category: "Kelakuan Baik",
+        category: "Kelengkapan Dokumen",
         status: "passed",
-        label: "SKCK Valid dan Masih Berlaku",
-        detail: `Masa berlaku: ${skckData.masaBerlaku}`,
+        label: "Surat Lamaran Valid",
+        detail: `Nama sesuai dengan KTP: ${suratData.nama || 'terdeteksi'}`,
         extractedValue: "Valid",
-        requiredValue: "SKCK yang masih berlaku",
+        requiredValue: "Surat lamaran yang sesuai",
       });
       validationResults.score++;
     } else {
       validationResults.checks.push({
-        category: "Kelakuan Baik",
+        category: "Kelengkapan Dokumen",
         status: "failed",
-        label: "SKCK Tidak Valid atau Kadaluarsa",
-        detail: "Mohon upload SKCK yang masih berlaku",
-        extractedValue: "Kadaluarsa",
-        requiredValue: "SKCK yang masih berlaku",
+        label: "Surat Lamaran Tidak Valid",
+        detail: "Nama di surat lamaran tidak sesuai dengan KTP",
+        extractedValue: "Tidak sesuai",
+        requiredValue: "Surat lamaran dengan nama yang sesuai",
       });
       validationResults.overall = "failed";
     }
