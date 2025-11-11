@@ -1,7 +1,6 @@
 import { writeFile, unlink } from "fs/promises";
 import path from "path";
 import { verifyDocument, detectDocumentTypeFromContent, performOCR } from "@/lib/visionApi";
-import { performTesseractOCR } from "@/lib/tesseractOcr";
 import { extractTextFromPDF } from "@/lib/pdfParser";
 import { 
   validateKTP, 
@@ -41,43 +40,25 @@ export async function POST(request) {
       );
     }
 
-    // Save file temporarily
-    const tempDir = path.join(process.cwd(), "tmp");
+    // Save file temporarily (use /tmp for serverless compatibility)
+    const tempDir = "/tmp";
     const filename = `${Date.now()}-${file.name}`;
     const filepath = path.join(tempDir, filename);
     let fileCreated = false;
 
-    // Create tmp directory if not exists
+    // Write file to /tmp (no need to create directory, always exists in serverless)
     try {
       await writeFile(filepath, Buffer.from(await file.arrayBuffer()));
       fileCreated = true;
     } catch (err) {
-      if (err.code === "ENOENT") {
-        try {
-          const fs = await import("fs");
-          fs.mkdirSync(tempDir, { recursive: true });
-          await writeFile(filepath, Buffer.from(await file.arrayBuffer()));
-          fileCreated = true;
-        } catch (mkdirErr) {
-          console.error("Failed to create temp directory:", mkdirErr);
-          return Response.json(
-            {
-              error: "Tidak dapat menyimpan file sementara: " + mkdirErr.message,
-              success: false,
-            },
-            { status: 500 }
-          );
-        }
-      } else {
-        console.error("Failed to write file:", err);
-        return Response.json(
-          {
-            error: "Tidak dapat menyimpan file: " + err.message,
-            success: false,
-          },
-          { status: 500 }
-        );
-      }
+      console.error("Failed to write file:", err);
+      return Response.json(
+        {
+          error: "Tidak dapat menyimpan file: " + err.message,
+          success: false,
+        },
+        { status: 500 }
+      );
     }
 
     console.log("\n" + "=".repeat(80));
@@ -123,28 +104,11 @@ export async function POST(request) {
         };
       }
     } else {
-      // Try Tesseract first, fallback to Vision API if fails
-      console.log("[API] Attempting Tesseract OCR for", documentType);
-      try {
-        ocrResult = await Promise.race([
-          performTesseractOCR(filepath),
-          new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Tesseract timeout')), 10000)
-          )
-        ]);
-        
-        // Check if Tesseract failed
-        if (!ocrResult.success || !ocrResult.text || ocrResult.text.length < 10) {
-          throw new Error('Tesseract returned insufficient data');
-        }
-        
-        console.log("[API] ✅ Tesseract OCR succeeded");
-      } catch (tesseractError) {
-        console.warn("[API] ⚠️ Tesseract failed, falling back to Vision API:", tesseractError.message);
-        const visionResult = await verifyDocument(filepath, documentType);
-        ocrResult = visionResult.ocr;
-        visionAnalysis = visionResult.analysis;
-      }
+      // Always use Vision API in production (Tesseract not available in serverless)
+      console.log("[API] Using Vision API OCR for", documentType);
+      const visionResult = await verifyDocument(filepath, documentType);
+      ocrResult = visionResult.ocr;
+      visionAnalysis = visionResult.analysis;
     }
 
     console.log("\n[API] 📄 OCR EXTRACTION RESULT:");
