@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { createClient } from '@supabase/supabase-js';
 
+// Configure maximum execution time (in seconds) for Vercel
+export const maxDuration = 60; // 60 seconds for Pro plan, 10 for Hobby
+export const dynamic = 'force-dynamic';
+
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -10,9 +14,28 @@ const supabase = createClient(
 
 export async function POST(request) {
   try {
+    console.log('=== RECOMMEND API CALLED ===');
+
+    // Check if API key is configured
+    if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
+      console.error('GEMINI API KEY NOT CONFIGURED');
+      return NextResponse.json({
+        success: false,
+        error: "Konfigurasi API tidak lengkap. Silakan hubungi administrator."
+      }, { status: 500 });
+    }
+
     const { questions, answers, sessionId, preFilteredFormasi } = await request.json();
 
+    console.log('Received data:', {
+      questionsCount: questions?.length,
+      answersCount: answers?.length,
+      sessionId,
+      preFilteredFormasiCount: preFilteredFormasi?.length
+    });
+
     if (!questions || !answers || answers.length !== 5) {
+      console.error('Invalid input - missing questions or answers');
       return NextResponse.json({
         success: false,
         error: "Data pertanyaan atau jawaban tidak lengkap"
@@ -115,9 +138,15 @@ RULES:
 - 2-3 reasons per formasi (konkret & spesifik)
 - Match berdasarkan: pendidikan (35%), program studi (35%), lokasi (20%), instansi (10%)`;
 
+    console.log('Calling Gemini API...');
+    console.log('Gemini API Key exists:', !!process.env.NEXT_PUBLIC_GEMINI_API_KEY);
+
     const result = await model.generateContent(prompt);
+    console.log('Gemini API response received');
+
     const response = await result.response;
     let text = response.text();
+    console.log('Gemini response text length:', text.length);
 
     // Clean up markdown code blocks if present
     text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
@@ -184,11 +213,25 @@ RULES:
     });
 
   } catch (error) {
-    console.error('Error generating recommendations:', error);
+    console.error('=== ERROR generating recommendations ===');
+    console.error('Error message:', error.message);
+    console.error('Error name:', error.name);
+    console.error('Error stack:', error.stack);
+
+    // Check for specific error types
+    let errorMessage = "Terjadi kesalahan saat menganalisis jawaban Anda";
+    if (error.message?.includes('API key')) {
+      errorMessage = "Konfigurasi API key tidak valid";
+    } else if (error.message?.includes('timeout')) {
+      errorMessage = "Request timeout - silakan coba lagi";
+    } else if (error.message?.includes('JSON')) {
+      errorMessage = "Format respons AI tidak valid";
+    }
 
     return NextResponse.json({
       success: false,
-      error: error.message || "Terjadi kesalahan saat menganalisis jawaban Anda",
+      error: errorMessage,
+      debugError: error.message,
       details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     }, { status: 500 });
   }

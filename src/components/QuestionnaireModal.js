@@ -182,7 +182,10 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
         options: []
       }));
 
+      console.log('=== SUBMIT ANSWERS DEBUG ===');
       console.log(`Submitting with ${filteredFormasi.length} pre-filtered formasi`);
+      console.log('Answers:', answers);
+      console.log('Session ID:', sessionId);
 
       const response = await fetch('/api/questionnaire/recommend', {
         method: 'POST',
@@ -197,18 +200,28 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
         }),
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
       const data = await response.json();
+      console.log('Response data:', data);
 
       if (data.success) {
         setRecommendations(data.data.recommendations);
         setAnalysisSummary(data.data.analysis_summary);
         setStep(7); // Results step
       } else {
-        setError(data.error || 'Gagal mendapatkan rekomendasi');
+        console.error('API returned error:', data.error, data.details);
+        // Show debug error if available for better troubleshooting
+        const errorMsg = data.debugError
+          ? `${data.error} (Debug: ${data.debugError})`
+          : data.error || 'Gagal mendapatkan rekomendasi';
+        setError(errorMsg);
         setStep(5); // Go back to last question
       }
     } catch (err) {
       console.error('Error submitting answers:', err);
+      console.error('Error stack:', err.stack);
       setError('Terjadi kesalahan saat memproses jawaban');
       setStep(5); // Go back to last question
     }
