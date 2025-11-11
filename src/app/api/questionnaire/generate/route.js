@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { createClient } from '@supabase/supabase-js';
+import { getProgramsByEducation } from '@/lib/educationMapping';
 
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 const supabase = createClient(
@@ -20,197 +21,162 @@ export async function POST(request) {
       }, { status: 400 });
     }
 
-    // Question 1: ALWAYS education level (static, from database)
+    // Question 1: ALWAYS education level (static, predefined)
     if (questionNumber === 1) {
-      // Get education question from question_bank
-      const { data: educationQuestion } = await supabase
-        .from('question_bank')
-        .select('*')
-        .eq('id', 'education')
-        .single();
-
-      // Get unique education levels from formasi
-      const { data: formasiData } = await supabase
-        .from('formasi')
-        .select('jenjang_pendidikan')
-        .order('id');
-
-      const uniqueEducationLevels = [...new Set(formasiData.map(f => f.jenjang_pendidikan).filter(Boolean))];
-      const options = uniqueEducationLevels.map((level, idx) => ({
-        id: String.fromCharCode(97 + idx),
-        text: level,
-        value: level
-      }));
-
       return NextResponse.json({
         success: true,
         data: {
           id: 1,
-          question: educationQuestion.question,
-          options: options
+          question: 'Apa jenjang pendidikan tertinggi Anda?',
+          options: [
+            { id: "a", text: "SD (Sekolah Dasar)", value: "SD" },
+            { id: "b", text: "SMP (Sekolah Menengah Pertama)", value: "SMP" },
+            { id: "c", text: "SMA/SMK (Sekolah Menengah Atas/Kejuruan)", value: "SMA/SMK" },
+            { id: "d", text: "D3 (Diploma III/Sarjana Muda)", value: "Diploma III/Sarjana Muda" },
+            { id: "e", text: "D4/S1 (Diploma IV/Sarjana)", value: "S-1/Sarjana" },
+            { id: "f", text: "S2 (Magister)", value: "S-2" },
+            { id: "g", text: "S3 (Doktor)", value: "S-3" }
+          ]
         }
       });
     }
 
-    // Questions 2-5: Let Gemini pick the best question from the database
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
-      generationConfig: {
-        temperature: 0.3,
-        topK: 20,
-        topP: 0.8,
+    // Question 2: Program Studi - Based on education level from Q1
+    if (questionNumber === 2) {
+      const educationLevel = previousAnswers?.[0]?.value;
+      
+      if (!educationLevel) {
+        return NextResponse.json({
+          success: false,
+          error: "Education level not found in previous answers"
+        }, { status: 400 });
       }
-    });
 
-    // Build context from previous answers
-    const answerContext = previousAnswers.map((ans, idx) =>
-      `Q${idx + 1}: ${ans.text} (value: ${ans.value})`
-    ).join('\n');
-
-    // Get all available questions from database (exclude 'education')
-    const { data: availableQuestions } = await supabase
-      .from('question_bank')
-      .select('id, question, tags')
-      .neq('id', 'education')
-      .order('id');
-
-    const questionsForPrompt = availableQuestions.map(q => ({
-      id: q.id,
-      question: q.question,
-      tags: q.tags.join(', ')
-    }));
-
-    const prompt = `Pilih 1 pertanyaan TERBAIK untuk Q${questionNumber} dari question bank.
-
-KONTEKS USER (previous answers):
-${answerContext}
-${userLocation ? `\nLokasi user: ${userLocation.city}, ${userLocation.province}` : ''}
-
-AVAILABLE QUESTIONS:
-${JSON.stringify(questionsForPrompt, null, 2)}
-
-RULES:
-- Q2 harus tentang program studi (pilih yang paling spesifik/relevan)
-- Q3 harus tentang instansi (pilih yang sesuai program studi)
-- Q4 harus tentang lokasi
-- Q5 harus tentang motivasi/preferensi kerja
-- Prioritaskan pertanyaan "specific" yang relevan dengan jawaban sebelumnya
-- Jika user jawab "Teknik" di Q2, pilih pertanyaan specific teknik untuk Q3
-
-OUTPUT JSON (no markdown):
-{"question_id": "program_general"}
-
-Hanya return question_id, tidak perlu penjelasan.`;
-
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    let text = response.text().replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-
-    const { question_id } = JSON.parse(text);
-
-    // Fetch selected question from database
-    const { data: selectedQuestion, error: questionError } = await supabase
-      .from('question_bank')
-      .select('*')
-      .eq('id', question_id)
-      .single();
-
-    if (questionError || !selectedQuestion) {
-      throw new Error('Invalid question_id from AI');
-    }
-
-    // Handle location personalization for Q4
-    if (selectedQuestion.id === 'location_preference' && userLocation) {
-      const province = userLocation.province;
-
-      // Check if province is already in options to avoid duplicates
-      const existingOptions = selectedQuestion.options || [];
-      const hasProvince = existingOptions.some(opt =>
-        opt.value.toLowerCase().includes(province.toLowerCase()) ||
-        province.toLowerCase().includes(opt.value.toLowerCase())
-      );
-
-      let personalizedOptions;
-      if (!hasProvince) {
-        // Add personalized option at the beginning, shift other option IDs
-        personalizedOptions = [
-          { id: "a", text: `Di sekitar ${province} (dekat lokasi saya)`, value: province },
-          ...existingOptions.map((opt, idx) => ({
-            ...opt,
-            id: String.fromCharCode(98 + idx) // b, c, d, e...
-          }))
-        ];
-      } else {
-        // Province already covered, just use original options
-        personalizedOptions = existingOptions;
+      const programs = getProgramsByEducation(educationLevel);
+      
+      if (!programs || programs.length === 0) {
+        return NextResponse.json({
+          success: false,
+          error: "No programs found for this education level"
+        }, { status: 400 });
       }
 
       return NextResponse.json({
         success: true,
         data: {
-          id: questionNumber,
-          question: selectedQuestion.question,
-          options: personalizedOptions
+          id: 2,
+          question: 'Apa bidang studi/jurusan Anda?',
+          options: programs
         }
       });
     }
 
-    // Return selected question
-    return NextResponse.json({
-      success: true,
-      data: {
-        id: questionNumber,
-        question: selectedQuestion.question,
-        options: selectedQuestion.options
+    // Question 3: Institution Type
+    if (questionNumber === 3) {
+      return NextResponse.json({
+        success: true,
+        data: {
+          id: 3,
+          question: 'Jenis instansi apa yang Anda minati?',
+          options: [
+            { id: "a", text: "Kementerian/Lembaga Pemerintah Pusat", value: "kementerian" },
+            { id: "b", text: "Pemerintah Daerah (Provinsi/Kabupaten/Kota)", value: "pemda" },
+            { id: "c", text: "Lembaga Pendidikan (Sekolah/Universitas)", value: "pendidikan" },
+            { id: "d", text: "Fasilitas Kesehatan (Rumah Sakit/Puskesmas)", value: "kesehatan" },
+            { id: "e", text: "Lembaga Independen (BPK, KPK, dll)", value: "independen" },
+            { id: "f", text: "Tidak ada preferensi khusus", value: "any" }
+          ]
+        }
+      });
+    }
+
+    // Question 4: Location Preference (with personalization)
+    if (questionNumber === 4) {
+      const baseOptions = [
+        { id: "a", text: "Jakarta dan sekitarnya", value: "Jakarta" },
+        { id: "b", text: "Jawa Barat (Bandung, Bogor, dll)", value: "Jawa Barat" },
+        { id: "c", text: "Jawa Tengah (Semarang, Solo, dll)", value: "Jawa Tengah" },
+        { id: "d", text: "Jawa Timur (Surabaya, Malang, dll)", value: "Jawa Timur" },
+        { id: "e", text: "Bali", value: "Bali" },
+        { id: "f", text: "Sumatera", value: "Sumatera" },
+        { id: "g", text: "Kalimantan", value: "Kalimantan" },
+        { id: "h", text: "Sulawesi", value: "Sulawesi" },
+        { id: "i", text: "Maluku dan Papua", value: "Maluku dan Papua" },
+        { id: "j", text: "Dimana saja (fleksibel)", value: "any" }
+      ];
+
+      // Personalize based on user location if available
+      if (userLocation && userLocation.province) {
+        const province = userLocation.province;
+        
+        // Check if user's province is already in the options
+        const hasProvince = baseOptions.some(opt =>
+          opt.text.toLowerCase().includes(province.toLowerCase()) ||
+          opt.value.toLowerCase().includes(province.toLowerCase())
+        );
+
+        if (!hasProvince && province !== 'Jakarta') {
+          // Add personalized option at the top
+          const personalizedOptions = [
+            { id: "a", text: `${province} (dekat lokasi Anda saat ini)`, value: province },
+            ...baseOptions.map((opt, idx) => ({
+              ...opt,
+              id: String.fromCharCode(98 + idx) // shift IDs: b, c, d, ...
+            }))
+          ];
+          
+          return NextResponse.json({
+            success: true,
+            data: {
+              id: 4,
+              question: 'Di mana Anda ingin bekerja?',
+              options: personalizedOptions
+            }
+          });
+        }
       }
-    });
+
+      return NextResponse.json({
+        success: true,
+        data: {
+          id: 4,
+          question: 'Di mana Anda ingin bekerja?',
+          options: baseOptions
+        }
+      });
+    }
+
+    // Question 5: Work Motivation/Preference
+    if (questionNumber === 5) {
+      return NextResponse.json({
+        success: true,
+        data: {
+          id: 5,
+          question: 'Apa yang paling penting bagi Anda dalam bekerja sebagai ASN?',
+          options: [
+            { id: "a", text: "Mengabdi kepada masyarakat dan negara", value: "service" },
+            { id: "b", text: "Mengembangkan karir dan kompetensi profesional", value: "career" },
+            { id: "c", text: "Stabilitas pekerjaan dan jaminan masa depan", value: "stability" },
+            { id: "d", text: "Berkontribusi pada bidang keahlian saya", value: "expertise" },
+            { id: "e", text: "Bekerja di lingkunan yang dinamis dan inovatif", value: "innovation" },
+            { id: "f", text: "Work-life balance yang baik", value: "balance" }
+          ]
+        }
+      });
+    }
+
+    // Invalid question number
+    return NextResponse.json({
+      success: false,
+      error: "Invalid question number"
+    }, { status: 400 });
 
   } catch (error) {
     console.error('Error generating question:', error);
-
-    // Fallback: Use simple rule-based selection from database
-    const { questionNumber, previousAnswers } = await request.json();
-
-    let fallbackQuestionId = 'program_general';
-
-    if (questionNumber === 2) {
-      fallbackQuestionId = 'program_general';
-    } else if (questionNumber === 3) {
-      const programValue = previousAnswers?.[1]?.value || '';
-      if (programValue.includes('Teknik')) fallbackQuestionId = 'instansi_teknik';
-      else if (programValue.includes('Ekonomi')) fallbackQuestionId = 'instansi_ekonomi';
-      else if (programValue.includes('Kesehatan')) fallbackQuestionId = 'instansi_kesehatan';
-      else if (programValue.includes('Pendidikan')) fallbackQuestionId = 'instansi_pendidikan';
-      else fallbackQuestionId = 'instansi_type';
-    } else if (questionNumber === 4) {
-      fallbackQuestionId = 'location_preference';
-    } else if (questionNumber === 5) {
-      fallbackQuestionId = 'motivation_general';
-    }
-
-    // Fetch fallback question from database
-    const { data: fallbackQuestion } = await supabase
-      .from('question_bank')
-      .select('*')
-      .eq('id', fallbackQuestionId)
-      .single();
-
-    if (fallbackQuestion) {
-      return NextResponse.json({
-        success: true,
-        data: {
-          id: questionNumber,
-          question: fallbackQuestion.question,
-          options: fallbackQuestion.options
-        },
-        fallback: true
-      });
-    }
-
-    // Ultimate fallback
+    
     return NextResponse.json({
       success: false,
-      error: "Could not load question"
+      error: "Could not load question: " + error.message
     }, { status: 500 });
   }
 }

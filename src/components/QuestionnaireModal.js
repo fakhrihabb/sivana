@@ -285,7 +285,7 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
         )}
 
         {/* Modal Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
+        <div className="p-6 pb-8 overflow-y-auto max-h-[calc(90vh-80px)]">
           {error && (
             <div className="mb-4 bg-red-50 border-2 border-red-200 rounded-xl p-4">
               <p className="text-red-700 text-sm">{error}</p>
