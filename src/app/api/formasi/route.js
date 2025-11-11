@@ -19,9 +19,9 @@ export async function GET(request) {
     const from = (page - 1) * limit;
     const to = from + limit - 1;
 
-    // Build query
+    // Build query using the view that includes provinces
     let query = supabase
-      .from('formasi')
+      .from('formasi_with_provinces')
       .select('*', { count: 'exact' })
       .order('id', { ascending: true });
 
@@ -60,7 +60,9 @@ export async function GET(request) {
       id: item.id,
       name: item.name,
       lembaga: item.lembaga,
-      lokasi: item.lokasi,
+      kantorPusat: item.kantor_pusat, // Headquarters/main office location
+      locations: item.provinces || [], // Placement locations (provinces)
+      provinceIds: item.province_ids || [], // Province IDs for filtering
       description: item.description,
       quota: item.quota,
       periode: item.periode,

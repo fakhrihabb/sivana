@@ -630,19 +630,44 @@ export default function DaftarPendaftar() {
                   <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#239DD7] group-hover:scale-105 transition-all duration-300">
                     {formasi.name}
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 flex items-center gap-2">
+                  <p className="text-gray-600 text-sm mb-3 flex items-center gap-2">
                     <svg className="w-4 h-4 text-[#239DD7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                     {formasi.lembaga}
                   </p>
-                  <p className="text-gray-600 text-sm mb-4 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-[#239DD7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    {formasi.lokasi}
-                  </p>
+                  
+                  {/* Headquarters */}
+                  {formasi.kantorPusat && (
+                    <p className="text-gray-500 text-xs mb-2 flex items-center gap-1.5">
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd" />
+                      </svg>
+                      <span>Kantor: {formasi.kantorPusat}</span>
+                    </p>
+                  )}
+                  
+                  {/* Display placement locations */}
+                  {formasi.locations && formasi.locations.length > 0 && (
+                    <div className="mb-4">
+                      <p className="text-xs text-gray-500 font-medium mb-1.5">Lokasi Penempatan:</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {formasi.locations.slice(0, 3).map((location, idx) => (
+                          <span 
+                            key={idx}
+                            className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200"
+                          >
+                            {location}
+                          </span>
+                        ))}
+                        {formasi.locations.length > 3 && (
+                          <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-600">
+                            +{formasi.locations.length - 3} lainnya
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-cyan-50 text-[#239DD7] text-xs font-semibold rounded-lg border border-[#239DD7]/20 group-hover:scale-110 group-hover:border-[#239DD7]/40 transition-all duration-300">
                       {formasi.jenisPengadaan}
