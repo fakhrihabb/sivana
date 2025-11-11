@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google-cloud/documentai": "^9.5.0",
     "@aws-sdk/client-rekognition": "^3.927.0",
     "@google-cloud/speech": "^7.2.1",
     "@google-cloud/text-to-speech": "^6.4.0",
@@ -24,8 +25,11 @@
     "lightningcss": "^1.30.2",
     "lucide-react": "^0.548.0",
     "next": "16.0.0",
+    "pdf-parse": "^2.4.5",
+    "pdf-to-png-converter": "^3.11.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "tesseract.js": "^6.0.1",
     "react-markdown": "^10.1.0",
     "react-webcam": "^7.2.0",
     "rehype-raw": "^7.0.0",

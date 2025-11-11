@@ -2,15 +2,13 @@
 
 import { useState, useRef, useEffect } from "react";
 
-// Document validation keywords
+// Document validation keywords (updated requirements)
 const DOCUMENT_KEYWORDS = {
   ktp: ["ktp", "tanda penduduk", "nomer identitas", "nik", "kartu tanda", "republic indonesia"],
-  ijazah: ["ijazah", "diploma", "sarjana", "s1", "s2", "s3", "universitas", "akademi"],
-  transkrip: ["transkrip", "transcript", "nilai", "grade", "semester", "gpa"],
-  skck: ["skck", "kepolisian", "keterangan catatan", "polri"],
-  surat_pernyataan: ["surat pernyataan", "pernyataan", "statement"],
-  str: ["str", "tanda registrasi", "registrasi"],
-  sertifikat: ["sertifikat", "certificate", "kompetensi"],
+  ijazah: ["ijazah", "diploma", "sarjana", "s1", "s2", "s3", "universitas", "akademi", "sttb"],
+  transkrip: ["transkrip", "transcript", "nilai", "grade", "semester", "gpa", "ipk"],
+  surat_lamaran: ["surat lamaran", "lamaran", "application", "permohonan", "melamar"],
+  surat_pernyataan: ["surat pernyataan", "pernyataan", "statement", "5 poin", "lima poin"],
 };
 
 export default function DocumentUpload({
@@ -20,6 +18,9 @@ export default function DocumentUpload({
   onUpload,
   uploaded,
   requirementValidation,
+  sessionData, // NEW: Cross-document data for validation
+  uploadedDocs, // NEW: All uploaded documents for extracting latest data
+  formasiData, // NEW: Formasi data for validation
 }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -40,7 +41,7 @@ export default function DocumentUpload({
       if (docId === "ijazah" && check.category === "Jurusan") return true;
       if (docId === "transkrip" && check.category === "IPK") return true;
       if (docId === "ktp" && check.category === "Usia") return true;
-      if (docId === "skck" && check.category === "Kelakuan Baik") return true;
+      if (docId === "surat_lamaran" && check.category === "Kelengkapan Dokumen") return true;
       if ((docId === "ktp" || docId === "ijazah" || docId === "transkrip") && check.category === "Konsistensi Data") return true;
       if ((docId === "ijazah" || docId === "transkrip") && check.category === "Konsistensi Akademik") return true;
       return false;
@@ -136,6 +137,23 @@ export default function DocumentUpload({
       const formData = new FormData();
       formData.append("file", file);
       formData.append("documentType", documentId);
+      
+      // Prepare fresh session data from latest uploadedDocs state
+      const freshSessionData = {
+        ktpData: uploadedDocs?.ktp?.result?.extractedData || null,
+        ijazahData: uploadedDocs?.ijazah?.result?.extractedData || null,
+        formasiData: formasiData || null,
+      };
+      
+      console.log("[DocumentUpload] Preparing fresh session data for", documentId);
+      console.log("[DocumentUpload] - Has KTP data:", !!freshSessionData.ktpData);
+      console.log("[DocumentUpload] - KTP nama:", freshSessionData.ktpData?.nama);
+      console.log("[DocumentUpload] - Has Ijazah data:", !!freshSessionData.ijazahData);
+      console.log("[DocumentUpload] - Has Formasi data:", !!freshSessionData.formasiData);
+      
+      // Add session data for cross-document validation
+      formData.append("sessionData", JSON.stringify(freshSessionData));
+      console.log("[DocumentUpload] Session data sent to API:", freshSessionData);
 
       // Check document type match for warnings
       const { detected } = detectDocumentType(file.name);
@@ -185,6 +203,29 @@ export default function DocumentUpload({
             // Parse Vision API response
             result.status = data.data.verdict?.status === "APPROVED" ? "MS" : "TMS";
             result.verdict = data.data.verdict;
+            
+            // **IMPORTANT: Store validation result for RequirementValidator**
+            if (data.data.validation) {
+              result.validation = data.data.validation;
+              console.log("[Frontend] Validation data stored:", result.validation);
+              
+              // Extract important fields from validation to extractedData
+              if (data.data.validation.nama) {
+                result.extractedData.nama = data.data.validation.nama;
+              }
+              if (data.data.validation.nik) {
+                result.extractedData.nik = data.data.validation.nik;
+              }
+              if (data.data.validation.umur !== undefined) {
+                result.extractedData.umur = data.data.validation.umur;
+              }
+              if (data.data.validation.programStudi) {
+                result.extractedData.programStudi = data.data.validation.programStudi;
+              }
+              if (data.data.validation.ipk !== undefined) {
+                result.extractedData.ipk = data.data.validation.ipk;
+              }
+            }
             
             // Extract OCR text
             if (data.data.ocr?.text) {
@@ -399,29 +440,28 @@ export default function DocumentUpload({
           warnings: ["Meterai tidak terdeteksi, mohon periksa manual"],
         };
 
-      case "skck":
+      case "surat_lamaran":
         return {
           ...baseResult,
           status: "verified",
           requirementStatus: reqStatus,
           extractedData: {
             nama: "NAMA LENGKAP",
-            nik: "3174XXXXXXXXX",
-            nomorSKCK: "SKCK/123/2025",
-            tanggalTerbit: "10-01-2025",
-            masaBerlaku: "10-01-2026",
-            penerbit: "POLRES JAKARTA SELATAN",
+            tanggalSurat: "10-01-2025",
+            ditujukanKepada: "Kepala Badan Kepegawaian Negara",
+            posisiYangDilamar: "CPNS - Analis Kebijakan",
+            alamat: "Jl. Contoh No. 123",
           },
           verificationChecks: {
             formatValid: true,
-            masihBerlaku: true,
-            capStempelJelas: true,
-            nomorValid: true,
+            bermaterai: true,
+            namaSesuai: true,
+            lengkap: true,
           },
           forensics: {
             metadataConsistent: true,
             noTampering: true,
-            authenticity: 97.2,
+            authenticity: 95.0,
           },
         };
 
@@ -722,6 +762,42 @@ export default function DocumentUpload({
                 );
               })()}
 
+              {/* Validation Errors - CRITICAL - SHOWN FIRST */}
+              {uploaded.result.validation?.errors && uploaded.result.validation.errors.length > 0 && (
+                <div className="mt-3 bg-red-50 border-2 border-red-400 rounded-lg p-3 shadow-sm">
+                  <div className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    <div className="flex-1">
+                      {uploaded.result.validation.errors.map((error, index) => (
+                        <p key={index} className="text-sm text-red-900 mb-1">
+                          {error}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Validation Warnings */}
+              {uploaded.result.validation?.warnings && uploaded.result.validation.warnings.length > 0 && (
+                <div className="mt-3 bg-yellow-50 border-2 border-yellow-400 rounded-lg p-3 shadow-sm">
+                  <div className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    <div className="flex-1">
+                      {uploaded.result.validation.warnings.map((warning, index) => (
+                        <p key={index} className="text-sm text-yellow-900 mb-1">
+                          {warning}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {uploaded.result.warnings && (
                 <div className="mt-3 bg-yellow-50 border border-yellow-200 rounded p-2">
                   <p className="text-xs text-yellow-800">
@@ -808,8 +884,8 @@ export default function DocumentUpload({
                       </div>
                     )}
 
-                    {/* Forensics */}
-                    {uploaded.result.forensics && (
+                    {/* Forensics - DISABLED */}
+                    {false && uploaded.result.forensics && (
                       <div>
                         <p className="font-medium text-gray-700 mb-2">
                           Analisis Forensik:
