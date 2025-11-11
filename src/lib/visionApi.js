@@ -4,11 +4,20 @@ import path from "path";
 const GOOGLE_VISION_API_KEY = process.env.GOOGLE_VISION_API_KEY;
 const VISION_API_URL = "https://vision.googleapis.com/v1/images:annotate";
 
+console.log('[Vision API] Environment check:');
+console.log('[Vision API] - Has GOOGLE_VISION_API_KEY:', !!GOOGLE_VISION_API_KEY);
+console.log('[Vision API] - API Key preview:', GOOGLE_VISION_API_KEY ? GOOGLE_VISION_API_KEY.substring(0, 15) + '...' : 'NOT SET');
+
 /**
  * Helper function to make Vision API REST calls
  */
 async function callVisionAPI(imageContent, features) {
   try {
+    if (!GOOGLE_VISION_API_KEY) {
+      console.error('[Vision API] ❌ GOOGLE_VISION_API_KEY not found in environment');
+      throw new Error('GOOGLE_VISION_API_KEY not found in environment variables');
+    }
+
     const request = {
       requests: [
         {
@@ -20,6 +29,9 @@ async function callVisionAPI(imageContent, features) {
       ],
     };
 
+    console.log('[Vision API] Making request to:', VISION_API_URL);
+    console.log('[Vision API] Features requested:', features.map(f => f.type).join(', '));
+
     const response = await fetch(`${VISION_API_URL}?key=${GOOGLE_VISION_API_KEY}`, {
       method: "POST",
       headers: {
@@ -28,19 +40,26 @@ async function callVisionAPI(imageContent, features) {
       body: JSON.stringify(request),
     });
 
+    console.log('[Vision API] Response status:', response.status, response.statusText);
+
     if (!response.ok) {
-      throw new Error(`Vision API error: ${response.status} ${response.statusText}`);
+      const errorText = await response.text();
+      console.error('[Vision API] ❌ Error response:', errorText);
+      throw new Error(`Vision API error: ${response.status} ${response.statusText} - ${errorText}`);
     }
 
     const data = await response.json();
-    
+
     if (data.error) {
+      console.error('[Vision API] ❌ API returned error:', data.error);
       throw new Error(`Vision API error: ${data.error.message}`);
     }
 
+    console.log('[Vision API] ✅ Request successful');
     return data.responses[0];
   } catch (error) {
-    console.error("Vision API call error:", error);
+    console.error("[Vision API] ❌ Call error:", error.message);
+    console.error("[Vision API] Error stack:", error.stack);
     throw error;
   }
 }

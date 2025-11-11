@@ -1,8 +1,15 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { searchKnowledge, formatResponseWithCitation } from "./knowledgeBase.js";
 import { sendMessageWithRetry, executeWithRateLimitAndRetry } from "./geminiRetry.js";
+import { createClient } from '@supabase/supabase-js';
 
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
+
+// Initialize Supabase client for formasi data
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
 // Model configuration with fallback options
 const PRIMARY_MODEL = "gemini-2.0-flash-exp";
@@ -40,15 +47,164 @@ JANGAN:
 - Menyebut tahun 2024 dalam jawaban (gunakan 2025)`
 });
 
+/**
+ * Search formasi data from Supabase based on user query
+ * Extracts provinsi, program_studi, or lembaga from query
+ */
+async function searchFormasiData(userMessage) {
+  try {
+    const lowerMessage = userMessage.toLowerCase();
+
+    // Check if query is about formasi/positions
+    const isFormasiQuery =
+      lowerMessage.includes('formasi') ||
+      lowerMessage.includes('lowongan') ||
+      lowerMessage.includes('berapa jumlah') ||
+      lowerMessage.includes('ada berapa') ||
+      lowerMessage.includes('jabatan') ||
+      lowerMessage.includes('posisi');
+
+    if (!isFormasiQuery) {
+      return null; // Not a formasi query
+    }
+
+    console.log('[Formasi Search] Detected formasi query, searching Supabase...');
+
+    // Build query
+    let query = supabase
+      .from('formasi')
+      .select(`
+        id,
+        name,
+        lembaga,
+        kantor_pusat,
+        jenjang_pendidikan,
+        program_studi,
+        formasi_provinces (
+          provinces (
+            name
+          )
+        )
+      `);
+
+    // Extract province from query (e.g., "formasi di aceh", "lowongan di jakarta")
+    const provinceMatch = lowerMessage.match(/(?:di|provinsi|daerah)\s+([a-z\s]+)/i);
+    if (provinceMatch) {
+      const provinceName = provinceMatch[1].trim();
+      console.log('[Formasi Search] Province filter:', provinceName);
+
+      // Join with provinces table to filter
+      const { data: matchedFormasi, error } = await query;
+
+      if (error) {
+        console.error('[Formasi Search] Error:', error);
+        return null;
+      }
+
+      // Filter by province name
+      const filtered = matchedFormasi.filter(f =>
+        f.formasi_provinces?.some(fp =>
+          fp.provinces?.name.toLowerCase().includes(provinceName)
+        )
+      );
+
+      if (filtered.length > 0) {
+        return {
+          formasi: filtered,
+          filter: `provinsi ${provinceName}`,
+          total: filtered.length
+        };
+      }
+    }
+
+    // Extract program studi (e.g., "formasi ekonomi", "lowongan akuntansi")
+    const programStudiMatch = lowerMessage.match(/(?:formasi|jurusan|program studi|lulusan)\s+([a-z\s]+)/i);
+    if (programStudiMatch) {
+      const programStudi = programStudiMatch[1].trim();
+      console.log('[Formasi Search] Program studi filter:', programStudi);
+
+      query = query.ilike('program_studi', `%${programStudi}%`);
+    }
+
+    // Execute query
+    const { data, error } = await query.limit(20);
+
+    if (error) {
+      console.error('[Formasi Search] Error:', error);
+      return null;
+    }
+
+    if (data && data.length > 0) {
+      return {
+        formasi: data,
+        filter: programStudiMatch ? `program studi ${programStudiMatch[1]}` : 'semua formasi',
+        total: data.length
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('[Formasi Search] Exception:', error);
+    return null;
+  }
+}
+
+/**
+ * Format formasi data for chatbot response
+ */
+function formatFormasiContext(formasiData) {
+  const { formasi, filter, total } = formasiData;
+
+  let context = `\n\n=== DATA FORMASI DARI DATABASE ===\n`;
+  context += `Total formasi ditemukan untuk ${filter}: ${total}\n\n`;
+
+  formasi.slice(0, 10).forEach((f, index) => {
+    context += `${index + 1}. ${f.name}\n`;
+    context += `   Instansi: ${f.lembaga}\n`;
+    context += `   Kantor Pusat: ${f.kantor_pusat}\n`;
+    context += `   Pendidikan: ${f.jenjang_pendidikan} ${f.program_studi}\n`;
+
+    if (f.formasi_provinces && f.formasi_provinces.length > 0) {
+      const provinces = f.formasi_provinces
+        .map(fp => fp.provinces?.name)
+        .filter(Boolean)
+        .join(', ');
+      context += `   Lokasi: ${provinces}\n`;
+    }
+
+    context += '\n';
+  });
+
+  if (total > 10) {
+    context += `(dan ${total - 10} formasi lainnya)\n`;
+  }
+
+  context += '\n=== INSTRUKSI ===\n';
+  context += 'Berikan ringkasan data formasi di atas kepada user dengan format yang mudah dibaca.\n';
+  context += 'Sebutkan total jumlah formasi, instansi-instansi yang tersedia, dan lokasi penempatan.\n';
+
+  return context;
+}
+
 export async function getGeminiResponse(userMessage, conversationHistory = []) {
   try {
-    // 1. Search knowledge base terlebih dahulu
+    // 1. Search formasi data from Supabase (priority)
+    const formasiData = await searchFormasiData(userMessage);
+
+    // 2. Search knowledge base terlebih dahulu
     const knowledgeResults = searchKnowledge(userMessage);
-    
+
     let context = "";
     let usedKnowledge = false;
-    
-    if (knowledgeResults && knowledgeResults.length > 0) {
+    let usedFormasiData = false;
+
+    // Prioritize formasi data if found
+    if (formasiData) {
+      context = formatFormasiContext(formasiData);
+      usedFormasiData = true;
+      usedKnowledge = true;
+      console.log('[Gemini] Using formasi data from Supabase');
+    } else if (knowledgeResults && knowledgeResults.length > 0) {
       // Jika ada match di knowledge base, gunakan yang paling relevan
       const bestMatch = knowledgeResults[0];
       context = `
@@ -57,6 +213,7 @@ ${formatResponseWithCitation(bestMatch)}
 
 User adalah peserta SSCASN yang menanyakan hal terkait. Berikan jawaban berdasarkan context di atas dengan sumber yang jelas.`;
       usedKnowledge = true;
+      console.log('[Gemini] Using static knowledge base');
     }
 
     // 2. Build chat history dengan context

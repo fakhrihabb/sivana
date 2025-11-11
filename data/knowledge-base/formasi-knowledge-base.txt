@@ -1,0 +1,2226 @@
+FORMASI CASN/PPPK - KNOWLEDGE BASE
+Exported: 2025-11-11T16:30:42.722Z
+Total Formasi: 370
+
+================================================================================
+
+1. Analis Kebijakan
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Jakarta Pusat
+   Persyaratan: S-1/Sarjana Ilmu Komunikasi
+   Lokasi Penempatan: Sumatera Selatan, DKI Jakarta, Jawa Tengah, Kalimantan Tengah, Kalimantan Utara, Papua Barat
+
+2. Auditor
+   Instansi: Badan Pemeriksa Keuangan
+   Kantor Pusat: Jakarta Selatan
+   Persyaratan: S-1/Sarjana Akuntansi
+   Lokasi Penempatan: Riau, Lampung, DKI Jakarta, Nusa Tenggara Barat, Sulawesi Tenggara, Maluku
+
+3. Pengawas Sekolah
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Jakarta Timur
+   Persyaratan: S-2 Administrasi Pendidikan
+   Lokasi Penempatan: Sulawesi Barat, Maluku, Maluku Utara, Papua Barat, Papua Pegunungan, Papua Selatan
+
+4. Tenaga Kesehatan
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Jakarta Barat
+   Persyaratan: Diploma III/Sarjana Muda Keperawatan
+   Lokasi Penempatan: Sumatera Barat, Bengkulu, DKI Jakarta, Nusa Tenggara Barat, Sulawesi Barat, Maluku, Papua, Papua Tengah, Papua Pegunungan
+
+5. Pranata Komputer
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Jakarta Pusat
+   Persyaratan: S-1/Sarjana Ilmu Komputer
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Bangka Belitung, Lampung, DKI Jakarta, Jawa Barat, Banten, Jawa Tengah, Sulawesi Barat
+
+6. Analis Sumber Daya Manusia
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Jakarta Selatan
+   Persyaratan: S-1/Sarjana Manajemen
+   Lokasi Penempatan: Riau, Jambi, Sumatera Selatan, Banten, Kalimantan Selatan, Sulawesi Tengah, Papua, Papua Tengah
+
+7. Guru Matematika
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Jakarta Utara
+   Persyaratan: S-1/Sarjana Pendidikan Matematika
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Bali, Sulawesi Tenggara, Papua, Papua Selatan, Papua Barat Daya
+
+8. Dokter Umum
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Bandung
+   Persyaratan: S-1/Sarjana Kedokteran
+   Lokasi Penempatan: Jambi, Sumatera Selatan, Kepulauan Bangka Belitung, Jawa Timur, Bali, Kalimantan Barat, Sulawesi Selatan
+
+9. Analis Data
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Jakarta Pusat
+   Persyaratan: S-1/Sarjana Statistika
+   Lokasi Penempatan: Kepulauan Riau, Jawa Tengah, Nusa Tenggara Barat, Kalimantan Tengah, Gorontalo, Papua Tengah
+
+10. Pengelola Keuangan
+   Instansi: Kementerian Dalam Negeri
+   Kantor Pusat: Jakarta Selatan
+   Persyaratan: Diploma IV Akuntansi
+   Lokasi Penempatan: Sumatera Barat, DKI Jakarta, Jawa Timur, Nusa Tenggara Timur, Sulawesi Selatan, Papua Barat
+
+11. Teknisi Laboratorium
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma III/Sarjana Muda Analis Kesehatan
+   Lokasi Penempatan: Riau, Jambi, Kepulauan Bangka Belitung, Kalimantan Utara, Sulawesi Utara, Papua Barat
+
+12. Guru Bahasa Inggris
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Semarang
+   Persyaratan: S-1/Sarjana Pendidikan Bahasa Inggris
+   Lokasi Penempatan: Bengkulu, DI Yogyakarta, Nusa Tenggara Barat, Kalimantan Utara, Gorontalo, Maluku, Papua Tengah, Papua Pegunungan
+
+13. Penyuluh Pertanian
+   Instansi: Dinas Pertanian
+   Kantor Pusat: Yogyakarta
+   Persyaratan: S-1/Sarjana Agronomi
+   Lokasi Penempatan: Sumatera Utara, Jambi, Sumatera Selatan, Kepulauan Bangka Belitung, DKI Jakarta, Banten, Kalimantan Barat, Kalimantan Timur, Maluku, Maluku Utara
+
+14. Arsiparis
+   Instansi: Arsip Nasional Republik Indonesia
+   Kantor Pusat: Jakarta Timur
+   Persyaratan: Diploma IV Kearsipan
+   Lokasi Penempatan: Riau, Sumatera Selatan, Bengkulu, DKI Jakarta, Kalimantan Utara, Sulawesi Tenggara, Papua Tengah, Papua Pegunungan, Papua Selatan
+
+15. Apoteker
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Medan
+   Persyaratan: S-1/Sarjana Farmasi
+   Lokasi Penempatan: DI Yogyakarta, Nusa Tenggara Barat, Kalimantan Utara, Sulawesi Utara, Sulawesi Selatan, Maluku
+
+16. Network Administrator
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Jakarta Pusat
+   Persyaratan: Diploma III/Sarjana Muda Teknik Informatika
+   Lokasi Penempatan: Aceh, Sumatera Barat, Riau, Jambi, Lampung, Kalimantan Selatan, Sulawesi Tenggara
+
+17. Analis Kebijakan
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Jakarta Pusat
+   Persyaratan: S-1/Sarjana Ilmu Ekonomi
+   Lokasi Penempatan: Aceh, Bengkulu, Banten, Kalimantan Tengah, Kalimantan Utara, Papua Barat, Papua Pegunungan
+
+18. Perancang Peraturan Perundang-undangan
+   Instansi: Kementerian Hukum dan HAM
+   Kantor Pusat: Jakarta Selatan
+   Persyaratan: S-2 Ilmu Hukum
+   Lokasi Penempatan: Riau, Bengkulu, DKI Jakarta, Jawa Timur, Bali, Gorontalo, Sulawesi Tengah, Sulawesi Selatan, Papua, Papua Tengah
+
+19. Guru Pendidikan Jasmani
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Malang
+   Persyaratan: S-1/Sarjana Pendidikan Jasmani
+   Lokasi Penempatan: Aceh, Bengkulu, Lampung, Banten, DI Yogyakarta, Sulawesi Barat, Sulawesi Tenggara, Maluku, Maluku Utara
+
+20. Analis Lingkungan
+   Instansi: Kementerian Lingkungan Hidup dan Kehutanan
+   Kantor Pusat: Bogor
+   Persyaratan: S-1/Sarjana Teknik Lingkungan
+   Lokasi Penempatan: Jambi, DKI Jakarta, Bali, Kalimantan Tengah, Kalimantan Utara, Sulawesi Utara, Sulawesi Tengah, Papua, Papua Barat Daya
+
+21. Radiografer
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Denpasar
+   Persyaratan: Diploma III/Sarjana Muda Radiologi
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Riau, DKI Jakarta, Jawa Timur, Nusa Tenggara Barat, Gorontalo, Sulawesi Selatan, Maluku, Papua Selatan
+
+22. Perencana
+   Instansi: Badan Perencanaan Pembangunan Nasional
+   Kantor Pusat: Jakarta Pusat
+   Persyaratan: S-2 Perencanaan Wilayah dan Kota
+   Lokasi Penempatan: Riau, Kepulauan Bangka Belitung, Nusa Tenggara Barat, Kalimantan Selatan, Gorontalo, Maluku Utara
+
+23. Widyaiswara
+   Instansi: Lembaga Administrasi Negara
+   Kantor Pusat: Jakarta Timur
+   Persyaratan: S-2 Administrasi Publik
+   Lokasi Penempatan: Sumatera Barat, Bengkulu, Jawa Barat, Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Barat, Kalimantan Utara, Maluku, Maluku Utara, Papua Barat Daya
+
+24. Pranata Humas
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Jakarta Pusat
+   Persyaratan: S-1/Sarjana Ilmu Komunikasi
+   Lokasi Penempatan: Kepulauan Riau, Sumatera Selatan, Jawa Tengah, DI Yogyakarta, Nusa Tenggara Barat, Gorontalo, Sulawesi Tengah, Maluku Utara, Papua Selatan
+
+25. Bidan
+   Instansi: Puskesmas
+   Kantor Pusat: Palembang
+   Persyaratan: Diploma III/Sarjana Muda Kebidanan
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Jawa Tengah, Jawa Timur, Kalimantan Barat, Kalimantan Tengah, Sulawesi Utara, Sulawesi Tengah, Sulawesi Selatan, Maluku, Papua Selatan
+
+26. Analis Kepegawaian
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Jakarta Selatan
+   Persyaratan: S-1/Sarjana Psikologi
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Riau, Jambi, Bali, Nusa Tenggara Barat, Papua Pegunungan
+
+27. Penjaga Kantor dan Kebersihan
+   Instansi: Kementerian Dalam Negeri
+   Kantor Pusat: Jakarta
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Riau, Sumatera Selatan, Banten, Jawa Tengah, Bali, Sulawesi Utara, Papua Tengah, Papua Pegunungan, Papua Barat Daya
+
+28. Petugas Administrasi Dasar
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Bandung
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Riau, Lampung, Jawa Barat, Banten, Sulawesi Utara, Gorontalo, Sulawesi Selatan, Sulawesi Tenggara, Maluku Utara, Papua Pegunungan
+
+29. Operator Mesin Kantor
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Jakarta
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Riau, Sumatera Selatan, Bengkulu, Jawa Barat, Bali, Gorontalo, Maluku Utara, Papua Selatan, Papua Barat Daya
+
+30. Petugas Layanan Umum
+   Instansi: Sekretariat Negara
+   Kantor Pusat: Surabaya
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Aceh, Sumatera Barat, Riau, Jambi, Banten, Kalimantan Tengah, Sulawesi Tengah, Sulawesi Selatan, Papua Tengah
+
+31. Asisten Administrasi Perkantoran
+   Instansi: Kementerian PUPR
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Kepulauan Riau, Jambi, Lampung, DI Yogyakarta, Nusa Tenggara Timur, Kalimantan Utara, Sulawesi Barat, Papua, Papua Barat, Papua Barat Daya
+
+32. Operator Komputer Dasar
+   Instansi: Lembaga Administrasi Negara
+   Kantor Pusat: Bogor
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Bengkulu, DKI Jakarta, Kalimantan Selatan, Papua, Papua Pegunungan, Papua Barat Daya
+
+33. Petugas Arsip dan Dokumen
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Kepulauan Riau, Bali, Kalimantan Timur, Sulawesi Selatan, Papua, Papua Pegunungan, Papua Selatan
+
+34. Asisten Pelayanan Publik
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Semarang
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Jambi, Sumatera Selatan, Bali, Kalimantan Selatan, Papua Barat, Papua Selatan
+
+35. Staf Administrasi Umum
+   Instansi: Kementerian Hukum dan HAM
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTA Umum
+   Lokasi Penempatan: Aceh, Riau, Kepulauan Riau, Jambi, Nusa Tenggara Timur, Kalimantan Tengah, Kalimantan Timur, Papua, Papua Barat Daya
+
+36. Operator Data Entry
+   Instansi: Arsip Nasional Republik Indonesia
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTA Ilmu Administrasi Negara
+   Lokasi Penempatan: Sumatera Barat, Riau, Bengkulu, Jawa Timur, Nusa Tenggara Timur, Sulawesi Barat, Sulawesi Tenggara
+
+37. Petugas Pelayanan Masyarakat
+   Instansi: Kementerian Pariwisata
+   Kantor Pusat: Bali
+   Persyaratan: SLTA Umum
+   Lokasi Penempatan: Riau, Kepulauan Riau, Jambi, Bali, Kalimantan Barat, Kalimantan Timur, Maluku, Maluku Utara, Papua Barat, Papua Selatan
+
+38. Asisten Pengelola Arsip
+   Instansi: Badan Informasi Geospasial
+   Kantor Pusat: Bogor
+   Persyaratan: SLTA Umum
+   Lokasi Penempatan: Aceh, Kepulauan Riau, Jambi, Banten, DI Yogyakarta, Kalimantan Barat, Sulawesi Utara, Sulawesi Tengah, Sulawesi Barat, Maluku Utara
+
+39. Teknisi Komputer dan Jaringan
+   Instansi: PLN
+   Kantor Pusat: Jakarta
+   Persyaratan: SMK/SLTA Kejuruan Teknik Elektro
+   Lokasi Penempatan: Aceh, DKI Jakarta, Banten, Jawa Tengah, Sulawesi Utara, Sulawesi Tengah, Maluku Utara, Papua Selatan
+
+40. Teknisi Elektro dan Listrik
+   Instansi: Kementerian Perindustrian
+   Kantor Pusat: Bandung
+   Persyaratan: SMK/SLTA Kejuruan Teknik Mesin
+   Lokasi Penempatan: Riau, DKI Jakarta, Jawa Barat, DI Yogyakarta, Papua Barat, Papua Selatan
+
+41. Operator Mesin Produksi
+   Instansi: Kementerian PUPR
+   Kantor Pusat: Surabaya
+   Persyaratan: SMK/SLTA Kejuruan Teknik Sipil
+   Lokasi Penempatan: Riau, Jambi, Sumatera Selatan, Nusa Tenggara Timur, Kalimantan Barat, Kalimantan Utara, Papua Barat
+
+42. Teknisi Perawatan Gedung
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Jakarta
+   Persyaratan: SMK/SLTA Kejuruan Teknik Informatika
+   Lokasi Penempatan: Sumatera Barat, Sumatera Selatan, Kalimantan Tengah, Kalimantan Selatan, Sulawesi Utara, Sulawesi Selatan, Sulawesi Tenggara, Papua, Papua Tengah, Papua Barat Daya
+
+43. Guru Sekolah Dasar Terpencil
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Papua
+   Persyaratan: SLTA Keguruan Pendidikan
+   Lokasi Penempatan: Jambi, Bengkulu, Lampung, Banten, Sulawesi Barat, Maluku
+
+44. Tenaga Pengajar SD Daerah Khusus
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Maluku
+   Persyaratan: SLTA Keguruan Pendidikan
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Riau, Jambi, Banten, Sulawesi Tenggara, Papua
+
+45. Guru Pendamping Anak Berkebutuhan Khusus
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: NTT
+   Persyaratan: SLTA Keguruan Pendidikan
+   Lokasi Penempatan: Kepulauan Riau, Kepulauan Bangka Belitung, Jawa Tengah, Sulawesi Barat, Maluku, Papua, Papua Barat, Papua Tengah
+
+46. Pendidik Sekolah Dasar
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: NTB
+   Persyaratan: SLTA Keguruan Pendidikan
+   Lokasi Penempatan: Aceh, Kepulauan Riau, Sumatera Selatan, Nusa Tenggara Barat, Sulawesi Barat, Sulawesi Selatan, Maluku Utara, Papua, Papua Pegunungan, Papua Barat Daya
+
+47. Asisten Operator Perpustakaan
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma I Administrasi Perkantoran
+   Lokasi Penempatan: Sumatera Barat, Riau, Lampung, Jawa Barat, DI Yogyakarta, Kalimantan Selatan, Maluku Utara, Papua Tengah
+
+48. Petugas Administrasi Kesekretariatan
+   Instansi: Sekretariat Negara
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma I Administrasi
+   Lokasi Penempatan: Sumatera Utara, Jambi, Jawa Barat, Jawa Timur, Nusa Tenggara Timur, Kalimantan Selatan
+
+49. Operator Sistem Informasi Dasar
+   Instansi: Kementerian Dalam Negeri
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma I Manajemen
+   Lokasi Penempatan: Aceh, Sumatera Utara, DKI Jakarta, Jawa Barat, Sulawesi Tengah, Maluku, Papua Tengah
+
+50. Asisten Pengelola Database
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma I Akuntansi
+   Lokasi Penempatan: Aceh, Sumatera Selatan, Kepulauan Bangka Belitung, Jawa Barat, Sulawesi Barat, Sulawesi Selatan, Maluku
+
+51. Operator Administrasi Perkantoran
+   Instansi: Kementerian PUPR
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma II Teknik Sipil
+   Lokasi Penempatan: Sumatera Barat, DI Yogyakarta, Kalimantan Selatan, Kalimantan Utara, Sulawesi Selatan, Sulawesi Tenggara, Maluku Utara, Papua
+
+52. Asisten Pengelola Surat Menyurat
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma II Analis Kesehatan
+   Lokasi Penempatan: Sumatera Barat, Jawa Barat, Kalimantan Selatan, Kalimantan Utara, Gorontalo, Sulawesi Selatan, Papua Barat
+
+53. Petugas Tata Usaha Kantor
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma II Akuntansi
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Riau, Sumatera Selatan, Lampung, DI Yogyakarta, Jawa Timur, Bali, Kalimantan Utara, Sulawesi Tengah
+
+54. Operator Layanan Administrasi
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Semarang
+   Persyaratan: Diploma II Statistika
+   Lokasi Penempatan: DI Yogyakarta, Kalimantan Selatan, Sulawesi Utara, Gorontalo, Sulawesi Tengah, Sulawesi Tenggara, Papua Tengah
+
+55. Teknisi Laboratorium Komputer
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma III/Sarjana Muda Keperawatan
+   Lokasi Penempatan: Jambi, Bengkulu, Jawa Tengah, DI Yogyakarta, Maluku, Maluku Utara
+
+56. Analis Sistem Informasi Junior
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma III/Sarjana Muda Analis Kesehatan
+   Lokasi Penempatan: Aceh, Kepulauan Bangka Belitung, Bengkulu, DKI Jakarta, Jawa Barat, Nusa Tenggara Barat, Sulawesi Selatan, Maluku, Papua Barat
+
+57. Asisten Programmer
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma III/Sarjana Muda Kebidanan
+   Lokasi Penempatan: Sumatera Barat, Jambi, Bengkulu, Sulawesi Barat, Papua, Papua Selatan
+
+58. Teknisi Multimedia dan Broadcasting
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Medan
+   Persyaratan: Diploma III/Sarjana Muda Farmasi
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Nusa Tenggara Timur, Kalimantan Selatan, Sulawesi Utara, Sulawesi Tengah, Sulawesi Barat, Sulawesi Tenggara, Maluku Utara, Papua Barat
+
+59. Analis Data Pemerintahan
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma IV Akuntansi
+   Lokasi Penempatan: Sumatera Selatan, Bengkulu, DKI Jakarta, Jawa Timur, Kalimantan Selatan, Kalimantan Timur, Gorontalo
+
+60. Perancang Sistem Digital
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma IV Manajemen
+   Lokasi Penempatan: Kepulauan Riau, Jambi, Bengkulu, DI Yogyakarta, Kalimantan Tengah, Sulawesi Tenggara, Maluku, Papua, Papua Pegunungan
+
+61. Analis Kebijakan Publik
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Yogyakarta
+   Persyaratan: Diploma IV Sistem Informasi
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Kalimantan Selatan, Kalimantan Utara, Sulawesi Tengah, Papua Barat, Papua Tengah, Papua Selatan
+
+62. Spesialis Manajemen Proyek
+   Instansi: Badan Siber dan Sandi Negara
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma IV Teknik Informatika
+   Lokasi Penempatan: Aceh, Jambi, Kepulauan Bangka Belitung, Lampung, Jawa Tengah, Kalimantan Selatan, Papua Barat, Papua Tengah, Papua Pegunungan, Papua Barat Daya
+
+63. Analis Perencanaan Pembangunan
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Jakarta
+   Persyaratan: S-1/Sarjana Akuntansi
+   Lokasi Penempatan: Aceh, Kepulauan Riau, Jambi, Sumatera Selatan, Lampung, Jawa Barat, Banten, Kalimantan Utara, Sulawesi Tengah, Papua Barat
+
+64. Analis Keuangan Daerah
+   Instansi: Badan Pemeriksa Keuangan
+   Kantor Pusat: Jakarta
+   Persyaratan: S-1/Sarjana Ilmu Ekonomi
+   Lokasi Penempatan: Jambi, Bengkulu, Jawa Barat, Nusa Tenggara Timur, Gorontalo, Maluku Utara
+
+65. Auditor Internal Pemda
+   Instansi: Kementerian Dalam Negeri
+   Kantor Pusat: Bandung
+   Persyaratan: S-1/Sarjana Ilmu Administrasi Negara
+   Lokasi Penempatan: Kepulauan Riau, Nusa Tenggara Timur, Kalimantan Selatan, Kalimantan Timur, Sulawesi Utara, Sulawesi Barat, Sulawesi Tenggara
+
+66. Analis Kebijakan Ekonomi
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Jakarta
+   Persyaratan: S-1/Sarjana Statistika
+   Lokasi Penempatan: Jawa Barat, Kalimantan Barat, Kalimantan Tengah, Sulawesi Tengah, Sulawesi Barat, Maluku Utara, Papua, Papua Selatan
+
+67. Peneliti Kebijakan Sosial
+   Instansi: Lembaga Ilmu Pengetahuan Indonesia
+   Kantor Pusat: Bandung
+   Persyaratan: S-2 Biologi
+   Lokasi Penempatan: Jawa Barat, Jawa Timur, Bali, Kalimantan Barat, Sulawesi Tenggara, Maluku, Papua Tengah, Papua Selatan, Papua Barat Daya
+
+68. Peneliti Pembangunan Daerah
+   Instansi: Badan Riset dan Inovasi Nasional
+   Kantor Pusat: Bogor
+   Persyaratan: S-2 Fisika
+   Lokasi Penempatan: Aceh, Riau, Bengkulu, Jawa Tengah, Bali, Nusa Tenggara Barat, Papua Pegunungan
+
+69. Analis Strategi Pemerintahan
+   Instansi: Lembaga Administrasi Negara
+   Kantor Pusat: Jakarta
+   Persyaratan: S-2 Administrasi Publik
+   Lokasi Penempatan: Aceh, Jambi, Kepulauan Bangka Belitung, Bengkulu, DI Yogyakarta, Nusa Tenggara Timur, Sulawesi Selatan, Papua Pegunungan
+
+70. Peneliti Urban Planning
+   Instansi: Badan Perencanaan Pembangunan Nasional
+   Kantor Pusat: Jakarta
+   Persyaratan: S-2 Perencanaan Wilayah dan Kota
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Riau, Sumatera Selatan, Sulawesi Utara, Maluku, Maluku Utara, Papua Barat
+
+71. Peneliti Senior Kebijakan Publik
+   Instansi: Badan Riset dan Inovasi Nasional
+   Kantor Pusat: Bandung
+   Persyaratan: S-3/Doktor Teknik Kimia
+   Lokasi Penempatan: Aceh, Sumatera Utara, Jambi, Bengkulu, DKI Jakarta, Jawa Barat, Banten, Jawa Timur, Kalimantan Utara, Sulawesi Utara
+
+72. Ahli Peneliti Ekonomi Pembangunan
+   Instansi: Lembaga Ilmu Pengetahuan Indonesia
+   Kantor Pusat: Bogor
+   Persyaratan: S-3/Doktor Biologi
+   Lokasi Penempatan: Riau, Sumatera Selatan, Bali, Nusa Tenggara Timur, Kalimantan Barat, Kalimantan Timur, Sulawesi Barat, Maluku, Maluku Utara, Papua
+
+73. Peneliti Utama Tata Kelola Pemerintahan
+   Instansi: Badan Riset dan Inovasi Nasional
+   Kantor Pusat: Jakarta
+   Persyaratan: S-3/Doktor Fisika
+   Lokasi Penempatan: Kepulauan Riau, Sumatera Selatan, Kalimantan Selatan, Kalimantan Timur, Gorontalo, Sulawesi Selatan, Maluku Utara, Papua
+
+74. Pakar Kebijakan Strategis Nasional
+   Instansi: Lembaga Ilmu Pengetahuan Indonesia
+   Kantor Pusat: Jakarta
+   Persyaratan: S-3/Doktor Teknik Informatika
+   Lokasi Penempatan: Sumatera Barat, Sumatera Selatan, Bengkulu, Kalimantan Selatan, Kalimantan Timur, Sulawesi Utara, Sulawesi Selatan, Maluku Utara, Papua Tengah, Papua Barat Daya
+
+75. Guru Pendamping Sekolah Dasar
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: SD Pendidikan
+   Lokasi Penempatan: Jambi, Sumatera Selatan, Nusa Tenggara Timur, Kalimantan Barat, Kalimantan Timur, Papua, Papua Barat, Papua Pegunungan, Papua Barat Daya
+
+76. Guru Kelas SD Perintis
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Bandung
+   Persyaratan: SD Pendidikan Guru Sekolah Dasar
+   Lokasi Penempatan: Bengkulu, DKI Jakarta, Kalimantan Tengah, Kalimantan Timur, Gorontalo, Sulawesi Tenggara, Maluku, Papua Barat
+
+77. Tenaga Pengajar SD
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Surabaya
+   Persyaratan: SD Pendidikan
+   Lokasi Penempatan: Sumatera Barat, Riau, Jambi, DKI Jakarta, Jawa Barat, Nusa Tenggara Timur, Papua Barat, Papua Barat Daya
+
+78. Guru SD Daerah Terpencil
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Medan
+   Persyaratan: SD Pendidikan Guru Sekolah Dasar
+   Lokasi Penempatan: Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Tengah, Sulawesi Tengah, Sulawesi Selatan, Maluku
+
+79. Guru Pendamping SMP
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTP Pendidikan
+   Lokasi Penempatan: Jawa Barat, Bali, Kalimantan Barat, Kalimantan Selatan, Kalimantan Utara, Sulawesi Selatan
+
+80. Asisten Guru Mata Pelajaran SMP
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Semarang
+   Persyaratan: SLTP Pendidikan Matematika
+   Lokasi Penempatan: Aceh, Lampung, Banten, Jawa Timur, Kalimantan Utara, Sulawesi Tengah, Papua Pegunungan, Papua Selatan
+
+81. Guru Kelas SMP
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Yogyakarta
+   Persyaratan: SLTP Pendidikan
+   Lokasi Penempatan: Sumatera Utara, Bengkulu, Jawa Barat, Banten, DI Yogyakarta, Bali, Sulawesi Tengah, Papua Tengah
+
+82. Guru Pendamping Belajar SMP
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Malang
+   Persyaratan: SLTP Pendidikan Bahasa Inggris
+   Lokasi Penempatan: Lampung, DKI Jakarta, Jawa Barat, Jawa Timur, Gorontalo, Papua Barat, Papua Barat Daya
+
+83. Guru Mata Pelajaran SMA
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTA Pendidikan
+   Lokasi Penempatan: Sumatera Barat, Jawa Timur, Bali, Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Timur, Papua, Papua Pegunungan, Papua Barat Daya
+
+84. Guru Pembimbing Ekstrakurikuler
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Bandung
+   Persyaratan: SLTA Pendidikan IPA
+   Lokasi Penempatan: Sumatera Utara, DKI Jakarta, Banten, DI Yogyakarta, Bali, Kalimantan Barat, Gorontalo, Sulawesi Barat, Papua Tengah, Papua Selatan
+
+85. Tenaga Pengajar SMA
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Denpasar
+   Persyaratan: SLTA Pendidikan
+   Lokasi Penempatan: Jambi, Banten, Jawa Tengah, DI Yogyakarta, Nusa Tenggara Barat, Kalimantan Barat, Sulawesi Utara, Papua, Papua Pegunungan
+
+86. Guru Kelas SMA
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Makassar
+   Persyaratan: SLTA Pendidikan Jasmani
+   Lokasi Penempatan: Jawa Barat, Nusa Tenggara Barat, Kalimantan Barat, Kalimantan Tengah, Sulawesi Utara, Sulawesi Barat, Papua, Papua Tengah, Papua Pegunungan
+
+87. Instruktur Praktik SMK
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: SMK/SLTA Kejuruan Pendidikan
+   Lokasi Penempatan: Sumatera Utara, Jambi, Kepulauan Bangka Belitung, Bengkulu, Jawa Tengah, Kalimantan Barat, Kalimantan Timur, Gorontalo, Maluku, Papua Selatan
+
+88. Guru Produktif Kejuruan SMK
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Surabaya
+   Persyaratan: SMK/SLTA Kejuruan Pendidikan Seni Rupa
+   Lokasi Penempatan: Riau, Jambi, DKI Jakarta, Nusa Tenggara Barat, Nusa Tenggara Timur, Papua
+
+89. Guru Keterampilan SMK
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Bandung
+   Persyaratan: SMK/SLTA Kejuruan Pendidikan
+   Lokasi Penempatan: Bengkulu, Lampung, DI Yogyakarta, Bali, Kalimantan Barat, Kalimantan Tengah, Maluku, Maluku Utara, Papua
+
+90. Pembimbing Praktik Industri SMK
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Semarang
+   Persyaratan: SMK/SLTA Kejuruan Pendidikan Matematika
+   Lokasi Penempatan: Aceh, Sumatera Barat, Jambi, Sumatera Selatan, Bali, Nusa Tenggara Barat, Nusa Tenggara Timur, Sulawesi Selatan, Maluku
+
+91. Guru SD Lulusan SPG
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Papua
+   Persyaratan: SLTA Keguruan Pendidikan
+   Lokasi Penempatan: Sumatera Barat, Jawa Barat, Kalimantan Timur, Sulawesi Utara, Sulawesi Selatan, Papua Selatan
+
+92. Tenaga Pendidik Keguruan
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Maluku
+   Persyaratan: SLTA Keguruan Pendidikan Guru Sekolah Dasar
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Lampung, DKI Jakarta, Jawa Barat, Kalimantan Tengah, Kalimantan Utara, Sulawesi Tenggara, Papua
+
+93. Guru Kelas Lulusan SPG
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: NTT
+   Persyaratan: SLTA Keguruan Pendidikan
+   Lokasi Penempatan: Aceh, Riau, Jambi, DKI Jakarta, Jawa Timur, Kalimantan Timur, Sulawesi Tengah, Papua, Papua Tengah, Papua Selatan
+
+94. Pendidik Anak Sekolah Dasar
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: NTB
+   Persyaratan: SLTA Keguruan Pendidikan Anak Usia Dini
+   Lokasi Penempatan: Kepulauan Riau, Jambi, Lampung, Bali, Kalimantan Timur, Sulawesi Tengah, Maluku Utara
+
+95. Guru Pendamping TK/PAUD
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma I Pendidikan
+   Lokasi Penempatan: Kepulauan Riau, Jawa Barat, DI Yogyakarta, Jawa Timur, Kalimantan Selatan, Kalimantan Timur
+
+96. Asisten Guru Playgroup
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma I Pendidikan Guru Sekolah Dasar
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Riau, Kepulauan Bangka Belitung, Jawa Tengah, Nusa Tenggara Barat, Kalimantan Tengah, Kalimantan Selatan, Gorontalo, Sulawesi Barat, Maluku
+
+97. Guru Kelas SD Rendah
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma I Pendidikan
+   Lokasi Penempatan: DI Yogyakarta, Kalimantan Selatan, Sulawesi Selatan, Maluku Utara, Papua, Papua Tengah, Papua Barat Daya
+
+98. Guru Kelas SD Tinggi
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Yogyakarta
+   Persyaratan: Diploma I Pendidikan Anak Usia Dini
+   Lokasi Penempatan: Sumatera Barat, Sumatera Selatan, Jawa Barat, Jawa Tengah, Kalimantan Tengah, Kalimantan Selatan, Sulawesi Tenggara
+
+99. Guru SD untuk Kelas Rangkap
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma II Pendidikan
+   Lokasi Penempatan: Kepulauan Riau, Sumatera Selatan, DKI Jakarta, Jawa Barat, Kalimantan Barat, Kalimantan Utara, Papua, Papua Selatan, Papua Barat Daya
+
+100. Guru Pendamping ABK SD
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Semarang
+   Persyaratan: Diploma II Pendidikan Matematika
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Bengkulu, DKI Jakarta, Banten, DI Yogyakarta, Jawa Timur, Nusa Tenggara Barat, Kalimantan Barat, Kalimantan Utara
+
+101. Guru Mata Pelajaran SMP
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Malang
+   Persyaratan: Diploma II Pendidikan
+   Lokasi Penempatan: Kepulauan Riau, Jambi, Kepulauan Bangka Belitung, DKI Jakarta, Kalimantan Tengah, Gorontalo, Papua Barat, Papua Tengah, Papua Selatan, Papua Barat Daya
+
+102. Guru Bimbingan Konseling SMP
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Denpasar
+   Persyaratan: Diploma II Pendidikan Bahasa Indonesia
+   Lokasi Penempatan: Bengkulu, Jawa Barat, Nusa Tenggara Timur, Kalimantan Barat, Sulawesi Utara, Gorontalo, Sulawesi Tengah, Papua Tengah, Papua Selatan
+
+103. Guru Ekstrakurikuler SMP
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma III/Sarjana Muda Pendidikan
+   Lokasi Penempatan: Lampung, DI Yogyakarta, Nusa Tenggara Timur, Kalimantan Selatan, Sulawesi Tengah, Papua Barat
+
+104. Guru Kelas SMP Terpadu
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma III/Sarjana Muda Pendidikan IPA
+   Lokasi Penempatan: Riau, Sumatera Selatan, Jawa Timur, Kalimantan Barat, Gorontalo, Papua Tengah
+
+105. Guru Bahasa Indonesia SMA
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma III/Sarjana Muda Pendidikan
+   Lokasi Penempatan: Aceh, Sumatera Selatan, Kepulauan Bangka Belitung, Jawa Barat, Kalimantan Barat, Sulawesi Tengah, Sulawesi Barat, Papua, Papua Selatan
+
+106. Guru Pendidikan Jasmani
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Medan
+   Persyaratan: Diploma III/Sarjana Muda Pendidikan Fisika
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Riau, Jambi, Lampung, Bali, Kalimantan Timur
+
+107. Guru Seni Budaya dan Kesenian
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma IV Pendidikan
+   Lokasi Penempatan: Sumatera Utara, Bengkulu, DKI Jakarta, Banten, DI Yogyakarta, Nusa Tenggara Barat, Nusa Tenggara Timur, Maluku, Papua, Papua Pegunungan
+
+108. Guru Mata Pelajaran Umum
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma IV Pendidikan Matematika
+   Lokasi Penempatan: Aceh, Sumatera Barat, Kepulauan Riau, Kepulauan Bangka Belitung, Jawa Timur, Nusa Tenggara Barat, Sulawesi Utara, Maluku Utara, Papua
+
+109. Guru Produktif SMK Teknik
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Yogyakarta
+   Persyaratan: Diploma IV Pendidikan
+   Lokasi Penempatan: Sumatera Barat, Sumatera Selatan, Jawa Tengah, Kalimantan Selatan, Kalimantan Utara, Sulawesi Tengah, Sulawesi Selatan, Maluku Utara
+
+110. Guru SMK Tata Boga
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Semarang
+   Persyaratan: Diploma IV Pendidikan Bahasa Inggris
+   Lokasi Penempatan: Riau, Sumatera Selatan, Kepulauan Bangka Belitung, Nusa Tenggara Timur, Kalimantan Tengah, Gorontalo
+
+111. Instruktur Praktik SMK Otomotif
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: S-1/Sarjana Pendidikan Matematika
+   Lokasi Penempatan: Kepulauan Riau, Bengkulu, DKI Jakarta, Nusa Tenggara Barat, Sulawesi Tenggara, Maluku, Papua Barat, Papua Pegunungan, Papua Selatan
+
+112. Guru Kejuruan Multimedia
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Bandung
+   Persyaratan: S-1/Sarjana Pendidikan Bahasa Inggris
+   Lokasi Penempatan: Banten, Jawa Tengah, Jawa Timur, Kalimantan Tengah, Kalimantan Selatan, Kalimantan Timur
+
+113. Guru Kelas SD Inklusi
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Surabaya
+   Persyaratan: S-1/Sarjana Pendidikan IPA
+   Lokasi Penempatan: Sumatera Barat, Jambi, Jawa Barat, Kalimantan Selatan, Kalimantan Timur, Maluku Utara, Papua Barat
+
+114. Guru Agama SD
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Yogyakarta
+   Persyaratan: S-1/Sarjana Pendidikan Guru Sekolah Dasar
+   Lokasi Penempatan: Aceh, Sumatera Selatan, Kalimantan Barat, Kalimantan Tengah, Kalimantan Timur, Maluku, Maluku Utara
+
+115. Guru Matematika SD
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: S-2 Administrasi Pendidikan
+   Lokasi Penempatan: Aceh, Sumatera Barat, Kepulauan Bangka Belitung, Nusa Tenggara Timur, Sulawesi Utara, Sulawesi Tengah, Sulawesi Selatan, Papua Tengah, Papua Pegunungan, Papua Barat Daya
+
+116. Guru IPA SD
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Bandung
+   Persyaratan: S-2 Pendidikan Matematika
+   Lokasi Penempatan: Riau, Sumatera Selatan, Jawa Barat, Jawa Timur, Bali, Kalimantan Timur, Sulawesi Utara, Sulawesi Tenggara, Papua, Papua Pegunungan
+
+117. Guru Bahasa Inggris SD
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Surabaya
+   Persyaratan: S-2 Pendidikan Bahasa Indonesia
+   Lokasi Penempatan: Sumatera Barat, Jambi, Sumatera Selatan, Nusa Tenggara Barat, Kalimantan Tengah, Papua Selatan
+
+118. Guru Olahraga SD
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Yogyakarta
+   Persyaratan: S-2 Pendidikan IPA
+   Lokasi Penempatan: Sumatera Barat, Bengkulu, DI Yogyakarta, Nusa Tenggara Barat, Kalimantan Selatan, Gorontalo, Papua Tengah, Papua Selatan, Papua Barat Daya
+
+119. Guru IPS SMP
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: S-3/Doktor Administrasi Pendidikan
+   Lokasi Penempatan: Aceh, DI Yogyakarta, Nusa Tenggara Barat, Kalimantan Timur, Kalimantan Utara, Sulawesi Utara, Sulawesi Barat, Sulawesi Selatan, Papua Barat, Papua Selatan
+
+120. Guru Bahasa Daerah
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Bandung
+   Persyaratan: S-3/Doktor Pendidikan Matematika
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Bengkulu, Kalimantan Selatan, Sulawesi Utara, Papua Selatan
+
+121. Guru Prakarya dan Kewirausahaan
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Surabaya
+   Persyaratan: S-3/Doktor Pendidikan Fisika
+   Lokasi Penempatan: Sumatera Utara, Jawa Barat, Jawa Tengah, Bali, Kalimantan Timur, Kalimantan Utara, Sulawesi Selatan, Papua Pegunungan
+
+122. Guru TIK dan Komputer
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Yogyakarta
+   Persyaratan: S-3/Doktor Pendidikan Kimia
+   Lokasi Penempatan: Bengkulu, Jawa Timur, Gorontalo, Sulawesi Barat, Maluku Utara, Papua Barat Daya
+
+123. Guru Fisika SMA
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Jakarta
+   Persyaratan: SD Umum
+   Lokasi Penempatan: DKI Jakarta, Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Selatan, Kalimantan Timur, Gorontalo, Sulawesi Selatan
+
+124. Guru Kimia SMA
+   Instansi: Kementerian Dalam Negeri
+   Kantor Pusat: Bandung
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Kepulauan Riau, Lampung, Jawa Tengah, Kalimantan Tengah, Kalimantan Utara, Papua Barat Daya
+
+125. Guru Biologi SMA
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Surabaya
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Kalimantan Barat, Kalimantan Selatan, Kalimantan Timur, Kalimantan Utara, Sulawesi Selatan, Maluku, Papua, Papua Tengah
+
+126. Guru Matematika SMA Wajib
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Yogyakarta
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Kepulauan Riau, Sumatera Selatan, DKI Jakarta, DI Yogyakarta, Jawa Timur, Kalimantan Tengah, Kalimantan Utara, Papua Tengah, Papua Selatan
+
+127. Guru Matematika SMA Peminatan
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Bangka Belitung, Jawa Tengah, Kalimantan Selatan, Sulawesi Utara, Sulawesi Selatan, Maluku Utara, Papua, Papua Barat Daya
+
+128. Guru Ekonomi SMA
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Bandung
+   Persyaratan: SLTP Administrasi
+   Lokasi Penempatan: Riau, Sumatera Selatan, Jawa Tengah, Bali, Papua Barat, Papua Barat Daya
+
+129. Guru Sosiologi
+   Instansi: Kementerian Dalam Negeri
+   Kantor Pusat: Surabaya
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Sumatera Utara, DKI Jakarta, Kalimantan Tengah, Kalimantan Utara, Papua Pegunungan, Papua Selatan
+
+130. Guru Geografi
+   Instansi: Arsip Nasional Republik Indonesia
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTP Kearsipan
+   Lokasi Penempatan: Sumatera Utara, Riau, Bengkulu, Jawa Barat, Banten, Sulawesi Barat
+
+131. Guru Sejarah Indonesia
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTA Statistika
+   Lokasi Penempatan: Jambi, Bali, Nusa Tenggara Barat, Sulawesi Utara, Gorontalo, Sulawesi Tengah, Maluku Utara, Papua, Papua Barat, Papua Selatan
+
+132. Guru Bahasa Inggris SMA
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Bandung
+   Persyaratan: SLTA Teknik Informatika
+   Lokasi Penempatan: Sumatera Utara, Jawa Timur, Nusa Tenggara Timur, Kalimantan Tengah, Gorontalo, Sulawesi Tengah, Sulawesi Barat
+
+133. Guru Bahasa Asing (Mandarin/Jepang)
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Surabaya
+   Persyaratan: SLTA Manajemen
+   Lokasi Penempatan: Aceh, Sumatera Utara, Kepulauan Bangka Belitung, Bengkulu, Lampung, Nusa Tenggara Timur, Kalimantan Barat, Kalimantan Timur, Papua Barat
+
+134. Guru Pendidikan Agama Islam
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Semarang
+   Persyaratan: SLTA Akuntansi
+   Lokasi Penempatan: Riau, Lampung, Jawa Timur, Kalimantan Selatan, Sulawesi Selatan, Papua Tengah
+
+135. Guru Bimbingan Konseling SMA
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Jakarta
+   Persyaratan: SMK/SLTA Kejuruan Teknik Informatika
+   Lokasi Penempatan: Aceh, Kepulauan Riau, Sumatera Selatan, Maluku Utara, Papua, Papua Barat Daya
+
+136. Guru PKn dan Pancasila
+   Instansi: Badan Siber dan Sandi Negara
+   Kantor Pusat: Bandung
+   Persyaratan: SMK/SLTA Kejuruan Teknik Komputer
+   Lokasi Penempatan: Sumatera Barat, Jambi, Bengkulu, Lampung, Nusa Tenggara Barat, Gorontalo, Maluku, Papua Selatan
+
+137. Guru Seni Rupa
+   Instansi: Kementerian PUPR
+   Kantor Pusat: Surabaya
+   Persyaratan: SMK/SLTA Kejuruan Teknik Sipil
+   Lokasi Penempatan: Sumatera Utara, Jawa Barat, Bali, Sulawesi Tenggara, Maluku, Maluku Utara
+
+138. Guru Seni Musik
+   Instansi: Kementerian Perindustrian
+   Kantor Pusat: Bandung
+   Persyaratan: SMK/SLTA Kejuruan Teknik Mesin
+   Lokasi Penempatan: Lampung, Bali, Nusa Tenggara Timur, Kalimantan Selatan, Sulawesi Utara, Sulawesi Selatan, Papua Pegunungan, Papua Barat Daya
+
+139. Guru Seni Tari
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTA Keguruan Pendidikan
+   Lokasi Penempatan: Kepulauan Riau, Kepulauan Bangka Belitung, Bengkulu, Jawa Timur, Kalimantan Tengah, Sulawesi Utara, Sulawesi Tengah, Maluku, Papua Barat, Papua Tengah
+
+140. Guru Penjaskes SMA
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Bandung
+   Persyaratan: SLTA Keguruan Administrasi
+   Lokasi Penempatan: Kepulauan Riau, Sumatera Selatan, Kepulauan Bangka Belitung, DKI Jakarta, Jawa Timur, Kalimantan Tengah, Gorontalo, Sulawesi Selatan, Papua Selatan
+
+141. Guru Teknologi Informasi SMA
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Surabaya
+   Persyaratan: SLTA Keguruan Pendidikan
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Bangka Belitung, Jawa Barat, Jawa Timur, Sulawesi Tengah, Papua Tengah, Papua Barat Daya
+
+142. Guru Bahasa dan Sastra Indonesia
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Yogyakarta
+   Persyaratan: SLTA Keguruan Ilmu Perpustakaan
+   Lokasi Penempatan: Kepulauan Riau, Jambi, DKI Jakarta, Bali, Kalimantan Selatan, Maluku, Papua, Papua Pegunungan, Papua Selatan
+
+143. Operator Komputer dan Data Entry
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma I Akuntansi
+   Lokasi Penempatan: Sumatera Utara, Riau, Sumatera Selatan, Kepulauan Bangka Belitung, Bengkulu, Jawa Barat, Kalimantan Timur, Papua Barat Daya
+
+144. Asisten Teknisi IT
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma I Administrasi
+   Lokasi Penempatan: Sumatera Utara, Riau, Jawa Tengah, Nusa Tenggara Barat, Gorontalo, Papua Barat, Papua Tengah, Papua Selatan
+
+145. Operator Help Desk
+   Instansi: Kementerian Dalam Negeri
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma I Manajemen
+   Lokasi Penempatan: Aceh, Jawa Barat, DI Yogyakarta, Jawa Timur, Sulawesi Utara, Papua Barat
+
+146. Teknisi Perawatan Hardware
+   Instansi: Sekretariat Negara
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma I Administrasi Perkantoran
+   Lokasi Penempatan: Kepulauan Riau, Bengkulu, Jawa Barat, Banten, Kalimantan Barat, Kalimantan Tengah, Kalimantan Selatan, Kalimantan Utara, Sulawesi Tenggara, Papua Barat
+
+147. Teknisi Jaringan Komputer
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma II Statistika
+   Lokasi Penempatan: DKI Jakarta, Jawa Timur, Nusa Tenggara Timur, Kalimantan Utara, Sulawesi Utara, Maluku Utara, Papua Tengah, Papua Barat Daya
+
+148. Asisten Network Administrator
+   Instansi: Kementerian PUPR
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma II Teknik Sipil
+   Lokasi Penempatan: Kepulauan Riau, Kepulauan Bangka Belitung, Banten, DI Yogyakarta, Bali, Kalimantan Barat, Kalimantan Selatan, Sulawesi Tengah, Maluku, Papua Pegunungan
+
+149. Operator Sistem Informasi
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma II Akuntansi
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Riau, Kepulauan Bangka Belitung, Bengkulu, DKI Jakarta, Maluku, Maluku Utara
+
+150. Teknisi Instalasi Jaringan
+   Instansi: Badan Informasi Geospasial
+   Kantor Pusat: Bogor
+   Persyaratan: Diploma II Teknik Geodesi
+   Lokasi Penempatan: Kepulauan Riau, Kepulauan Bangka Belitung, Lampung, Jawa Tengah, Kalimantan Barat, Kalimantan Selatan, Gorontalo, Sulawesi Barat, Sulawesi Selatan, Papua Barat Daya
+
+151. Administrator Database Junior
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma III/Sarjana Muda Teknik Informatika
+   Lokasi Penempatan: Riau, DKI Jakarta, Kalimantan Barat, Gorontalo, Sulawesi Tenggara, Papua Selatan
+
+152. Web Developer Junior
+   Instansi: Badan Siber dan Sandi Negara
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma III/Sarjana Muda Teknik Komputer
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Jambi, Lampung, Kalimantan Barat, Sulawesi Utara, Maluku, Papua Barat Daya
+
+153. Programmer Aplikasi Desktop
+   Instansi: Kementerian Lingkungan Hidup dan Kehutanan
+   Kantor Pusat: Bogor
+   Persyaratan: Diploma III/Sarjana Muda Teknik Lingkungan
+   Lokasi Penempatan: Aceh, Sumatera Utara, Jambi, Kalimantan Utara, Sulawesi Tenggara, Maluku Utara, Papua Pegunungan, Papua Barat Daya
+
+154. Teknisi Support Aplikasi
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Semarang
+   Persyaratan: Diploma III/Sarjana Muda Statistika
+   Lokasi Penempatan: Aceh, Kepulauan Riau, Jambi, Bengkulu, Jawa Barat, Sulawesi Utara, Sulawesi Barat, Papua Pegunungan, Papua Barat Daya
+
+155. Analis Sistem Junior
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma IV Sistem Informasi
+   Lokasi Penempatan: DKI Jakarta, Jawa Tengah, Kalimantan Utara, Maluku Utara, Papua Selatan, Papua Barat Daya
+
+156. Quality Assurance Tester
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma IV Manajemen
+   Lokasi Penempatan: Aceh, Kepulauan Riau, Kepulauan Bangka Belitung, Lampung, Jawa Timur, Nusa Tenggara Barat, Maluku Utara, Papua
+
+157. System Analyst
+   Instansi: Kementerian Lingkungan Hidup dan Kehutanan
+   Kantor Pusat: Bogor
+   Persyaratan: Diploma IV Teknik Lingkungan
+   Lokasi Penempatan: Aceh, Riau, Banten, DI Yogyakarta, Bali, Nusa Tenggara Timur, Maluku, Papua, Papua Barat, Papua Pegunungan
+
+158. Business Intelligence Analyst
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma IV Akuntansi
+   Lokasi Penempatan: Riau, Kepulauan Riau, Kepulauan Bangka Belitung, Banten, DI Yogyakarta, Kalimantan Tengah, Kalimantan Selatan, Maluku
+
+159. Network Engineer
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Jakarta
+   Persyaratan: S-1/Sarjana Teknik Informatika
+   Lokasi Penempatan: Lampung, DKI Jakarta, Bali, Nusa Tenggara Barat, Gorontalo, Sulawesi Tenggara, Papua, Papua Tengah, Papua Pegunungan
+
+160. Full Stack Developer
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Jakarta
+   Persyaratan: S-1/Sarjana Statistika
+   Lokasi Penempatan: Sumatera Barat, Jambi, DKI Jakarta, Kalimantan Tengah, Kalimantan Utara, Sulawesi Tenggara, Papua Selatan
+
+161. Mobile App Developer
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Bandung
+   Persyaratan: S-1/Sarjana Akuntansi
+   Lokasi Penempatan: Jawa Tengah, DI Yogyakarta, Kalimantan Tengah, Sulawesi Tengah, Papua, Papua Tengah
+
+162. DevOps Engineer
+   Instansi: Arsip Nasional Republik Indonesia
+   Kantor Pusat: Jakarta
+   Persyaratan: S-1/Sarjana Ilmu Perpustakaan
+   Lokasi Penempatan: Aceh, Sumatera Utara, Banten, Bali, Nusa Tenggara Barat, Kalimantan Utara, Maluku Utara
+
+163. Database Administrator
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Jakarta
+   Persyaratan: S-2 Administrasi Publik
+   Lokasi Penempatan: Riau, Jambi, Lampung, Jawa Timur, Nusa Tenggara Barat, Sulawesi Barat, Papua Barat, Papua Barat Daya
+
+164. Software Architect
+   Instansi: Lembaga Administrasi Negara
+   Kantor Pusat: Jakarta
+   Persyaratan: S-2 Manajemen
+   Lokasi Penempatan: Aceh, Sumatera Utara, Sumatera Barat, Riau, Bengkulu, DKI Jakarta, Jawa Tengah, Nusa Tenggara Timur, Maluku, Maluku Utara
+
+165. Cyber Security Specialist
+   Instansi: Badan Riset dan Inovasi Nasional
+   Kantor Pusat: Bandung
+   Persyaratan: S-2 Teknik Informatika
+   Lokasi Penempatan: Aceh, Sumatera Utara, Kepulauan Bangka Belitung, Jawa Barat, Jawa Timur, Nusa Tenggara Timur, Maluku, Maluku Utara, Papua Tengah, Papua Pegunungan
+
+166. IT Project Manager
+   Instansi: Kementerian Lingkungan Hidup dan Kehutanan
+   Kantor Pusat: Bogor
+   Persyaratan: S-2 Teknik Lingkungan
+   Lokasi Penempatan: Sumatera Utara, Sumatera Selatan, Lampung, Jawa Timur, Bali, Kalimantan Tengah, Kalimantan Selatan, Papua, Papua Barat Daya
+
+167. Enterprise Architect
+   Instansi: Badan Riset dan Inovasi Nasional
+   Kantor Pusat: Bandung
+   Persyaratan: S-3/Doktor Teknik Informatika
+   Lokasi Penempatan: Sumatera Utara, Sumatera Selatan, Jawa Timur, Bali, Kalimantan Barat, Kalimantan Tengah, Sulawesi Selatan, Maluku, Papua Barat Daya
+
+168. Chief Technology Officer
+   Instansi: Lembaga Ilmu Pengetahuan Indonesia
+   Kantor Pusat: Bogor
+   Persyaratan: S-3/Doktor Teknik Kimia
+   Lokasi Penempatan: Jawa Tengah, DI Yogyakarta, Kalimantan Barat, Kalimantan Utara, Papua Barat, Papua Barat Daya
+
+169. IT Strategy Consultant
+   Instansi: Badan Riset dan Inovasi Nasional
+   Kantor Pusat: Jakarta
+   Persyaratan: S-3/Doktor Statistika
+   Lokasi Penempatan: Riau, Kepulauan Riau, Jawa Timur, Bali, Papua, Papua Selatan
+
+170. Lead Data Scientist
+   Instansi: Kementerian Lingkungan Hidup dan Kehutanan
+   Kantor Pusat: Bogor
+   Persyaratan: S-3/Doktor Teknik Lingkungan
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Bangka Belitung, DKI Jakarta, Sulawesi Tenggara, Papua, Papua Pegunungan, Papua Selatan
+
+171. AI Research Scientist
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Aceh, Sumatera Utara, Banten, Jawa Timur, Nusa Tenggara Barat, Kalimantan Utara, Gorontalo, Sulawesi Tengah, Sulawesi Barat, Papua Barat Daya
+
+172. Chief Information Security Officer
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Aceh, Sumatera Utara, Riau, Bengkulu, DKI Jakarta, Banten, DI Yogyakarta, Sulawesi Tengah, Sulawesi Barat
+
+173. Digital Transformation Lead
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Bangka Belitung, Jawa Barat, Banten, Kalimantan Selatan, Sulawesi Tengah, Sulawesi Tenggara, Papua Tengah, Papua Barat Daya
+
+174. Cloud Solutions Architect
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Medan
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Kepulauan Riau, Jambi, Lampung, DKI Jakarta, Banten, Jawa Timur, Maluku
+
+175. Teknisi Elektro Gedung
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Aceh, Sumatera Selatan, Bengkulu, Banten, Kalimantan Selatan, Sulawesi Utara, Papua Tengah, Papua Selatan
+
+176. Operator Mesin Produksi
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Semarang
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Lampung, Banten, Kalimantan Barat, Kalimantan Selatan, Kalimantan Utara, Sulawesi Tengah, Maluku Utara, Papua, Papua Tengah
+
+177. Teknisi AC dan Refrigerator
+   Instansi: Puskesmas
+   Kantor Pusat: Yogyakarta
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Sumatera Barat, DKI Jakarta, Jawa Tengah, Nusa Tenggara Barat, Kalimantan Barat, Kalimantan Tengah, Sulawesi Barat, Papua
+
+178. Mekanik Kendaraan Dinas
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Denpasar
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Bengkulu, DKI Jakarta, Banten, DI Yogyakarta, Nusa Tenggara Barat, Kalimantan Selatan, Sulawesi Utara, Sulawesi Tenggara
+
+179. Teknisi Audio Visual
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTA Umum
+   Lokasi Penempatan: Riau, Kepulauan Bangka Belitung, Lampung, Jawa Barat, Nusa Tenggara Timur, Sulawesi Tenggara, Papua, Papua Barat, Papua Selatan, Papua Barat Daya
+
+180. Operator Broadcasting
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: SLTA Kesehatan Masyarakat
+   Lokasi Penempatan: Aceh, Jambi, Sumatera Selatan, Jawa Timur, Bali, Kalimantan Barat, Sulawesi Tengah, Papua, Papua Barat
+
+181. Editor Video dan Multimedia
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: SLTA Umum
+   Lokasi Penempatan: Sumatera Utara, Jawa Timur, Kalimantan Barat, Kalimantan Tengah, Maluku, Maluku Utara
+
+182. Desainer Grafis
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Makassar
+   Persyaratan: SLTA Kesehatan Masyarakat
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Bangka Belitung, Lampung, Banten, DI Yogyakarta, Kalimantan Selatan, Kalimantan Timur, Maluku, Papua Pegunungan
+
+183. Fotografer dan Videografer
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: SMK/SLTA Kejuruan Keperawatan
+   Lokasi Penempatan: Jambi, Jawa Tengah, Nusa Tenggara Timur, Sulawesi Utara, Gorontalo, Sulawesi Tengah, Maluku Utara
+
+184. Content Creator Digital
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: SMK/SLTA Kejuruan Analis Kesehatan
+   Lokasi Penempatan: Sumatera Utara, Lampung, DI Yogyakarta, Nusa Tenggara Timur, Sulawesi Tengah, Maluku, Papua Selatan
+
+185. Social Media Specialist
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: SMK/SLTA Kejuruan Farmasi
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Bangka Belitung, Lampung, Jawa Barat, Jawa Tengah, Kalimantan Selatan, Gorontalo, Sulawesi Tenggara, Papua Barat, Papua Pegunungan
+
+186. Digital Marketing Specialist
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Semarang
+   Persyaratan: SMK/SLTA Kejuruan Kebidanan
+   Lokasi Penempatan: Aceh, Sumatera Selatan, Jawa Tengah, Jawa Timur, Nusa Tenggara Timur, Sulawesi Utara, Sulawesi Barat, Maluku, Maluku Utara, Papua Barat Daya
+
+187. Public Relations Officer
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: SLTA Keguruan Kesehatan Masyarakat
+   Lokasi Penempatan: Kepulauan Riau, DKI Jakarta, Kalimantan Tengah, Kalimantan Utara, Papua, Papua Barat Daya
+
+188. Corporate Communication Manager
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: SLTA Keguruan Keperawatan
+   Lokasi Penempatan: Aceh, Sumatera Barat, Kepulauan Riau, Kepulauan Bangka Belitung, Bali, Sulawesi Barat, Papua Barat, Papua Pegunungan
+
+189. Brand Strategy Manager
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: SLTA Keguruan Gizi
+   Lokasi Penempatan: Jambi, Kepulauan Bangka Belitung, Jawa Tengah, Nusa Tenggara Timur, Kalimantan Timur, Sulawesi Utara, Sulawesi Tenggara, Papua Barat Daya
+
+190. Chief Marketing Officer
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Yogyakarta
+   Persyaratan: SLTA Keguruan Farmasi
+   Lokasi Penempatan: Aceh, Sumatera Utara, Jambi, Bengkulu, DI Yogyakarta, Sulawesi Tengah, Papua Selatan
+
+191. Asisten Perawat Klinik
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma I Keperawatan
+   Lokasi Penempatan: Kepulauan Riau, Jawa Timur, Bali, Kalimantan Tengah, Kalimantan Timur, Sulawesi Tengah, Sulawesi Tenggara, Maluku
+
+192. Petugas Rekam Medis
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma I Analis Kesehatan
+   Lokasi Penempatan: Kepulauan Riau, Sumatera Selatan, Banten, DI Yogyakarta, Sulawesi Tengah, Sulawesi Tenggara, Papua Selatan
+
+193. Asisten Apoteker
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma I Kebidanan
+   Lokasi Penempatan: Aceh, Lampung, Kalimantan Tengah, Kalimantan Timur, Gorontalo, Papua, Papua Tengah, Papua Selatan
+
+194. Petugas Administrasi Kesehatan
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Medan
+   Persyaratan: Diploma I Farmasi
+   Lokasi Penempatan: Jambi, Banten, Jawa Tengah, Nusa Tenggara Timur, Kalimantan Barat, Kalimantan Utara, Sulawesi Utara, Maluku Utara, Papua Barat, Papua Barat Daya
+
+195. Teknisi Elektromedis Dasar
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma II Keperawatan
+   Lokasi Penempatan: Banten, Nusa Tenggara Timur, Kalimantan Utara, Sulawesi Tengah, Maluku, Papua Barat
+
+196. Asisten Laboratorium Medis
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma II Kebidanan
+   Lokasi Penempatan: Riau, Jawa Barat, Nusa Tenggara Barat, Kalimantan Selatan, Kalimantan Utara, Sulawesi Selatan, Maluku, Papua Tengah
+
+197. Petugas Sterilisasi Alat Medis
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma II Analis Kesehatan
+   Lokasi Penempatan: Aceh, Sumatera Utara, Kepulauan Riau, Bali, Nusa Tenggara Timur, Kalimantan Tengah, Sulawesi Utara, Sulawesi Tenggara, Maluku Utara
+
+198. Asisten Radiologi
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Semarang
+   Persyaratan: Diploma II Farmasi
+   Lokasi Penempatan: Kepulauan Riau, Banten, Kalimantan Tengah, Kalimantan Selatan, Papua, Papua Tengah
+
+199. Perawat Ruang Rawat Inap
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma III/Sarjana Muda Keperawatan
+   Lokasi Penempatan: Jambi, Sumatera Selatan, Bengkulu, Lampung, Banten, Sulawesi Utara, Gorontalo, Papua Pegunungan
+
+200. Bidan Puskesmas
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma III/Sarjana Muda Kebidanan
+   Lokasi Penempatan: Sumatera Selatan, Bengkulu, Jawa Barat, Jawa Tengah, DI Yogyakarta, Nusa Tenggara Timur, Kalimantan Timur, Gorontalo, Sulawesi Selatan, Sulawesi Tenggara
+
+201. Analis Laboratorium Klinik
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma III/Sarjana Muda Analis Kesehatan
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Bengkulu, Banten, Jawa Tengah, Nusa Tenggara Barat, Kalimantan Selatan, Sulawesi Utara, Sulawesi Tenggara, Papua Barat, Papua Pegunungan
+
+202. Radiografer Diagnostik
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Medan
+   Persyaratan: Diploma III/Sarjana Muda Radiologi
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Jambi, Kepulauan Bangka Belitung, DKI Jakarta, Kalimantan Utara, Sulawesi Tengah, Sulawesi Selatan, Sulawesi Tenggara, Maluku Utara
+
+203. Perawat Anestesi
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: Diploma IV Keperawatan
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Riau, Kepulauan Bangka Belitung, DKI Jakarta, Kalimantan Timur, Maluku, Papua Barat, Papua Barat Daya
+
+204. Bidan Pendidik
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: Diploma IV Kebidanan
+   Lokasi Penempatan: Riau, Kepulauan Bangka Belitung, Lampung, Nusa Tenggara Timur, Kalimantan Timur, Kalimantan Utara, Gorontalo, Sulawesi Barat
+
+205. Analis Kesehatan Lanjut
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: Diploma IV Analis Kesehatan
+   Lokasi Penempatan: Bengkulu, Lampung, DKI Jakarta, Jawa Barat, Banten, Nusa Tenggara Barat, Kalimantan Utara, Sulawesi Utara, Sulawesi Tenggara, Papua Tengah
+
+206. Fisioterapis Rehabilitasi
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Yogyakarta
+   Persyaratan: Diploma IV Fisioterapi
+   Lokasi Penempatan: Sumatera Utara, Riau, Bengkulu, Jawa Barat, Jawa Timur, Nusa Tenggara Barat, Kalimantan Barat, Sulawesi Tenggara, Papua Barat
+
+207. Dokter Umum Layanan Primer
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: S-1/Sarjana Kedokteran
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Kalimantan Tengah, Kalimantan Timur, Gorontalo, Sulawesi Barat, Papua Tengah, Papua Selatan, Papua Barat Daya
+
+208. Perawat Bedah
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: S-1/Sarjana Keperawatan
+   Lokasi Penempatan: Sumatera Utara, Jambi, Kalimantan Tengah, Kalimantan Selatan, Kalimantan Utara, Gorontalo, Sulawesi Selatan, Sulawesi Tenggara, Maluku
+
+209. Apoteker Pelayanan Farmasi
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: S-1/Sarjana Farmasi
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Bangka Belitung, Jawa Barat, Banten, DI Yogyakarta, Bali, Kalimantan Utara, Papua, Papua Selatan
+
+210. Nutrisionis Klinis
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Semarang
+   Persyaratan: S-1/Sarjana Gizi
+   Lokasi Penempatan: Sumatera Utara, Jambi, Jawa Timur, Nusa Tenggara Timur, Kalimantan Timur, Kalimantan Utara, Sulawesi Utara, Sulawesi Barat
+
+211. Dokter Spesialis Paru
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: S-2 Kedokteran Spesialis
+   Lokasi Penempatan: Kepulauan Riau, DKI Jakarta, Nusa Tenggara Timur, Kalimantan Utara, Sulawesi Barat, Sulawesi Selatan, Maluku Utara
+
+212. Psikolog Klinis Anak dan Remaja
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: S-2 Psikologi Klinis
+   Lokasi Penempatan: Riau, Bengkulu, Nusa Tenggara Timur, Kalimantan Timur, Sulawesi Selatan, Maluku, Papua Barat
+
+213. Epidemiolog Penyakit Menular
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: S-2 Kesehatan Masyarakat
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Bangka Belitung, Lampung, Kalimantan Timur, Sulawesi Utara, Sulawesi Tenggara, Papua Barat
+
+214. Farmakolog Klinis
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Yogyakarta
+   Persyaratan: S-2 Farmasi
+   Lokasi Penempatan: Bengkulu, Banten, Bali, Nusa Tenggara Timur, Kalimantan Timur, Sulawesi Tengah, Sulawesi Selatan, Papua Barat, Papua Tengah, Papua Pegunungan
+
+215. Profesor Ilmu Kedokteran
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jakarta
+   Persyaratan: S-3/Doktor Kedokteran
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Jambi, Jawa Barat, Jawa Timur, Maluku Utara, Papua
+
+216. Peneliti Kesehatan Masyarakat Senior
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Bandung
+   Persyaratan: S-3/Doktor Kesehatan Masyarakat
+   Lokasi Penempatan: Aceh, Sumatera Barat, Riau, Kepulauan Riau, Lampung, DI Yogyakarta, Bali, Nusa Tenggara Barat, Kalimantan Timur, Sulawesi Barat
+
+217. Peneliti Farmasi dan Obat Tradisional
+   Instansi: Puskesmas
+   Kantor Pusat: Surabaya
+   Persyaratan: S-3/Doktor Farmasi
+   Lokasi Penempatan: Sumatera Barat, Lampung, Jawa Barat, Jawa Timur, Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Tengah, Kalimantan Timur, Maluku Utara, Papua Pegunungan
+
+218. Peneliti Gizi dan Pangan
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Yogyakarta
+   Persyaratan: S-3/Doktor Gizi
+   Lokasi Penempatan: Aceh, Riau, Bengkulu, Nusa Tenggara Timur, Kalimantan Timur, Papua Barat, Papua Pegunungan, Papua Selatan
+
+219. Analis Kebijakan Fiskal
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Aceh
+   Persyaratan: S-1/Sarjana Ilmu Ekonomi
+   Lokasi Penempatan: Kepulauan Riau, DKI Jakarta, Jawa Tengah, Jawa Timur, Kalimantan Barat, Kalimantan Tengah, Kalimantan Timur, Sulawesi Barat, Maluku
+
+220. Auditor Internal Pemerintah
+   Instansi: Badan Pemeriksa Keuangan
+   Kantor Pusat: Sumatera Utara
+   Persyaratan: S-1/Sarjana Akuntansi
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Jambi, Sumatera Selatan, DKI Jakarta, Gorontalo, Sulawesi Tengah, Sulawesi Selatan, Sulawesi Tenggara, Maluku Utara
+
+221. Perencana Pembangunan Infrastruktur
+   Instansi: Kementerian PUPR
+   Kantor Pusat: Sumatera Barat
+   Persyaratan: S-1/Sarjana Teknik Sipil
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Jawa Tengah, Kalimantan Barat, Kalimantan Tengah, Sulawesi Barat, Papua Barat
+
+222. Analis Data Kependudukan
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Riau
+   Persyaratan: S-1/Sarjana Statistika
+   Lokasi Penempatan: Kalimantan Barat, Kalimantan Tengah, Sulawesi Utara, Gorontalo, Sulawesi Barat, Maluku, Maluku Utara, Papua Barat, Papua Pegunungan
+
+223. Pranata Sistem Informasi
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Kepulauan Riau
+   Persyaratan: S-1/Sarjana Teknik Informatika
+   Lokasi Penempatan: Riau, Sumatera Selatan, DI Yogyakarta, Nusa Tenggara Timur, Sulawesi Barat, Maluku Utara, Papua Barat Daya
+
+224. Ahli Hukum Pemerintahan
+   Instansi: Kementerian Hukum dan HAM
+   Kantor Pusat: Jambi
+   Persyaratan: S-2 Ilmu Hukum
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Riau, Bali, Kalimantan Tengah, Sulawesi Barat, Maluku
+
+225. Pengelola Keuangan APBN
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Sumatera Selatan
+   Persyaratan: S-1/Sarjana Akuntansi
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Lampung, DKI Jakarta, Jawa Tengah, Kalimantan Selatan, Papua Barat, Papua Tengah
+
+226. Surveyor Pemetaan Wilayah
+   Instansi: Badan Informasi Geospasial
+   Kantor Pusat: Bangka Belitung
+   Persyaratan: S-1/Sarjana Teknik Geodesi
+   Lokasi Penempatan: Jambi, Lampung, Jawa Barat, Kalimantan Barat, Kalimantan Selatan, Kalimantan Utara, Sulawesi Utara, Sulawesi Selatan, Papua Barat Daya
+
+227. Analis Kebijakan Publik
+   Instansi: Kementerian PAN-RB
+   Kantor Pusat: Bengkulu
+   Persyaratan: S-2 Administrasi Publik
+   Lokasi Penempatan: Kepulauan Riau, Jambi, Sumatera Selatan, Bali, Kalimantan Timur, Gorontalo, Papua Barat, Papua Selatan, Papua Barat Daya
+
+228. Peneliti Bioteknologi
+   Instansi: Badan Riset dan Inovasi Nasional
+   Kantor Pusat: Lampung
+   Persyaratan: S-3/Doktor Biologi
+   Lokasi Penempatan: Kepulauan Riau, Sumatera Selatan, Lampung, Bali, Kalimantan Barat, Kalimantan Tengah, Sulawesi Utara, Sulawesi Tenggara, Papua, Papua Pegunungan
+
+229. Widyaiswara Aparatur
+   Instansi: Lembaga Administrasi Negara
+   Kantor Pusat: DKI Jakarta
+   Persyaratan: S-2 Administrasi Publik
+   Lokasi Penempatan: Sumatera Utara, Jambi, Kalimantan Utara, Sulawesi Tenggara, Maluku Utara, Papua Pegunungan, Papua Barat Daya
+
+230. Arsiparis Digital
+   Instansi: Arsip Nasional Republik Indonesia
+   Kantor Pusat: Jawa Barat
+   Persyaratan: S-1/Sarjana Ilmu Perpustakaan
+   Lokasi Penempatan: Aceh, Riau, Kepulauan Riau, Banten, Nusa Tenggara Barat, Gorontalo, Maluku
+
+231. Analis Manajemen SDM
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Banten
+   Persyaratan: S-1/Sarjana Psikologi
+   Lokasi Penempatan: Sumatera Utara, Riau, Jambi, Sumatera Selatan, Bengkulu, Lampung, DKI Jakarta, Kalimantan Selatan, Papua, Papua Barat
+
+232. Perencana Tata Ruang Kota
+   Instansi: Badan Perencanaan Pembangunan Nasional
+   Kantor Pusat: Jawa Tengah
+   Persyaratan: S-2 Perencanaan Wilayah dan Kota
+   Lokasi Penempatan: Aceh, Kepulauan Bangka Belitung, DKI Jakarta, Jawa Timur, Sulawesi Utara, Sulawesi Barat, Sulawesi Selatan, Papua Tengah
+
+233. Pranata Humas Digital
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: DI Yogyakarta
+   Persyaratan: S-1/Sarjana Ilmu Komunikasi
+   Lokasi Penempatan: DKI Jakarta, Jawa Tengah, Jawa Timur, Nusa Tenggara Timur, Sulawesi Tengah, Sulawesi Barat, Maluku Utara, Papua Tengah, Papua Barat Daya
+
+234. Analis Pertanian Berkelanjutan
+   Instansi: Kementerian Pertanian
+   Kantor Pusat: Jawa Timur
+   Persyaratan: S-1/Sarjana Agronomi
+   Lokasi Penempatan: Sumatera Utara, Sumatera Selatan, Bengkulu, DI Yogyakarta, Jawa Timur, Nusa Tenggara Timur, Sulawesi Tengah
+
+235. Teknisi Jaringan Keamanan Siber
+   Instansi: Badan Siber dan Sandi Negara
+   Kantor Pusat: Bali
+   Persyaratan: Diploma III/Sarjana Muda Teknik Komputer
+   Lokasi Penempatan: Sumatera Utara, Riau, Nusa Tenggara Timur, Kalimantan Barat, Kalimantan Utara, Sulawesi Selatan, Papua Barat
+
+236. Desainer Grafis Promosi Pariwisata
+   Instansi: Kementerian Pariwisata
+   Kantor Pusat: Nusa Tenggara Barat
+   Persyaratan: S-1/Sarjana Desain Komunikasi Visual
+   Lokasi Penempatan: Jambi, Jawa Barat, Kalimantan Barat, Kalimantan Timur, Sulawesi Barat, Sulawesi Tenggara, Papua Pegunungan
+
+237. Analis Lingkungan Hidup
+   Instansi: Kementerian Lingkungan Hidup dan Kehutanan
+   Kantor Pusat: Nusa Tenggara Timur
+   Persyaratan: S-1/Sarjana Teknik Lingkungan
+   Lokasi Penempatan: Sumatera Utara, Bengkulu, Bali, Nusa Tenggara Barat, Nusa Tenggara Timur, Sulawesi Tengah, Papua Pegunungan, Papua Selatan, Papua Barat Daya
+
+238. Operator Teknisi Listrik
+   Instansi: PLN
+   Kantor Pusat: Kalimantan Barat
+   Persyaratan: SMK/SLTA Kejuruan Teknik Ketenagalistrikan
+   Lokasi Penempatan: Bengkulu, DKI Jakarta, Jawa Timur, Nusa Tenggara Barat, Nusa Tenggara Timur, Sulawesi Selatan, Maluku Utara, Papua Barat, Papua Pegunungan
+
+239. Teknisi Mesin Industri
+   Instansi: Kementerian Perindustrian
+   Kantor Pusat: Kalimantan Tengah
+   Persyaratan: SMK/SLTA Kejuruan Teknik Mesin
+   Lokasi Penempatan: Sumatera Selatan, Jawa Barat, Bali, Sulawesi Barat, Sulawesi Tenggara, Maluku
+
+240. Asisten Pengelola Arsip
+   Instansi: Sekretariat Negara
+   Kantor Pusat: Kalimantan Selatan
+   Persyaratan: Diploma I Administrasi Perkantoran
+   Lokasi Penempatan: Lampung, DKI Jakarta, Jawa Tengah, Nusa Tenggara Barat, Kalimantan Barat, Kalimantan Tengah, Kalimantan Utara, Sulawesi Utara, Papua Barat
+
+241. Peneliti Energi Terbarukan
+   Instansi: Badan Riset dan Inovasi Nasional
+   Kantor Pusat: Kalimantan Timur
+   Persyaratan: S-3/Doktor Teknik Kimia
+   Lokasi Penempatan: Sumatera Selatan, Kepulauan Bangka Belitung, Banten, Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Selatan, Maluku, Papua Pegunungan, Papua Selatan
+
+242. Analis Perdagangan Internasional
+   Instansi: Kementerian Perdagangan
+   Kantor Pusat: Kalimantan Utara
+   Persyaratan: S-1/Sarjana Ilmu Ekonomi
+   Lokasi Penempatan: Sumatera Barat, Lampung, Kalimantan Timur, Gorontalo, Sulawesi Barat, Papua, Papua Selatan
+
+243. Satuan Pengamanan Kantor
+   Instansi: Kementerian Dalam Negeri
+   Kantor Pusat: Sulawesi Utara
+   Persyaratan: SLTP Umum
+   Lokasi Penempatan: Banten, Jawa Tengah, Nusa Tenggara Timur, Kalimantan Timur, Gorontalo, Maluku Utara, Papua Pegunungan
+
+244. Petugas Pemeliharaan Gedung
+   Instansi: Kementerian Pekerjaan Umum
+   Kantor Pusat: Gorontalo
+   Persyaratan: SD Umum
+   Lokasi Penempatan: Jambi, Lampung, DI Yogyakarta, Kalimantan Tengah, Sulawesi Barat, Papua, Papua Barat Daya
+
+245. Teknisi Konstruksi Jalan
+   Instansi: Kementerian PUPR
+   Kantor Pusat: Sulawesi Tengah
+   Persyaratan: Diploma II Teknik Sipil
+   Lokasi Penempatan: Riau, Jawa Barat, DI Yogyakarta, Kalimantan Selatan, Sulawesi Utara, Gorontalo, Sulawesi Barat, Sulawesi Tenggara
+
+246. Analis Kebijakan Kesejahteraan Sosial
+   Instansi: Kementerian Sosial
+   Kantor Pusat: Sulawesi Selatan
+   Persyaratan: S-1/Sarjana Ilmu Administrasi Negara
+   Lokasi Penempatan: Kepulauan Riau, Sumatera Selatan, Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Barat, Kalimantan Selatan, Kalimantan Utara, Papua Selatan
+
+247. Fasilitator Pemberdayaan Masyarakat
+   Instansi: Kementerian Desa
+   Kantor Pusat: Sulawesi Barat
+   Persyaratan: S-1/Sarjana Manajemen
+   Lokasi Penempatan: Kepulauan Riau, Jawa Tengah, Jawa Timur, Kalimantan Utara, Gorontalo, Sulawesi Tengah, Maluku Utara, Papua
+
+248. Penyuluh Pertanian Lapangan
+   Instansi: Dinas Pertanian
+   Kantor Pusat: Sulawesi Tenggara
+   Persyaratan: S-1/Sarjana Agronomi
+   Lokasi Penempatan: Aceh, Kepulauan Riau, Sumatera Selatan, DKI Jakarta, Kalimantan Selatan, Sulawesi Utara, Sulawesi Tengah, Papua Tengah
+
+249. Operator Sistem Informasi Geografis
+   Instansi: Badan Informasi Geospasial
+   Kantor Pusat: Maluku
+   Persyaratan: Diploma III/Sarjana Muda Teknik Geodesi
+   Lokasi Penempatan: Jambi, DKI Jakarta, Jawa Timur, Kalimantan Utara, Papua, Papua Barat Daya
+
+250. Analis Kelautan dan Perikanan
+   Instansi: Kementerian Kelautan dan Perikanan
+   Kantor Pusat: Maluku Utara
+   Persyaratan: S-1/Sarjana Ilmu Kelautan
+   Lokasi Penempatan: Sumatera Barat, Riau, Kepulauan Riau, Jambi, Lampung, DKI Jakarta, Jawa Barat, Papua Barat, Papua Selatan, Papua Barat Daya
+
+251. Peneliti Antropologi Budaya
+   Instansi: Lembaga Ilmu Pengetahuan Indonesia
+   Kantor Pusat: Papua
+   Persyaratan: S-3/Doktor Antropologi
+   Lokasi Penempatan: Aceh, Kepulauan Riau, Sumatera Selatan, Jawa Barat, Jawa Tengah, Nusa Tenggara Timur, Kalimantan Barat, Sulawesi Utara, Sulawesi Tenggara, Papua
+
+252. Teknisi Telekomunikasi
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Papua Barat
+   Persyaratan: SMK/SLTA Kejuruan Teknik Elektro
+   Lokasi Penempatan: Riau, Jawa Barat, Banten, Jawa Tengah, Kalimantan Timur, Kalimantan Utara, Sulawesi Tengah, Maluku, Maluku Utara
+
+253. Guru Pendamping Khusus
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Papua Tengah
+   Persyaratan: SLTA Keguruan Pendidikan
+   Lokasi Penempatan: Aceh, Sumatera Utara, Kepulauan Riau, Kepulauan Bangka Belitung, DKI Jakarta, Nusa Tenggara Barat, Kalimantan Barat, Sulawesi Selatan, Maluku, Papua Selatan
+
+254. Analis Pembangunan Daerah
+   Instansi: Badan Perencanaan Pembangunan Nasional
+   Kantor Pusat: Papua Pegunungan
+   Persyaratan: S-2 Perencanaan Wilayah dan Kota
+   Lokasi Penempatan: Sumatera Barat, Riau, Jambi, Nusa Tenggara Timur, Kalimantan Selatan, Sulawesi Utara, Sulawesi Barat, Sulawesi Tenggara, Papua Barat
+
+255. Pengelola Database Kependudukan
+   Instansi: Kementerian Dalam Negeri
+   Kantor Pusat: Papua Selatan
+   Persyaratan: Diploma IV Sistem Informasi
+   Lokasi Penempatan: Aceh, Jambi, Kepulauan Bangka Belitung, DI Yogyakarta, Kalimantan Timur, Kalimantan Utara, Sulawesi Tengah, Sulawesi Selatan, Papua
+
+256. Teknisi Laboratorium Lingkungan
+   Instansi: Kementerian Lingkungan Hidup dan Kehutanan
+   Kantor Pusat: Papua Barat Daya
+   Persyaratan: Diploma III/Sarjana Muda Teknik Lingkungan
+   Lokasi Penempatan: Sumatera Barat, Bengkulu, DKI Jakarta, DI Yogyakarta, Jawa Timur, Bali, Sulawesi Barat, Sulawesi Selatan, Papua, Papua Tengah
+
+257. Guru Matematika untuk Sekolah Unggulan
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Aceh
+   Persyaratan: S-1/Sarjana Pendidikan Matematika
+   Lokasi Penempatan: Riau, Kepulauan Bangka Belitung, Banten, DI Yogyakarta, Kalimantan Barat, Kalimantan Tengah, Sulawesi Utara, Sulawesi Barat, Sulawesi Selatan, Papua Barat
+
+258. Guru Bahasa Inggris untuk Program Bilingual
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Sumatera Utara
+   Persyaratan: S-1/Sarjana Pendidikan Bahasa Inggris
+   Lokasi Penempatan: Jawa Tengah, DI Yogyakarta, Nusa Tenggara Barat, Sulawesi Selatan, Papua, Papua Tengah, Papua Selatan
+
+259. Guru Pendidikan Jasmani dan Kesehatan
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Sumatera Barat
+   Persyaratan: S-1/Sarjana Pendidikan Jasmani dan Kesehatan
+   Lokasi Penempatan: Sumatera Selatan, Kalimantan Tengah, Kalimantan Timur, Gorontalo, Sulawesi Barat, Papua Pegunungan, Papua Barat Daya
+
+260. Guru Seni Budaya dan Prakarya
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Riau
+   Persyaratan: S-1/Sarjana Pendidikan Seni Rupa
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Bengkulu, Jawa Barat, Banten, Jawa Tengah, Bali, Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Barat, Sulawesi Selatan
+
+261. Guru IPA Terpadu SMP
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Kepulauan Riau
+   Persyaratan: S-1/Sarjana Pendidikan IPA
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Riau, Kepulauan Bangka Belitung, Jawa Barat, Nusa Tenggara Barat, Kalimantan Selatan, Sulawesi Selatan, Maluku Utara, Papua Selatan
+
+262. Guru Bimbingan dan Konseling
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Jambi
+   Persyaratan: S-1/Sarjana Bimbingan dan Konseling
+   Lokasi Penempatan: Bengkulu, Jawa Timur, Kalimantan Selatan, Sulawesi Utara, Gorontalo, Sulawesi Tengah, Sulawesi Barat, Papua Barat, Papua Tengah
+
+263. Guru Kelas Sekolah Dasar
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Sumatera Selatan
+   Persyaratan: S-1/Sarjana Pendidikan Guru Sekolah Dasar
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Kepulauan Riau, Kepulauan Bangka Belitung, Bengkulu, DKI Jakarta, Jawa Timur, Sulawesi Barat, Sulawesi Selatan, Maluku Utara
+
+264. Guru TK untuk Anak Usia Dini
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Bangka Belitung
+   Persyaratan: S-1/Sarjana Pendidikan Anak Usia Dini
+   Lokasi Penempatan: Kepulauan Riau, DKI Jakarta, Nusa Tenggara Barat, Kalimantan Tengah, Sulawesi Tenggara, Papua Selatan, Papua Barat Daya
+
+265. Guru Fisika untuk Kelas Eksperimen
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Bengkulu
+   Persyaratan: S-1/Sarjana Pendidikan Fisika
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Riau, Banten, DI Yogyakarta, Bali, Gorontalo, Papua Barat
+
+266. Guru Kimia dan Laboratorium
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Lampung
+   Persyaratan: S-1/Sarjana Pendidikan Kimia
+   Lokasi Penempatan: Aceh, Sumatera Barat, Kepulauan Bangka Belitung, Bali, Kalimantan Timur, Papua Selatan, Papua Barat Daya
+
+267. Guru Bahasa Indonesia dan Sastra
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: DKI Jakarta
+   Persyaratan: S-1/Sarjana Pendidikan Bahasa Indonesia
+   Lokasi Penempatan: Lampung, DI Yogyakarta, Bali, Kalimantan Tengah, Sulawesi Barat, Maluku Utara, Papua Pegunungan
+
+268. Guru Sejarah dan Kebudayaan Lokal
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Jawa Barat
+   Persyaratan: S-1/Sarjana Pendidikan Sejarah
+   Lokasi Penempatan: Riau, Bengkulu, Kalimantan Selatan, Gorontalo, Sulawesi Tengah, Papua, Papua Barat
+
+269. Guru Teknologi Informasi
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Banten
+   Persyaratan: S-1/Sarjana Pendidikan Teknologi Informasi
+   Lokasi Penempatan: Aceh, Sumatera Barat, Sumatera Selatan, Bengkulu, DKI Jakarta, Banten, Kalimantan Barat, Sulawesi Tenggara, Papua Selatan
+
+270. Guru Ekonomi dan Kewirausahaan
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Jawa Tengah
+   Persyaratan: S-1/Sarjana Pendidikan Ekonomi
+   Lokasi Penempatan: DKI Jakarta, Jawa Tengah, Bali, Nusa Tenggara Timur, Sulawesi Tenggara, Maluku Utara, Papua
+
+271. Guru Geografi dan Lingkungan
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: DI Yogyakarta
+   Persyaratan: S-1/Sarjana Pendidikan Geografi
+   Lokasi Penempatan: Bengkulu, Lampung, DKI Jakarta, Banten, Jawa Timur, Kalimantan Timur, Papua Barat
+
+272. Guru Pendidikan Agama Islam
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Jawa Timur
+   Persyaratan: S-1/Sarjana Pendidikan Agama Islam
+   Lokasi Penempatan: Aceh, Riau, Jambi, Sumatera Selatan, Bengkulu, Bali, Sulawesi Utara, Maluku, Papua Tengah, Papua Pegunungan
+
+273. Guru Muatan Lokal Bahasa Daerah
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Bali
+   Persyaratan: S-1/Sarjana Pendidikan Bahasa Daerah
+   Lokasi Penempatan: Aceh, Sumatera Barat, Kalimantan Tengah, Kalimantan Selatan, Kalimantan Timur, Sulawesi Barat, Maluku, Papua, Papua Pegunungan
+
+274. Guru Sosiologi dan Antropologi
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Nusa Tenggara Barat
+   Persyaratan: S-1/Sarjana Pendidikan Sosiologi
+   Lokasi Penempatan: Kepulauan Riau, Jawa Barat, Sulawesi Utara, Sulawesi Tengah, Sulawesi Barat, Papua Barat, Papua Tengah
+
+275. Guru Pendidikan Kewarganegaraan
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Nusa Tenggara Timur
+   Persyaratan: S-1/Sarjana Pendidikan Pancasila dan Kewarganegaraan
+   Lokasi Penempatan: Aceh, Bengkulu, DKI Jakarta, DI Yogyakarta, Kalimantan Selatan, Sulawesi Utara, Gorontalo, Papua Barat
+
+276. Guru Biologi dan Ekosistem
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Kalimantan Barat
+   Persyaratan: S-1/Sarjana Pendidikan Biologi
+   Lokasi Penempatan: Aceh, Sumatera Barat, Riau, Jambi, Jawa Timur, Nusa Tenggara Timur, Kalimantan Selatan, Maluku Utara, Papua Barat Daya
+
+277. Guru Musik dan Seni Pertunjukan
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Kalimantan Tengah
+   Persyaratan: S-1/Sarjana Pendidikan Seni Musik
+   Lokasi Penempatan: Aceh, Kepulauan Riau, Sumatera Selatan, Jawa Timur, Kalimantan Barat, Kalimantan Timur, Sulawesi Tenggara, Maluku, Maluku Utara, Papua Barat
+
+278. Guru Prakarya dan Kewirausahaan
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Kalimantan Selatan
+   Persyaratan: S-1/Sarjana Pendidikan Kesejahteraan Keluarga
+   Lokasi Penempatan: Sumatera Utara, Riau, Jambi, Jawa Tengah, Kalimantan Tengah, Sulawesi Barat, Sulawesi Selatan, Sulawesi Tenggara
+
+279. Guru Matematika untuk Kelas Unggulan
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Kalimantan Timur
+   Persyaratan: S-2 Pendidikan Matematika
+   Lokasi Penempatan: Kepulauan Riau, Jambi, Kepulauan Bangka Belitung, DKI Jakarta, Banten, Jawa Tengah, Jawa Timur, Gorontalo, Sulawesi Selatan, Papua Barat Daya
+
+280. Guru Bahasa Inggris Conversation
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Kalimantan Utara
+   Persyaratan: S-1/Sarjana Pendidikan Bahasa Inggris
+   Lokasi Penempatan: Kepulauan Riau, Jambi, DKI Jakarta, Jawa Barat, DI Yogyakarta, Sulawesi Utara, Maluku, Papua
+
+281. Guru Pendidikan Luar Biasa
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Sulawesi Utara
+   Persyaratan: S-1/Sarjana Pendidikan Luar Biasa
+   Lokasi Penempatan: Jambi, Jawa Barat, Jawa Timur, Kalimantan Selatan, Papua Pegunungan, Papua Selatan, Papua Barat Daya
+
+282. Guru Tata Boga dan Kuliner
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Gorontalo
+   Persyaratan: S-1/Sarjana Pendidikan Tata Boga
+   Lokasi Penempatan: Aceh, Jawa Barat, DI Yogyakarta, Jawa Timur, Nusa Tenggara Timur, Kalimantan Tengah, Kalimantan Timur, Sulawesi Barat, Maluku
+
+283. Guru Tata Busana dan Fashion
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Sulawesi Tengah
+   Persyaratan: S-1/Sarjana Pendidikan Tata Busana
+   Lokasi Penempatan: Sumatera Utara, Riau, Bengkulu, Jawa Tengah, Kalimantan Utara, Gorontalo, Maluku Utara, Papua, Papua Tengah
+
+284. Guru Robotika dan Coding
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Sulawesi Selatan
+   Persyaratan: S-1/Sarjana Pendidikan Teknik Informatika
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Bangka Belitung, DKI Jakarta, Nusa Tenggara Barat, Sulawesi Utara, Sulawesi Tengah, Papua Barat Daya
+
+285. Guru Pendidikan Jasmani Adaptif
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Sulawesi Barat
+   Persyaratan: S-1/Sarjana Pendidikan Jasmani
+   Lokasi Penempatan: Bengkulu, Banten, Kalimantan Barat, Gorontalo, Sulawesi Tengah, Papua, Papua Tengah, Papua Pegunungan, Papua Barat Daya
+
+286. Guru Seni Tari Tradisional
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Sulawesi Tenggara
+   Persyaratan: S-1/Sarjana Pendidikan Seni Tari
+   Lokasi Penempatan: Sumatera Barat, Riau, Kepulauan Riau, Jawa Barat, DI Yogyakarta, Bali, Nusa Tenggara Barat, Kalimantan Utara, Sulawesi Barat, Papua Selatan
+
+287. Guru Matematika Terapan
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Maluku
+   Persyaratan: S-1/Sarjana Pendidikan Matematika
+   Lokasi Penempatan: Sumatera Selatan, Bengkulu, DI Yogyakarta, Gorontalo, Sulawesi Tengah, Maluku Utara, Papua, Papua Selatan
+
+288. Guru Bahasa Inggris untuk SD
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Maluku Utara
+   Persyaratan: S-1/Sarjana Pendidikan Bahasa Inggris
+   Lokasi Penempatan: Aceh, Sumatera Utara, Sumatera Barat, Kepulauan Bangka Belitung, Jawa Timur, Kalimantan Utara, Papua, Papua Barat, Papua Selatan
+
+289. Guru Literasi dan Numerasi
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Papua
+   Persyaratan: S-1/Sarjana Pendidikan Guru Sekolah Dasar
+   Lokasi Penempatan: Sumatera Barat, Jambi, Kepulauan Bangka Belitung, Lampung, Jawa Barat, DI Yogyakarta, Kalimantan Selatan, Sulawesi Tengah, Papua Barat, Papua Tengah
+
+290. Guru Pendidikan Multikultural
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Papua Barat
+   Persyaratan: S-1/Sarjana Pendidikan Kewarganegaraan
+   Lokasi Penempatan: Sumatera Utara, Riau, Jawa Barat, Kalimantan Tengah, Kalimantan Selatan, Kalimantan Utara, Gorontalo, Sulawesi Selatan, Papua Barat Daya
+
+291. Guru Keterampilan Hidup
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Papua Tengah
+   Persyaratan: S-1/Sarjana Pendidikan Kesejahteraan Keluarga
+   Lokasi Penempatan: Riau, DKI Jakarta, Jawa Barat, Banten, Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Utara, Sulawesi Tengah, Papua Barat Daya
+
+292. Guru Pendidikan Karakter
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Papua Pegunungan
+   Persyaratan: S-1/Sarjana Pendidikan Pancasila dan Kewarganegaraan
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Bengkulu, Banten, Jawa Timur, Kalimantan Barat, Kalimantan Timur, Kalimantan Utara, Sulawesi Tenggara, Papua
+
+293. Guru IPS Terpadu
+   Instansi: Kementerian Pendidikan dan Kebudayaan
+   Kantor Pusat: Papua Selatan
+   Persyaratan: S-1/Sarjana Pendidikan IPS
+   Lokasi Penempatan: Banten, Jawa Timur, Nusa Tenggara Timur, Kalimantan Timur, Gorontalo, Maluku, Papua
+
+294. Guru Pendidikan Lingkungan Hidup
+   Instansi: Dinas Pendidikan
+   Kantor Pusat: Papua Barat Daya
+   Persyaratan: S-1/Sarjana Pendidikan Biologi
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Bangka Belitung, Lampung, Banten, Jawa Tengah, Kalimantan Utara, Sulawesi Utara, Maluku Utara, Papua Barat Daya
+
+295. Spesialis Keamanan Siber
+   Instansi: Badan Siber dan Sandi Negara
+   Kantor Pusat: Aceh
+   Persyaratan: S-1/Sarjana Teknik Informatika
+   Lokasi Penempatan: Bengkulu, Nusa Tenggara Timur, Kalimantan Barat, Kalimantan Utara, Gorontalo, Sulawesi Tengah, Maluku, Maluku Utara, Papua, Papua Selatan
+
+296. Ahli Data Science
+   Instansi: Badan Pusat Statistik
+   Kantor Pusat: Sumatera Utara
+   Persyaratan: S-1/Sarjana Statistika
+   Lokasi Penempatan: Aceh, Sumatera Barat, Bengkulu, Banten, DI Yogyakarta, Sulawesi Tenggara, Maluku, Papua Tengah, Papua Selatan
+
+297. Spesialis Cloud Computing
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Sumatera Barat
+   Persyaratan: S-1/Sarjana Sistem Informasi
+   Lokasi Penempatan: Sumatera Barat, Riau, Sumatera Selatan, Lampung, Jawa Tengah, Jawa Timur, Bali, Nusa Tenggara Barat, Kalimantan Tengah, Papua
+
+298. Analis Business Intelligence
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Riau
+   Persyaratan: S-1/Sarjana Sistem Informasi
+   Lokasi Penempatan: Riau, Jambi, DKI Jakarta, Kalimantan Timur, Maluku Utara, Papua Barat Daya
+
+299. Desainer UX/UI Aplikasi Pemerintah
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Kepulauan Riau
+   Persyaratan: S-1/Sarjana Desain Komunikasi Visual
+   Lokasi Penempatan: Aceh, DI Yogyakarta, Nusa Tenggara Timur, Kalimantan Barat, Sulawesi Tengah, Sulawesi Selatan, Papua Tengah
+
+300. Spesialis Multimedia Broadcasting
+   Instansi: Lembaga Penyiaran Publik
+   Kantor Pusat: Jambi
+   Persyaratan: Diploma III/Sarjana Muda Teknik Multimedia
+   Lokasi Penempatan: DKI Jakarta, DI Yogyakarta, Nusa Tenggara Timur, Sulawesi Utara, Sulawesi Tengah, Sulawesi Tenggara, Papua Tengah
+
+301. Analis Keuangan dan Investasi
+   Instansi: Kementerian Keuangan
+   Kantor Pusat: Sumatera Selatan
+   Persyaratan: S-1/Sarjana Akuntansi
+   Lokasi Penempatan: Kepulauan Riau, Jambi, Sumatera Selatan, Jawa Barat, Jawa Tengah, Sulawesi Utara, Sulawesi Tengah, Maluku
+
+302. Spesialis Geographic Information System
+   Instansi: Badan Informasi Geospasial
+   Kantor Pusat: Bangka Belitung
+   Persyaratan: S-1/Sarjana Teknik Geodesi
+   Lokasi Penempatan: Sumatera Utara, Lampung, Nusa Tenggara Timur, Kalimantan Timur, Papua Tengah, Papua Pegunungan
+
+303. Pustakawan Digital
+   Instansi: Arsip Nasional Republik Indonesia
+   Kantor Pusat: Bengkulu
+   Persyaratan: S-1/Sarjana Ilmu Perpustakaan
+   Lokasi Penempatan: Sumatera Utara, Jambi, Jawa Barat, Jawa Tengah, Kalimantan Barat, Gorontalo, Sulawesi Tengah, Sulawesi Selatan, Papua, Papua Selatan
+
+304. Analis Manajemen Risiko
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Lampung
+   Persyaratan: S-1/Sarjana Manajemen
+   Lokasi Penempatan: Riau, DKI Jakarta, Kalimantan Timur, Kalimantan Utara, Gorontalo, Maluku, Papua, Papua Tengah
+
+305. Spesialis Database Administrator
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: DKI Jakarta
+   Persyaratan: S-1/Sarjana Teknik Informatika
+   Lokasi Penempatan: Kepulauan Riau, Lampung, Jawa Tengah, Nusa Tenggara Barat, Sulawesi Tengah, Maluku Utara, Papua Barat, Papua Pegunungan
+
+306. Analis Kebijakan Agraria
+   Instansi: Kementerian Agraria dan Tata Ruang
+   Kantor Pusat: Jawa Barat
+   Persyaratan: S-2 Administrasi Publik
+   Lokasi Penempatan: Aceh, Bengkulu, Banten, Jawa Tengah, Jawa Timur, Nusa Tenggara Timur, Maluku Utara
+
+307. Spesialis Machine Learning
+   Instansi: Badan Riset dan Inovasi Nasional
+   Kantor Pusat: Banten
+   Persyaratan: S-2 Teknik Informatika
+   Lokasi Penempatan: Jambi, Kepulauan Bangka Belitung, Bengkulu, Lampung, Kalimantan Tengah, Kalimantan Utara, Papua Barat, Papua Tengah, Papua Pegunungan
+
+308. Analis Supply Chain Management
+   Instansi: Kementerian Perdagangan
+   Kantor Pusat: Jawa Tengah
+   Persyaratan: S-1/Sarjana Manajemen
+   Lokasi Penempatan: Sumatera Utara, Sumatera Selatan, Lampung, DKI Jakarta, Kalimantan Barat, Kalimantan Tengah, Papua Pegunungan
+
+309. Spesialis Konstruksi Bangunan Hijau
+   Instansi: Kementerian PUPR
+   Kantor Pusat: DI Yogyakarta
+   Persyaratan: S-1/Sarjana Teknik Sipil
+   Lokasi Penempatan: Aceh, Sumatera Barat, Kepulauan Bangka Belitung, DI Yogyakarta, Nusa Tenggara Barat, Sulawesi Selatan
+
+310. Analis Pasar Modal
+   Instansi: Otoritas Jasa Keuangan
+   Kantor Pusat: Jawa Timur
+   Persyaratan: S-1/Sarjana Ilmu Ekonomi
+   Lokasi Penempatan: Riau, Jambi, Sumatera Selatan, Kepulauan Bangka Belitung, Jawa Timur, Kalimantan Selatan, Sulawesi Utara, Sulawesi Selatan, Papua
+
+311. Spesialis Internet of Things
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Bali
+   Persyaratan: S-1/Sarjana Teknik Elektro
+   Lokasi Penempatan: Aceh, Sumatera Selatan, Lampung, Jawa Barat, Kalimantan Utara, Maluku
+
+312. Analis Dampak Lingkungan
+   Instansi: Kementerian Lingkungan Hidup dan Kehutanan
+   Kantor Pusat: Nusa Tenggara Barat
+   Persyaratan: S-1/Sarjana Teknik Lingkungan
+   Lokasi Penempatan: DI Yogyakarta, Nusa Tenggara Timur, Kalimantan Barat, Sulawesi Barat, Papua Barat, Papua Tengah
+
+313. Spesialis Blockchain Technology
+   Instansi: Badan Siber dan Sandi Negara
+   Kantor Pusat: Nusa Tenggara Timur
+   Persyaratan: S-1/Sarjana Teknik Informatika
+   Lokasi Penempatan: Sumatera Utara, Lampung, Jawa Barat, Kalimantan Timur, Sulawesi Tengah, Papua Tengah
+
+314. Analis Energi Terbarukan
+   Instansi: Kementerian ESDM
+   Kantor Pusat: Kalimantan Barat
+   Persyaratan: S-1/Sarjana Teknik Elektro
+   Lokasi Penempatan: Sumatera Utara, Jambi, Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Utara, Sulawesi Tengah
+
+315. Spesialis Otomasi Industri
+   Instansi: Kementerian Perindustrian
+   Kantor Pusat: Kalimantan Tengah
+   Persyaratan: S-1/Sarjana Teknik Mesin
+   Lokasi Penempatan: Jawa Tengah, Kalimantan Tengah, Kalimantan Timur, Gorontalo, Sulawesi Barat, Papua Pegunungan
+
+316. Analis Pengadaan Barang dan Jasa
+   Instansi: Lembaga Kebijakan Pengadaan Barang/Jasa
+   Kantor Pusat: Kalimantan Selatan
+   Persyaratan: S-1/Sarjana Manajemen
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Riau, Jambi, Kepulauan Bangka Belitung, Lampung, Kalimantan Selatan, Kalimantan Utara, Sulawesi Utara, Papua Tengah, Papua Barat Daya
+
+317. Spesialis DevOps Engineer
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Kalimantan Timur
+   Persyaratan: S-1/Sarjana Teknik Informatika
+   Lokasi Penempatan: Sumatera Barat, Jambi, Bengkulu, Jawa Tengah, Nusa Tenggara Barat, Kalimantan Selatan, Sulawesi Tenggara, Papua Selatan, Papua Barat Daya
+
+318. Analis Smart City
+   Instansi: Badan Perencanaan Pembangunan Nasional
+   Kantor Pusat: Kalimantan Utara
+   Persyaratan: S-2 Perencanaan Wilayah dan Kota
+   Lokasi Penempatan: Sumatera Barat, Jambi, Kepulauan Bangka Belitung, DKI Jakarta, Jawa Barat, DI Yogyakarta, Kalimantan Barat, Papua
+
+319. Spesialis Jaringan 5G
+   Instansi: Kementerian Komunikasi dan Informatika
+   Kantor Pusat: Sulawesi Utara
+   Persyaratan: S-1/Sarjana Teknik Telekomunikasi
+   Lokasi Penempatan: Sumatera Barat, Lampung, DI Yogyakarta, Nusa Tenggara Barat, Nusa Tenggara Timur, Kalimantan Barat, Kalimantan Tengah, Maluku Utara, Papua Barat, Papua Barat Daya
+
+320. Analis Quality Assurance Software
+   Instansi: Badan Kepegawaian Negara
+   Kantor Pusat: Gorontalo
+   Persyaratan: S-1/Sarjana Teknik Informatika
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Nusa Tenggara Timur, Sulawesi Utara, Papua, Papua Barat, Papua Tengah
+
+321. Spesialis Augmented Reality
+   Instansi: Kementerian Pariwisata
+   Kantor Pusat: Sulawesi Tengah
+   Persyaratan: S-1/Sarjana Teknik Multimedia
+   Lokasi Penempatan: Lampung, Jawa Barat, Kalimantan Barat, Kalimantan Tengah, Kalimantan Timur, Sulawesi Utara, Sulawesi Selatan, Papua
+
+322. Analis Forensik Digital
+   Instansi: Kepolisian Republik Indonesia
+   Kantor Pusat: Sulawesi Selatan
+   Persyaratan: S-1/Sarjana Teknik Informatika
+   Lokasi Penempatan: Sumatera Utara, Jawa Tengah, Kalimantan Selatan, Kalimantan Utara, Sulawesi Selatan, Maluku, Papua Pegunungan, Papua Barat Daya
+
+323. Spesialis Sistem Embedded
+   Instansi: Kementerian Pertahanan
+   Kantor Pusat: Sulawesi Barat
+   Persyaratan: S-1/Sarjana Teknik Elektro
+   Lokasi Penempatan: Sumatera Utara, Jambi, Jawa Tengah, DI Yogyakarta, Nusa Tenggara Barat, Kalimantan Utara, Sulawesi Utara, Papua Selatan, Papua Barat Daya
+
+324. Analis Transportasi Cerdas
+   Instansi: Kementerian Perhubungan
+   Kantor Pusat: Sulawesi Tenggara
+   Persyaratan: S-1/Sarjana Teknik Sipil
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Lampung, Banten, Bali, Kalimantan Tengah, Sulawesi Utara, Gorontalo, Sulawesi Barat, Papua Barat
+
+325. Spesialis Cyber Threat Intelligence
+   Instansi: Badan Siber dan Sandi Negara
+   Kantor Pusat: Maluku
+   Persyaratan: S-1/Sarjana Teknik Informatika
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Riau, Jambi, Kepulauan Bangka Belitung, Nusa Tenggara Timur, Kalimantan Utara, Sulawesi Utara, Papua Barat Daya
+
+326. Analis E-Government
+   Instansi: Kementerian Dalam Negeri
+   Kantor Pusat: Maluku Utara
+   Persyaratan: S-2 Administrasi Publik
+   Lokasi Penempatan: Jawa Barat, Jawa Tengah, Kalimantan Barat, Kalimantan Tengah, Sulawesi Utara, Maluku, Papua Selatan
+
+327. Spesialis Robotika
+   Instansi: Badan Riset dan Inovasi Nasional
+   Kantor Pusat: Papua
+   Persyaratan: S-2 Teknik Mesin
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Jawa Barat, Banten, Jawa Tengah, Kalimantan Barat, Kalimantan Selatan, Kalimantan Utara, Maluku Utara, Papua Barat Daya
+
+328. Analis Digital Marketing
+   Instansi: Kementerian Pariwisata
+   Kantor Pusat: Papua Barat
+   Persyaratan: S-1/Sarjana Ilmu Komunikasi
+   Lokasi Penempatan: Bengkulu, Banten, Jawa Tengah, Bali, Kalimantan Timur, Kalimantan Utara, Papua Barat
+
+329. Spesialis Network Security
+   Instansi: Badan Siber dan Sandi Negara
+   Kantor Pusat: Papua Tengah
+   Persyaratan: S-1/Sarjana Teknik Komputer
+   Lokasi Penempatan: Kepulauan Riau, Jawa Timur, Nusa Tenggara Barat, Kalimantan Tengah, Kalimantan Selatan, Gorontalo, Papua, Papua Barat
+
+330. Analis Sistem Logistik
+   Instansi: Kementerian Perhubungan
+   Kantor Pusat: Papua Pegunungan
+   Persyaratan: S-1/Sarjana Teknik Industri
+   Lokasi Penempatan: Aceh, Bengkulu, Bali, Kalimantan Selatan, Kalimantan Timur, Sulawesi Tenggara, Papua Tengah
+
+331. Spesialis Energi Bersih
+   Instansi: Kementerian ESDM
+   Kantor Pusat: Papua Selatan
+   Persyaratan: S-1/Sarjana Teknik Elektro
+   Lokasi Penempatan: Sumatera Selatan, Banten, Jawa Timur, Kalimantan Selatan, Sulawesi Tenggara, Papua, Papua Barat, Papua Tengah, Papua Barat Daya
+
+332. Analis Smart Agriculture
+   Instansi: Kementerian Pertanian
+   Kantor Pusat: Papua Barat Daya
+   Persyaratan: S-1/Sarjana Agronomi
+   Lokasi Penempatan: Sumatera Barat, Riau, Jambi, Bali, Papua Barat, Papua Tengah, Papua Pegunungan
+
+333. Dokter Umum Puskesmas
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Aceh
+   Persyaratan: S-1/Sarjana Kedokteran
+   Lokasi Penempatan: Riau, Kepulauan Riau, Bengkulu, Lampung, DKI Jakarta, Nusa Tenggara Barat, Kalimantan Timur, Papua Tengah, Papua Barat Daya
+
+334. Perawat ICU dan Gawat Darurat
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Sumatera Utara
+   Persyaratan: S-1/Sarjana Keperawatan
+   Lokasi Penempatan: Kepulauan Bangka Belitung, Bengkulu, DI Yogyakarta, Nusa Tenggara Barat, Sulawesi Tenggara, Maluku, Papua Selatan, Papua Barat Daya
+
+335. Bidan Desa untuk Ibu dan Anak
+   Instansi: Puskesmas
+   Kantor Pusat: Sumatera Barat
+   Persyaratan: Diploma III/Sarjana Muda Kebidanan
+   Lokasi Penempatan: Sumatera Barat, Bengkulu, Jawa Tengah, DI Yogyakarta, Bali, Nusa Tenggara Timur, Kalimantan Timur, Sulawesi Barat, Papua Selatan
+
+336. Apoteker Klinis Rumah Sakit
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Riau
+   Persyaratan: S-1/Sarjana Farmasi
+   Lokasi Penempatan: Sumatera Utara, Riau, Jambi, Kepulauan Bangka Belitung, Bengkulu, Lampung, Kalimantan Tengah, Maluku Utara, Papua Selatan
+
+337. Analis Laboratorium Medis
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Kepulauan Riau
+   Persyaratan: Diploma III/Sarjana Muda Analis Kesehatan
+   Lokasi Penempatan: Jawa Barat, Banten, DI Yogyakarta, Gorontalo, Sulawesi Barat, Maluku Utara, Papua Pegunungan
+
+338. Radiografer untuk Diagnostik
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Jambi
+   Persyaratan: Diploma III/Sarjana Muda Radiologi
+   Lokasi Penempatan: Riau, Sumatera Selatan, Lampung, Bali, Sulawesi Tengah, Papua, Papua Barat
+
+339. Nutrisionis Gizi Klinik
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Sumatera Selatan
+   Persyaratan: S-1/Sarjana Gizi
+   Lokasi Penempatan: Sumatera Utara, Riau, DKI Jakarta, Jawa Timur, Bali, Kalimantan Selatan, Sulawesi Tenggara, Papua Barat, Papua Barat Daya
+
+340. Fisioterapis Rehabilitasi Medik
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Bangka Belitung
+   Persyaratan: S-1/Sarjana Fisioterapi
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Bangka Belitung, Jawa Barat, Bali, Kalimantan Barat, Gorontalo, Sulawesi Selatan, Papua, Papua Pegunungan
+
+341. Dokter Gigi Umum
+   Instansi: Puskesmas
+   Kantor Pusat: Bengkulu
+   Persyaratan: S-1/Sarjana Kedokteran Gigi
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Jambi, Kalimantan Barat, Kalimantan Utara, Gorontalo, Papua Selatan
+
+342. Sanitarian Kesehatan Lingkungan
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Lampung
+   Persyaratan: S-1/Sarjana Kesehatan Masyarakat
+   Lokasi Penempatan: Aceh, Jambi, Kepulauan Bangka Belitung, Jawa Barat, Jawa Tengah, Sulawesi Selatan, Maluku
+
+343. Dokter Spesialis Anak
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: DKI Jakarta
+   Persyaratan: S-2 Kedokteran Spesialis
+   Lokasi Penempatan: Kepulauan Riau, Jambi, Banten, Bali, Nusa Tenggara Barat, Kalimantan Timur, Gorontalo, Papua Barat, Papua Tengah
+
+344. Psikolog Klinis Rumah Sakit
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Jawa Barat
+   Persyaratan: S-2 Psikologi Klinis
+   Lokasi Penempatan: Sumatera Utara, Sumatera Barat, Kalimantan Barat, Maluku Utara, Papua, Papua Selatan, Papua Barat Daya
+
+345. Perawat Bedah dan Operasi
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Banten
+   Persyaratan: S-1/Sarjana Keperawatan
+   Lokasi Penempatan: Sumatera Barat, Lampung, Nusa Tenggara Timur, Kalimantan Timur, Sulawesi Utara, Sulawesi Tengah, Sulawesi Tenggara, Maluku
+
+346. Terapis Okupasi
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Jawa Tengah
+   Persyaratan: S-1/Sarjana Terapi Okupasi
+   Lokasi Penempatan: Sumatera Barat, Sumatera Selatan, Bengkulu, Jawa Tengah, Nusa Tenggara Timur, Papua Selatan
+
+347. Epidemiolog Surveilans Penyakit
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: DI Yogyakarta
+   Persyaratan: S-2 Kesehatan Masyarakat
+   Lokasi Penempatan: Aceh, Riau, Kepulauan Bangka Belitung, Jawa Tengah, Bali, Kalimantan Selatan, Sulawesi Tengah, Sulawesi Selatan, Papua
+
+348. Perawat Komunitas Puskesmas
+   Instansi: Puskesmas
+   Kantor Pusat: Jawa Timur
+   Persyaratan: Diploma III/Sarjana Muda Keperawatan
+   Lokasi Penempatan: Sumatera Utara, Bengkulu, Lampung, Jawa Barat, Banten, Nusa Tenggara Timur, Sulawesi Utara, Gorontalo, Papua Pegunungan, Papua Selatan
+
+349. Dokter Spesialis Penyakit Dalam
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Bali
+   Persyaratan: S-2 Kedokteran Spesialis
+   Lokasi Penempatan: Sumatera Barat, Jawa Barat, Kalimantan Tengah, Kalimantan Utara, Gorontalo, Maluku Utara, Papua Barat, Papua Tengah
+
+350. Refraksionis Optisien
+   Instansi: Kementerian Kesehatan
+   Kantor Pusat: Nusa Tenggara Barat
+   Persyaratan: Diploma III/Sarjana Muda Refraksi Optisi
+   Lokasi Penempatan: Sumatera Barat, Kepulauan Bangka Belitung, Bengkulu, Lampung, Jawa Barat, Jawa Timur, Maluku Utara, Papua Tengah
+
+351. Tenaga Kesehatan Lingkungan
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Nusa Tenggara Timur
+   Persyaratan: S-1/Sarjana Kesehatan Masyarakat
+   Lokasi Penempatan: Riau, Jambi, Banten, Sulawesi Barat, Sulawesi Tenggara, Maluku
+
+352. Perawat Hemodialisa
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Kalimantan Barat
+   Persyaratan: S-1/Sarjana Keperawatan
+   Lokasi Penempatan: Riau, Sumatera Selatan, DKI Jakarta, Banten, Nusa Tenggara Timur, Kalimantan Selatan, Sulawesi Barat, Sulawesi Tenggara, Papua, Papua Barat Daya
+
+353. Dokter Spesialis Bedah
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Kalimantan Tengah
+   Persyaratan: S-2 Kedokteran Spesialis
+   Lokasi Penempatan: Aceh, Sumatera Barat, Kepulauan Riau, Bengkulu, DKI Jakarta, Jawa Barat, Kalimantan Barat, Kalimantan Tengah, Sulawesi Tengah, Maluku
+
+354. Bidan Koordinator
+   Instansi: Puskesmas
+   Kantor Pusat: Kalimantan Selatan
+   Persyaratan: S-1/Sarjana Kebidanan
+   Lokasi Penempatan: Sumatera Utara, Jawa Timur, Gorontalo, Sulawesi Tengah, Sulawesi Barat, Maluku, Maluku Utara, Papua Pegunungan
+
+355. Apoteker Komunitas
+   Instansi: Puskesmas
+   Kantor Pusat: Kalimantan Timur
+   Persyaratan: S-1/Sarjana Farmasi
+   Lokasi Penempatan: Kepulauan Riau, Sumatera Selatan, Bengkulu, Jawa Barat, Nusa Tenggara Barat, Kalimantan Timur, Sulawesi Utara, Papua Pegunungan
+
+356. Perawat Jiwa dan Kesehatan Mental
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Kalimantan Utara
+   Persyaratan: S-1/Sarjana Keperawatan
+   Lokasi Penempatan: Riau, Kalimantan Timur, Sulawesi Utara, Papua, Papua Tengah, Papua Pegunungan
+
+357. Dokter Spesialis Kandungan
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Sulawesi Utara
+   Persyaratan: S-2 Kedokteran Spesialis
+   Lokasi Penempatan: Aceh, Lampung, Banten, Kalimantan Tengah, Kalimantan Selatan, Sulawesi Utara, Sulawesi Barat, Papua Barat Daya
+
+358. Perawat Maternitas
+   Instansi: Puskesmas
+   Kantor Pusat: Gorontalo
+   Persyaratan: Diploma III/Sarjana Muda Keperawatan
+   Lokasi Penempatan: Sumatera Utara, Lampung, Banten, Nusa Tenggara Timur, Sulawesi Tengah, Maluku
+
+359. Ahli Teknologi Laboratorium Medik
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Sulawesi Tengah
+   Persyaratan: S-1/Sarjana Analis Kesehatan
+   Lokasi Penempatan: Banten, DI Yogyakarta, Nusa Tenggara Barat, Kalimantan Timur, Kalimantan Utara, Maluku Utara
+
+360. Dokter Spesialis Mata
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Sulawesi Selatan
+   Persyaratan: S-2 Kedokteran Spesialis
+   Lokasi Penempatan: Riau, Kepulauan Bangka Belitung, Lampung, DKI Jakarta, Jawa Tengah, DI Yogyakarta, Nusa Tenggara Barat, Nusa Tenggara Timur, Papua Barat
+
+361. Perawat Perioperatif
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Sulawesi Barat
+   Persyaratan: S-1/Sarjana Keperawatan
+   Lokasi Penempatan: DKI Jakarta, Jawa Tengah, Nusa Tenggara Barat, Kalimantan Barat, Kalimantan Tengah, Kalimantan Utara, Sulawesi Selatan, Maluku, Papua Barat
+
+362. Tenaga Promosi Kesehatan
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Sulawesi Tenggara
+   Persyaratan: S-1/Sarjana Kesehatan Masyarakat
+   Lokasi Penempatan: Sumatera Barat, Riau, Kepulauan Riau, Jawa Barat, Bali, Sulawesi Utara, Sulawesi Tenggara, Maluku Utara, Papua Barat
+
+363. Dokter Umum Terpencil
+   Instansi: Puskesmas
+   Kantor Pusat: Maluku
+   Persyaratan: S-1/Sarjana Kedokteran
+   Lokasi Penempatan: Lampung, DKI Jakarta, Banten, Jawa Tengah, Nusa Tenggara Timur, Kalimantan Utara, Sulawesi Tenggara, Papua, Papua Tengah, Papua Selatan
+
+364. Perawat Anak dan Neonatus
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Maluku Utara
+   Persyaratan: S-1/Sarjana Keperawatan
+   Lokasi Penempatan: Riau, Kepulauan Bangka Belitung, Nusa Tenggara Timur, Kalimantan Selatan, Sulawesi Utara, Sulawesi Tenggara, Papua Barat Daya
+
+365. Bidan Desa Terpencil
+   Instansi: Puskesmas
+   Kantor Pusat: Papua
+   Persyaratan: Diploma III/Sarjana Muda Kebidanan
+   Lokasi Penempatan: Banten, Jawa Tengah, Kalimantan Tengah, Kalimantan Utara, Sulawesi Selatan, Papua Pegunungan
+
+366. Dokter Spesialis THT
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Papua Barat
+   Persyaratan: S-2 Kedokteran Spesialis
+   Lokasi Penempatan: Sumatera Barat, Banten, Jawa Tengah, Bali, Nusa Tenggara Timur, Papua
+
+367. Perawat Paliatif dan Hospice
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Papua Tengah
+   Persyaratan: S-1/Sarjana Keperawatan
+   Lokasi Penempatan: Sumatera Utara, Kepulauan Riau, Lampung, Jawa Barat, Sulawesi Utara, Sulawesi Tengah, Sulawesi Selatan, Papua Pegunungan, Papua Selatan
+
+368. Ahli Gizi Masyarakat
+   Instansi: Dinas Kesehatan
+   Kantor Pusat: Papua Pegunungan
+   Persyaratan: S-1/Sarjana Gizi
+   Lokasi Penempatan: Aceh, Sumatera Selatan, Kepulauan Bangka Belitung, Banten, Kalimantan Selatan, Sulawesi Barat, Sulawesi Tenggara, Papua Barat, Papua Pegunungan
+
+369. Dokter Gigi Spesialis
+   Instansi: Rumah Sakit Umum Daerah
+   Kantor Pusat: Papua Selatan
+   Persyaratan: S-2 Kedokteran Gigi Spesialis
+   Lokasi Penempatan: Sumatera Utara, Riau, Lampung, DI Yogyakarta, Kalimantan Barat, Kalimantan Timur, Papua Tengah, Papua Selatan
+
+370. Perawat Geriatri
+   Instansi: Puskesmas
+   Kantor Pusat: Papua Barat Daya
+   Persyaratan: S-1/Sarjana Keperawatan
+   Lokasi Penempatan: Bengkulu, Nusa Tenggara Timur, Kalimantan Timur, Kalimantan Utara, Sulawesi Tengah, Papua Barat, Papua Tengah
+

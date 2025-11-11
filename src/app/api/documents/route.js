@@ -12,12 +12,21 @@ import {
 } from "@/lib/documentValidator";
 
 export async function POST(request) {
+  console.log("[API] === DOCUMENT PROCESSING API CALLED ===");
+  console.log("[API] Environment check:");
+  console.log("[API] - NODE_ENV:", process.env.NODE_ENV);
+  console.log("[API] - Has GOOGLE_APPLICATION_CREDENTIALS:", !!process.env.GOOGLE_APPLICATION_CREDENTIALS);
+  console.log("[API] - Has GOOGLE_DOC_AI_PROCESSOR_ID:", !!process.env.GOOGLE_DOC_AI_PROCESSOR_ID);
+  console.log("[API] - Has GEMINI_API_KEY:", !!process.env.NEXT_PUBLIC_GEMINI_API_KEY);
+  console.log("[API] - Has GOOGLE_VISION_API_KEY:", !!process.env.GOOGLE_VISION_API_KEY);
+
   try {
     const formData = await request.formData();
     const file = formData.get("file");
     const documentType = formData.get("documentType") || "ktp";
 
     if (!file) {
+      console.error("[API] ERROR: No file in request");
       return Response.json(
         { error: "Tidak ada file yang di-upload" },
         { status: 400 }
@@ -123,27 +132,38 @@ export async function POST(request) {
         };
       }
     } else {
-      // Try Tesseract first, fallback to Vision API if fails
-      console.log("[API] Attempting Tesseract OCR for", documentType);
-      try {
-        ocrResult = await Promise.race([
-          performTesseractOCR(filepath),
-          new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Tesseract timeout')), 10000)
-          )
-        ]);
-        
-        // Check if Tesseract failed
-        if (!ocrResult.success || !ocrResult.text || ocrResult.text.length < 10) {
-          throw new Error('Tesseract returned insufficient data');
-        }
-        
-        console.log("[API] ✅ Tesseract OCR succeeded");
-      } catch (tesseractError) {
-        console.warn("[API] ⚠️ Tesseract failed, falling back to Vision API:", tesseractError.message);
+      // PRODUCTION: Always use Vision API (Tesseract doesn't work in serverless)
+      // Tesseract only works in local development with system dependencies
+      const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+
+      if (isProduction) {
+        console.log("[API] 🌐 Production environment detected, using Vision API (Tesseract unavailable in serverless)");
         const visionResult = await verifyDocument(filepath, documentType);
         ocrResult = visionResult.ocr;
         visionAnalysis = visionResult.analysis;
+      } else {
+        // Try Tesseract first in development, fallback to Vision API if fails
+        console.log("[API] 💻 Development environment, attempting Tesseract OCR for", documentType);
+        try {
+          ocrResult = await Promise.race([
+            performTesseractOCR(filepath),
+            new Promise((_, reject) =>
+              setTimeout(() => reject(new Error('Tesseract timeout')), 10000)
+            )
+          ]);
+
+          // Check if Tesseract failed
+          if (!ocrResult.success || !ocrResult.text || ocrResult.text.length < 10) {
+            throw new Error('Tesseract returned insufficient data');
+          }
+
+          console.log("[API] ✅ Tesseract OCR succeeded");
+        } catch (tesseractError) {
+          console.warn("[API] ⚠️ Tesseract failed, falling back to Vision API:", tesseractError.message);
+          const visionResult = await verifyDocument(filepath, documentType);
+          ocrResult = visionResult.ocr;
+          visionAnalysis = visionResult.analysis;
+        }
       }
     }
 

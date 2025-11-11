@@ -17,12 +17,24 @@ function getDocumentAIClient() {
     return documentAIClient;
   }
 
+  console.log('[Document AI Client] Initializing Google Document AI client...');
+  console.log('[Document AI Client] Environment check:');
+  console.log('[Document AI Client] - Has GOOGLE_APPLICATION_CREDENTIALS:', !!process.env.GOOGLE_APPLICATION_CREDENTIALS);
+  console.log('[Document AI Client] - Has GOOGLE_CLOUD_PROJECT_ID:', !!process.env.GOOGLE_CLOUD_PROJECT_ID);
+  console.log('[Document AI Client] - Has GOOGLE_DOC_AI_PROCESSOR_ID:', !!process.env.GOOGLE_DOC_AI_PROCESSOR_ID);
+  console.log('[Document AI Client] - GOOGLE_DOC_AI_LOCATION:', process.env.GOOGLE_DOC_AI_LOCATION || 'us');
+
   // Get credentials from environment
   const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
   if (!credentials) {
+    console.error('[Document AI Client] ❌ GOOGLE_APPLICATION_CREDENTIALS not found in environment');
     throw new Error('GOOGLE_APPLICATION_CREDENTIALS not found in environment variables');
   }
+
+  console.log('[Document AI Client] Credentials type:', typeof credentials);
+  console.log('[Document AI Client] Credentials length:', credentials.length);
+  console.log('[Document AI Client] Credentials preview:', credentials.substring(0, 100) + '...');
 
   // Parse JSON credentials
   let parsedCredentials;
@@ -30,15 +42,28 @@ function getDocumentAIClient() {
     parsedCredentials = typeof credentials === 'string'
       ? JSON.parse(credentials)
       : credentials;
+
+    console.log('[Document AI Client] ✅ Credentials parsed successfully');
+    console.log('[Document AI Client] - Project ID from credentials:', parsedCredentials.project_id);
+    console.log('[Document AI Client] - Client email:', parsedCredentials.client_email);
+    console.log('[Document AI Client] - Has private key:', !!parsedCredentials.private_key);
   } catch (error) {
+    console.error('[Document AI Client] ❌ Failed to parse credentials:', error.message);
+    console.error('[Document AI Client] Credentials string:', credentials.substring(0, 200));
     throw new Error('Failed to parse GOOGLE_APPLICATION_CREDENTIALS: ' + error.message);
   }
 
   // Initialize client with credentials
-  documentAIClient = new DocumentProcessorServiceClient({
-    credentials: parsedCredentials,
-    projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
-  });
+  try {
+    documentAIClient = new DocumentProcessorServiceClient({
+      credentials: parsedCredentials,
+      projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
+    });
+    console.log('[Document AI Client] ✅ Client initialized successfully');
+  } catch (error) {
+    console.error('[Document AI Client] ❌ Failed to initialize client:', error.message);
+    throw new Error('Failed to initialize DocumentProcessorServiceClient: ' + error.message);
+  }
 
   return documentAIClient;
 }
