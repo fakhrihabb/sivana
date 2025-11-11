@@ -269,28 +269,23 @@ export async function validateIjazah(ocrText, ktpData, formasiData, visionHandwr
             console.log('[IJAZAH Validation] AI Notes:', geminiData.extraction_notes);
           }
           
-          // Validate name with KTP (using Gemini extracted name)
-          if (ktpData && ktpData.nama && geminiData.nama_lengkap) {
-            const namaKTP = ktpData.nama;
-            const namaIjazah = geminiData.nama_lengkap;
-            const similarity = nameSimilarity(namaKTP, namaIjazah);
-            
-            console.log('[IJAZAH Validation] Comparing names (AI extracted):');
-            console.log('  - KTP:', namaKTP);
-            console.log('  - Ijazah (AI):', namaIjazah);
-            console.log('  - Similarity:', (similarity * 100).toFixed(1) + '%');
-            
-            if (similarity < 0.7) {
+          // Validate name with KTP - Simple substring check
+          if (ktpData && ktpData.nama && ocrText) {
+            const namaKTP = ktpData.nama.toLowerCase().trim();
+            const ocrTextLower = ocrText.toLowerCase();
+
+            console.log('[IJAZAH Validation] Checking if KTP name exists in document:');
+            console.log('  - KTP Name:', ktpData.nama);
+            console.log('  - Document contains name:', ocrTextLower.includes(namaKTP));
+
+            if (!ocrTextLower.includes(namaKTP)) {
               validation.errors.push(
-                `❌ Nama tidak cocok: Ijazah tercatat atas nama "${namaIjazah}" ` +
-                `tetapi KTP menunjukkan "${namaKTP}". ` +
-                `Tingkat kesesuaian: ${(similarity * 100).toFixed(1)}% (minimum 70%). ` +
-                `Jika nama Anda berubah, mohon lampirkan dokumen perubahan nama.`
+                `❌ Nama pada KTP "${ktpData.nama}" tidak ditemukan di dokumen Ijazah. Pastikan dokumen Ijazah adalah milik "${ktpData.nama}".`
               );
-              console.log('[IJAZAH Validation] ❌ Name mismatch (AI extracted)');
+              console.log('[IJAZAH Validation] ❌ Name not found in document');
             } else {
               validation.namaMatch = true;
-              console.log('[IJAZAH Validation] ✅ Name match between KTP and AI-extracted Ijazah');
+              console.log('[IJAZAH Validation] ✅ Name found in document');
             }
           }
           
@@ -362,28 +357,23 @@ export async function validateIjazah(ocrText, ktpData, formasiData, visionHandwr
         console.log('  - Universitas:', pddiktiData.universitas);
         console.log('  - Tahun Lulus:', pddiktiData.tahun_lulus);
 
-        // 4. Validasi nama dengan KTP (dari database ke database)
-        if (ktpData && ktpData.nama) {
-          const namaKTP = ktpData.nama;
-          const namaIjazah = pddiktiData.nama;
-          const similarity = nameSimilarity(namaKTP, namaIjazah);
-          
-          console.log('[IJAZAH Validation] Comparing names:');
-          console.log('  - KTP:', namaKTP);
-          console.log('  - Ijazah:', namaIjazah);
-          console.log('  - Similarity:', (similarity * 100).toFixed(1) + '%');
-          
-          if (similarity < 0.7) {
+        // 4. Validasi nama dengan KTP - Simple substring check
+        if (ktpData && ktpData.nama && ocrText) {
+          const namaKTP = ktpData.nama.toLowerCase().trim();
+          const ocrTextLower = ocrText.toLowerCase();
+
+          console.log('[IJAZAH Validation] Checking if KTP name exists in document (PDDIKTI match):');
+          console.log('  - KTP Name:', ktpData.nama);
+          console.log('  - Document contains name:', ocrTextLower.includes(namaKTP));
+
+          if (!ocrTextLower.includes(namaKTP)) {
             validation.errors.push(
-              `❌ Nama tidak cocok: Ijazah tercatat atas nama "${namaIjazah}" ` +
-              `tetapi KTP menunjukkan "${namaKTP}". ` +
-              `Tingkat kesesuaian: ${(similarity * 100).toFixed(1)}% (minimum 70%). ` +
-              `Jika nama Anda berubah, mohon lampirkan dokumen perubahan nama.`
+              `❌ Nama pada KTP "${ktpData.nama}" tidak ditemukan di dokumen Ijazah. Pastikan dokumen Ijazah adalah milik "${ktpData.nama}".`
             );
-            console.log('[IJAZAH Validation] ❌ Name mismatch');
+            console.log('[IJAZAH Validation] ❌ Name not found in document');
           } else {
             validation.namaMatch = true;
-            console.log('[IJAZAH Validation] ✅ Name match between KTP and Ijazah');
+            console.log('[IJAZAH Validation] ✅ Name found in document (PDDIKTI match)');
           }
         } else {
           validation.warnings.push('⚠️ Data KTP belum tersedia. Upload KTP terlebih dahulu untuk validasi nama.');
@@ -644,70 +634,29 @@ export async function validateTranskrip(ocrText, ktpData, ijazahData) {
         }
       }
       
+      // Simple substring check - hanya cek apakah nama KTP ada di dokumen
+      const namaKTPLower = ktpData.nama.toLowerCase().trim();
+      const ocrTextLower = ocrText.toLowerCase();
+
+      console.log('[TRANSKRIP Validation] Checking if KTP name exists in document:');
+      console.log('  - KTP Name:', ktpData.nama);
+      console.log('  - Document contains name:', ocrTextLower.includes(namaKTPLower));
+
+      if (ocrTextLower.includes(namaKTPLower)) {
+        validation.namaMatchKTP = true;
+        validation.nama = ktpData.nama;
+        console.log('[TRANSKRIP Validation] ✅ Name found in document');
+      } else {
+        validation.errors.push(
+          `❌ Nama pada KTP "${ktpData.nama}" tidak ditemukan di dokumen Transkrip Nilai. Pastikan dokumen Transkrip adalah milik "${ktpData.nama}".`
+        );
+        console.log('[TRANSKRIP Validation] ❌ Name not found in document');
+        validation.namaMatchKTP = false;
+      }
+
+      // Still try to extract name for display purposes
       if (namaTranskrip) {
         validation.nama = namaTranskrip;
-        const similarity = nameSimilarity(namaKTP, namaTranskrip);
-        
-        console.log('[TRANSKRIP Validation] Checking name match with KTP:');
-        console.log('  - KTP Name:', ktpData.nama);
-        console.log('  - Transcript Name:', namaTranskrip);
-        console.log('  - Source:', geminiResult.success ? 'GEMINI AI' : 'OCR');
-        console.log('  - Similarity:', (similarity * 100).toFixed(1) + '%');
-        
-        if (similarity >= 0.7) {
-          validation.namaMatchKTP = true;
-          console.log('[TRANSKRIP Validation] ✅ Name match with KTP');
-        } else {
-          validation.warnings.push(
-            `⚠️ Nama di transkrip nilai "${namaTranskrip}" kurang cocok dengan KTP "${ktpData.nama}". ` +
-            `Tingkat kesesuaian: ${(similarity * 100).toFixed(1)}% (disarankan >= 70%).`
-          );
-          console.log('[TRANSKRIP Validation] ⚠️ Name similarity low, but continuing validation');
-          validation.namaMatchKTP = false;
-        }
-      } else {
-        // Fallback to OCR text search
-        const transcriptLower = ocrText.toLowerCase();
-
-        console.log('[TRANSKRIP Validation] Checking name match with KTP (OCR text search)...');
-        console.log('  - KTP Name:', ktpData.nama);
-
-        // Strategy 1: Exact match
-        if (transcriptLower.includes(namaKTP)) {
-          validation.namaMatchKTP = true;
-          validation.nama = ktpData.nama;
-          console.log('[TRANSKRIP Validation] ✅ Name found in transcript (exact match)');
-        } else {
-          // Strategy 2: Partial match (at least half of name parts)
-          const namaParts = namaKTP.split(' ').filter(part => part.length > 2);
-          let matchCount = 0;
-          
-          namaParts.forEach(part => {
-            if (transcriptLower.includes(part)) {
-              matchCount++;
-            }
-          });
-
-          const matchRatio = matchCount / namaParts.length;
-          console.log('[TRANSKRIP Validation] Name parts match:', matchCount, '/', namaParts.length);
-
-          if (matchRatio >= 0.5) {
-            validation.namaMatchKTP = true;
-            validation.nama = ktpData.nama;
-            validation.warnings.push(
-              `⚠️ Nama ditemukan secara parsial di transkrip nilai (${matchCount}/${namaParts.length} kata cocok). ` +
-              `Pastikan transkrip nilai adalah milik "${ktpData.nama}".`
-            );
-            console.log('[TRANSKRIP Validation] ⚠️ Name found (partial match)');
-          } else {
-            validation.errors.push(
-              `❌ Nama di transkrip nilai tidak cocok dengan KTP. ` +
-              `Pastikan transkrip nilai adalah milik "${ktpData.nama}".`
-            );
-            console.log('[TRANSKRIP Validation] ❌ Name mismatch with KTP');
-            return validation;
-          }
-        }
       }
     } else {
       validation.warnings.push('⚠️ Data KTP belum tersedia. Upload KTP terlebih dahulu untuk validasi nama.');
@@ -843,69 +792,30 @@ export async function validateSuratLamaran(ocrText, ktpData, ijazahData) {
       console.log('[SURAT LAMARAN Validation] ❌ No BKN institution found');
     }
 
-    // 2. Validasi nama dengan KTP
-    if (ktpData && ktpData.nama) {
-      const namaKTP = ktpData.nama.toLowerCase();
+    // 2. Validasi nama dengan KTP - Simple substring check
+    if (ktpData && ktpData.nama && ocrText) {
+      const namaKTPLower = ktpData.nama.toLowerCase().trim();
+      const ocrTextLower = ocrText.toLowerCase();
 
-      console.log('[SURAT LAMARAN Validation] Checking name match with KTP...');
+      console.log('[SURAT LAMARAN Validation] Checking if KTP name exists in document:');
       console.log('  - KTP Name:', ktpData.nama);
-      console.log('  - Extracted Name (Gemini):', validation.geminiExtracted?.nama_lengkap);
+      console.log('  - Document contains name:', ocrTextLower.includes(namaKTPLower));
 
-      // Strategy 1: Use Gemini extracted nama (if available)
-      if (validation.geminiExtracted?.nama_lengkap) {
-        const namaGemini = validation.geminiExtracted.nama_lengkap.toLowerCase();
-        const similarity = nameSimilarity(namaKTP, namaGemini);
-        
-        console.log('[SURAT LAMARAN Validation] Gemini vs KTP similarity:', (similarity * 100).toFixed(1) + '%');
-        
-        if (similarity >= 0.7) {
-          validation.namaMatchKTP = true;
-          validation.nama = validation.geminiExtracted.nama_lengkap;
-          console.log('[SURAT LAMARAN Validation] ✅ Name match (Gemini extraction)');
-        } else {
-          validation.errors.push(
-            `❌ Nama di surat lamaran (${validation.geminiExtracted.nama_lengkap}) tidak sesuai dengan KTP (${ktpData.nama}).`
-          );
-          console.log('[SURAT LAMARAN Validation] ❌ Name mismatch (Gemini extraction)');
-        }
+      if (ocrTextLower.includes(namaKTPLower)) {
+        validation.namaMatchKTP = true;
+        validation.nama = ktpData.nama;
+        console.log('[SURAT LAMARAN Validation] ✅ Name found in document');
       } else {
-        // Strategy 2: Fallback to OCR pattern matching
-        console.log('[SURAT LAMARAN Validation] Using OCR fallback for name extraction');
-        
-        if (suratLower.includes(namaKTP)) {
-          validation.namaMatchKTP = true;
-          validation.nama = ktpData.nama;
-          console.log('[SURAT LAMARAN Validation] ✅ Name found (exact match)');
-        } else {
-          // Partial match
-          const namaParts = namaKTP.split(' ').filter(part => part.length > 2);
-          let matchCount = 0;
-          
-          namaParts.forEach(part => {
-            if (suratLower.includes(part)) {
-              matchCount++;
-            }
-          });
+        validation.errors.push(
+          `❌ Nama pada KTP "${ktpData.nama}" tidak ditemukan di dokumen Surat Lamaran. Pastikan dokumen Surat Lamaran adalah milik "${ktpData.nama}".`
+        );
+        console.log('[SURAT LAMARAN Validation] ❌ Name not found in document');
+      }
 
-          const matchRatio = matchCount / namaParts.length;
-          console.log('[SURAT LAMARAN Validation] Name parts match:', matchCount, '/', namaParts.length);
-
-          if (matchRatio >= 0.5) {
-            validation.namaMatchKTP = true;
-            validation.nama = ktpData.nama;
-            validation.warnings.push(
-              `⚠️ Nama ditemukan secara parsial di surat lamaran (${matchCount}/${namaParts.length} kata cocok). ` +
-              `Pastikan surat lamaran atas nama "${ktpData.nama}".`
-            );
-            console.log('[SURAT LAMARAN Validation] ⚠️ Name found (partial match)');
-          } else {
-            validation.errors.push(
-              `❌ Nama tidak ditemukan dalam surat lamaran. ` +
-              `Pastikan surat lamaran ditujukan atas nama "${ktpData.nama}".`
-            );
-            console.log('[SURAT LAMARAN Validation] ❌ Name not found');
-          }
-        }
+      // Store Gemini extracted name for reference (if available)
+      if (validation.geminiExtracted?.nama_lengkap) {
+        validation.namaExtracted = validation.geminiExtracted.nama_lengkap;
+        console.log('[SURAT LAMARAN Validation] Gemini extracted name:', validation.namaExtracted);
       }
     } else {
       validation.warnings.push('⚠️ Data KTP tidak tersedia untuk verifikasi nama');
@@ -1135,71 +1045,30 @@ export async function validateSuratPernyataan(ocrText, ktpData, ijazahData) {
       console.log('[SURAT PERNYATAAN Validation] ❌ Insufficient statement points');
     }
 
-    // 3. Validasi nama dengan KTP
-    if (ktpData && ktpData.nama) {
-      const namaKTP = ktpData.nama.toLowerCase();
+    // 3. Validasi nama dengan KTP - Simple substring check
+    if (ktpData && ktpData.nama && ocrText) {
+      const namaKTPLower = ktpData.nama.toLowerCase().trim();
+      const ocrTextLower = ocrText.toLowerCase();
 
-      console.log('[SURAT PERNYATAAN Validation] Checking name match with KTP...');
+      console.log('[SURAT PERNYATAAN Validation] Checking if KTP name exists in document:');
       console.log('  - KTP Name:', ktpData.nama);
-      console.log('  - Extracted Name (Gemini):', validation.geminiExtracted?.nama_lengkap);
+      console.log('  - Document contains name:', ocrTextLower.includes(namaKTPLower));
 
-      // Strategy 1: Use Gemini extracted nama (if available)
-      if (validation.geminiExtracted?.nama_lengkap) {
-        const namaGemini = validation.geminiExtracted.nama_lengkap.toLowerCase();
-        const similarity = nameSimilarity(namaKTP, namaGemini);
-        
-        console.log('[SURAT PERNYATAAN Validation] Gemini vs KTP similarity:', (similarity * 100).toFixed(1) + '%');
-        
-        if (similarity >= 0.7) {
-          validation.namaMatchKTP = true;
-          validation.nama = validation.geminiExtracted.nama_lengkap;
-          console.log('[SURAT PERNYATAAN Validation] ✅ Name match (Gemini extraction)');
-        } else {
-          validation.errors.push(
-            `❌ Nama di surat pernyataan (${validation.geminiExtracted.nama_lengkap}) tidak sesuai dengan KTP (${ktpData.nama}).`
-          );
-          console.log('[SURAT PERNYATAAN Validation] ❌ Name mismatch (Gemini extraction)');
-          return validation;
-        }
+      if (ocrTextLower.includes(namaKTPLower)) {
+        validation.namaMatchKTP = true;
+        validation.nama = ktpData.nama;
+        console.log('[SURAT PERNYATAAN Validation] ✅ Name found in document');
       } else {
-        // Strategy 2: Fallback to OCR pattern matching
-        console.log('[SURAT PERNYATAAN Validation] Using OCR fallback for name extraction');
-        
-        if (suratLower.includes(namaKTP)) {
-          validation.namaMatchKTP = true;
-          validation.nama = ktpData.nama;
-          console.log('[SURAT PERNYATAAN Validation] ✅ Name found (exact match)');
-        } else {
-          // Partial match
-          const namaParts = namaKTP.split(' ').filter(part => part.length > 2);
-          let matchCount = 0;
-          
-          namaParts.forEach(part => {
-            if (suratLower.includes(part)) {
-              matchCount++;
-            }
-          });
+        validation.errors.push(
+          `❌ Nama pada KTP "${ktpData.nama}" tidak ditemukan di dokumen Surat Pernyataan. Pastikan dokumen Surat Pernyataan adalah milik "${ktpData.nama}".`
+        );
+        console.log('[SURAT PERNYATAAN Validation] ❌ Name not found in document');
+      }
 
-          const matchRatio = matchCount / namaParts.length;
-          console.log('[SURAT PERNYATAAN Validation] Name parts match:', matchCount, '/', namaParts.length);
-
-          if (matchRatio >= 0.5) {
-            validation.namaMatchKTP = true;
-            validation.nama = ktpData.nama;
-            validation.warnings.push(
-              `⚠️ Nama ditemukan secara parsial di surat pernyataan (${matchCount}/${namaParts.length} kata cocok). ` +
-              `Pastikan surat pernyataan atas nama "${ktpData.nama}".`
-            );
-            console.log('[SURAT PERNYATAAN Validation] ⚠️ Name found (partial match)');
-          } else {
-            validation.errors.push(
-              `❌ Nama tidak ditemukan dalam surat pernyataan. ` +
-              `Pastikan surat pernyataan atas nama "${ktpData.nama}".`
-            );
-            console.log('[SURAT PERNYATAAN Validation] ❌ Name not found');
-            return validation;
-          }
-        }
+      // Store Gemini extracted name for reference (if available)
+      if (validation.geminiExtracted?.nama_lengkap) {
+        validation.namaExtracted = validation.geminiExtracted.nama_lengkap;
+        console.log('[SURAT PERNYATAAN Validation] Gemini extracted name:', validation.namaExtracted);
       }
     } else {
       validation.warnings.push('⚠️ Data KTP tidak tersedia untuk verifikasi nama');
