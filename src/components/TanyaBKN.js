@@ -286,8 +286,15 @@ export default function TanyaBKN() {
               <div className="relative">
                 <div className="absolute -inset-1 bg-white/30 rounded-full blur-md"></div>
                 <div className="relative w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 shadow-lg">
-                  <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10.5 1.5H5.75A2.75 2.75 0 003 4.25v11.5A2.75 2.75 0 005.75 18.5h8.5a2.75 2.75 0 002.75-2.75V10M10.5 1.5v3.25a2.75 2.75 0 002.75 2.75h3.25m-6-6v6m-3-3h6" />
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect x="6" y="6" width="12" height="12" rx="2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="9" cy="10" r="1" fill="currentColor"/>
+                    <circle cx="15" cy="10" r="1" fill="currentColor"/>
+                    <line x1="9" y1="14" x2="15" y2="14" strokeWidth="2" strokeLinecap="round"/>
+                    <rect x="10" y="2" width="4" height="4" rx="1" strokeWidth="2"/>
+                    <line x1="12" y1="6" x2="12" y2="6" strokeWidth="2" strokeLinecap="round"/>
+                    <rect x="3" y="9" width="3" height="6" rx="1" strokeWidth="2"/>
+                    <rect x="18" y="9" width="3" height="6" rx="1" strokeWidth="2"/>
                   </svg>
                 </div>
                 <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-400 rounded-full border-2 border-white shadow-lg animate-pulse"></div>
