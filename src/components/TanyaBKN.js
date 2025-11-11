@@ -3,6 +3,10 @@
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { getGeminiResponse } from "@/lib/gemini";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import AudioMessage from "@/components/AudioMessage";
+import { createAudioRecorder, speechToText, textToSpeech, uploadAudio } from "@/lib/voice";
 
 export default function TanyaBKN() {
   const pathname = usePathname();
@@ -18,8 +22,11 @@ export default function TanyaBKN() {
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [conversationHistory, setConversationHistory] = useState([]);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isProcessingVoice, setIsProcessingVoice] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const audioRecorderRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -47,6 +54,110 @@ export default function TanyaBKN() {
     "Syarat pendaftaran",
     "Lupa password SSCASN",
   ];
+
+  const handleVoiceRecord = async () => {
+    if (isRecording) {
+      // Stop recording
+      setIsProcessingVoice(true);
+      const result = await audioRecorderRef.current.stop();
+      setIsRecording(false);
+
+      if (result.success && result.blob) {
+        // Upload audio to storage
+        const uploadResult = await uploadAudio(result.blob);
+
+        if (!uploadResult.success) {
+          console.error("Failed to upload audio:", uploadResult.error);
+          setIsProcessingVoice(false);
+          return;
+        }
+
+        // Transcribe audio
+        const transcriptResult = await speechToText(result.blob);
+
+        if (transcriptResult.success && transcriptResult.transcript) {
+          // Add user voice message
+          const userMessage = {
+            id: messages.length + 1,
+            type: "user",
+            text: transcriptResult.transcript,
+            audioUrl: uploadResult.url,
+            isVoice: true,
+            timestamp: new Date(),
+          };
+
+          setMessages((prev) => [...prev, userMessage]);
+          setIsProcessingVoice(false);
+
+          // Process the transcript to get bot response
+          await handleVoiceMessage(transcriptResult.transcript);
+        } else {
+          console.error("Failed to transcribe:", transcriptResult.error);
+          setIsProcessingVoice(false);
+        }
+      }
+    } else {
+      // Start recording
+      if (!audioRecorderRef.current) {
+        audioRecorderRef.current = createAudioRecorder();
+      }
+
+      const result = await audioRecorderRef.current.start();
+      if (result.success) {
+        setIsRecording(true);
+      } else {
+        alert("Tidak dapat mengakses mikrofon. Pastikan Anda memberikan izin akses mikrofon.");
+      }
+    }
+  };
+
+  const handleVoiceMessage = async (transcript) => {
+    setIsTyping(true);
+
+    // Add to conversation history
+    const newHistory = [...conversationHistory, { role: "user", content: transcript }];
+    setConversationHistory(newHistory);
+
+    try {
+      // Get text response from Gemini
+      const result = await getGeminiResponse(transcript, newHistory);
+
+      if (result.success && result.message) {
+        // Generate voice response
+        const ttsResult = await textToSpeech(result.message);
+
+        // Add bot response with voice
+        const botMessage = {
+          id: messages.length + 2,
+          type: "bot",
+          text: result.message,
+          audioUrl: ttsResult.success ? ttsResult.audioUrl : null,
+          isVoice: ttsResult.success,
+          timestamp: new Date(),
+        };
+
+        setMessages((prev) => [...prev, botMessage]);
+
+        // Update conversation history
+        setConversationHistory([...newHistory, { role: "assistant", content: result.message }]);
+      } else {
+        throw new Error(result.error || "API returned error");
+      }
+    } catch (error) {
+      console.error("Error processing voice message:", error);
+
+      const errorMessage = {
+        id: messages.length + 2,
+        type: "bot",
+        text: "Maaf, saya sedang mengalami kesulitan dalam memproses pertanyaan Anda. Silakan coba lagi.",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
 
   const handleSendMessage = async (text = inputValue) => {
     if (!text.trim()) return;
@@ -117,16 +228,17 @@ export default function TanyaBKN() {
       {/* Chatbot Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 group transition-all duration-300 ${
+        className={`fixed bottom-8 right-8 z-50 group transition-all duration-300 ${
           isOpen ? "scale-0" : "scale-100"
         }`}
       >
         <div className="relative">
           {/* Pulse animation */}
-          <div className="absolute inset-0 bg-brand-blue rounded-full animate-ping opacity-20"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#239DD7] via-cyan-500 to-[#DE1B5D] rounded-full animate-pulse opacity-40"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#DE1B5D] to-pink-500 rounded-full animate-pulse opacity-20" style={{animationDelay: '1s'}}></div>
 
           {/* Main button */}
-          <div className="relative w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-pink rounded-full shadow-lg flex items-center justify-center hover:shadow-xl transition-shadow">
+          <div className="relative w-16 h-16 bg-gradient-to-br from-[#239DD7] to-cyan-500 rounded-full shadow-2xl flex items-center justify-center hover:shadow-3xl hover:shadow-blue-500/50 transition-all duration-300 group-hover:scale-110 cursor-pointer border-2 border-white">
             <svg
               className="w-8 h-8 text-white"
               fill="none"
@@ -142,17 +254,17 @@ export default function TanyaBKN() {
             </svg>
           </div>
 
-          {/* Notification badge */}
-          <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+          {/* Notification badge with animation */}
+          <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-[#DE1B5D] to-pink-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white animate-bounce">
             <span className="text-white text-xs font-bold">1</span>
           </div>
 
           {/* Tooltip */}
-          <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-            <div className="bg-gray-900 text-white text-sm px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
+          <div className="absolute bottom-full right-0 mb-4 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:mb-6">
+            <div className="bg-gradient-to-r from-[#239DD7] to-cyan-500 text-white text-sm px-4 py-2.5 rounded-xl whitespace-nowrap shadow-2xl font-semibold">
               Ada yang bisa dibantu?
-              <div className="absolute top-full right-4 -mt-1">
-                <div className="border-4 border-transparent border-t-gray-900"></div>
+              <div className="absolute top-full right-6 -mt-2">
+                <div className="border-4 border-transparent border-t-cyan-500"></div>
               </div>
             </div>
           </div>
@@ -161,39 +273,46 @@ export default function TanyaBKN() {
 
       {/* Chatbot Window */}
       <div
-        className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
+        className={`fixed bottom-8 right-8 z-50 transition-all duration-300 ${
           isOpen
             ? "scale-100 opacity-100"
             : "scale-95 opacity-0 pointer-events-none"
         }`}
       >
-        <div className="w-[400px] h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-brand-blue to-brand-pink p-4 flex items-center justify-between">
+        <div className="w-[400px] h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-[#239DD7]/10">
+          {/* Header - Gradient Background */}
+          <div className="bg-gradient-to-r from-[#239DD7] via-cyan-500 to-[#DE1B5D] p-5 flex items-center justify-between border-b border-white/20">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                  <svg
-                    className="w-6 h-6 text-brand-blue"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+                <div className="absolute -inset-1 bg-white/30 rounded-full blur-md"></div>
+                <div className="relative w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 shadow-lg">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect x="6" y="6" width="12" height="12" rx="2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="9" cy="10" r="1" fill="currentColor"/>
+                    <circle cx="15" cy="10" r="1" fill="currentColor"/>
+                    <line x1="9" y1="14" x2="15" y2="14" strokeWidth="2" strokeLinecap="round"/>
+                    <rect x="10" y="2" width="4" height="4" rx="1" strokeWidth="2"/>
+                    <line x1="12" y1="6" x2="12" y2="6" strokeWidth="2" strokeLinecap="round"/>
+                    <rect x="3" y="9" width="3" height="6" rx="1" strokeWidth="2"/>
+                    <rect x="18" y="9" width="3" height="6" rx="1" strokeWidth="2"/>
                   </svg>
                 </div>
-                <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-white"></div>
+                <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-400 rounded-full border-2 border-white shadow-lg animate-pulse"></div>
               </div>
               <div>
-                <h3 className="text-white font-semibold">TanyaBKN</h3>
-                <p className="text-white/80 text-xs">Asisten Virtual • Online</p>
+                <h3 className="text-white font-bold text-lg">TanyaBKN</h3>
+                <p className="text-white/80 text-xs font-medium flex items-center gap-1">
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                  Asisten Virtual • Online
+                </p>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
+              className="group text-white/70 hover:text-white hover:bg-white/20 p-2 rounded-lg transition-all duration-300 group-hover:scale-110"
             >
               <svg
-                className="w-5 h-5"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -224,9 +343,34 @@ export default function TanyaBKN() {
                       : "bg-white text-gray-800 shadow-sm border border-gray-100"
                   }`}
                 >
-                  <p className="text-sm whitespace-pre-wrap leading-relaxed">
-                    {message.text}
-                  </p>
+                  {/* Voice Message */}
+                  {message.isVoice && message.audioUrl ? (
+                    <AudioMessage
+                      audioUrl={message.audioUrl}
+                      transcript={message.text}
+                      isUser={message.type === "user"}
+                      autoplay={message.type === "bot"}
+                    />
+                  ) : (
+                    /* Text Message */
+                    <div className={`text-sm leading-relaxed prose prose-sm max-w-none ${
+                      message.type === "user"
+                        ? "prose-invert prose-p:text-white prose-strong:text-white prose-headings:text-white prose-li:text-white prose-a:text-white prose-ul:text-white prose-ol:text-white"
+                        : "prose-gray prose-a:text-brand-blue hover:prose-a:text-brand-pink"
+                    }`}>
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" />,
+                          ul: ({node, ...props}) => <ul {...props} className="list-disc pl-4 space-y-1" />,
+                          ol: ({node, ...props}) => <ol {...props} className="list-decimal pl-4 space-y-1" />,
+                          li: ({node, ...props}) => <li {...props} className="ml-2" />
+                        }}
+                      >
+                        {message.text}
+                      </ReactMarkdown>
+                    </div>
+                  )}
                   <p
                     className={`text-xs mt-1 ${
                       message.type === "user"
@@ -288,7 +432,37 @@ export default function TanyaBKN() {
 
           {/* Input */}
           <div className="p-4 bg-white border-t border-gray-200">
+            {isProcessingVoice && (
+              <div className="mb-3 flex items-center justify-center gap-2 text-sm text-gray-600">
+                <div className="w-2 h-2 bg-brand-blue rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                <div className="w-2 h-2 bg-brand-blue rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                <div className="w-2 h-2 bg-brand-blue rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                <span>Memproses audio...</span>
+              </div>
+            )}
             <div className="flex gap-2">
+              {/* Voice Recording Button */}
+              <button
+                onClick={handleVoiceRecord}
+                disabled={isTyping || isProcessingVoice}
+                className={`px-3 py-2.5 rounded-full font-medium transition-all ${
+                  isRecording
+                    ? "bg-red-500 text-white animate-pulse"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                } ${(isTyping || isProcessingVoice) ? "opacity-50 cursor-not-allowed" : ""}`}
+                title={isRecording ? "Stop recording" : "Start voice recording"}
+              >
+                {isRecording ? (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clipRule="evenodd" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                )}
+              </button>
+
               <input
                 ref={inputRef}
                 type="text"
@@ -296,13 +470,14 @@ export default function TanyaBKN() {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ketik pertanyaan Anda..."
-                className="flex-1 px-4 py-2.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm"
+                disabled={isRecording || isProcessingVoice}
+                className="flex-1 px-4 py-2.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
               />
               <button
                 onClick={() => handleSendMessage()}
-                disabled={!inputValue.trim() || isTyping}
+                disabled={!inputValue.trim() || isTyping || isRecording || isProcessingVoice}
                 className={`px-4 py-2.5 rounded-full font-medium transition-all ${
-                  inputValue.trim() && !isTyping
+                  inputValue.trim() && !isTyping && !isRecording && !isProcessingVoice
                     ? "bg-gradient-to-r from-brand-blue to-brand-pink text-white hover:shadow-lg"
                     : "bg-gray-200 text-gray-400 cursor-not-allowed"
                 }`}
