@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { createClient } from '@supabase/supabase-js';
+import { generateContentWithRetry, executeWithRateLimitAndRetry } from '@/lib/geminiRetry';
 
 // Configure maximum execution time (in seconds) for Vercel
 export const maxDuration = 60; // 60 seconds for Pro plan, 10 for Hobby
@@ -162,21 +163,25 @@ RULES:
 - NO score 100%, NO duplicate scores
 - 2 reasons per formasi (singkat)`;
 
-    console.log('Calling Gemini API...');
+    console.log('Calling Gemini API with retry logic...');
     console.log('Gemini API Key exists:', !!process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 
-    // Add timeout wrapper
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Gemini API timeout after 45 seconds')), 45000);
-    });
-
-    const result = await Promise.race([
-      model.generateContent(prompt),
-      timeoutPromise
-    ]);
+    // Use retry logic with rate limiting
+    const response = await executeWithRateLimitAndRetry(
+      async () => {
+        const result = await model.generateContent(prompt);
+        return await result.response;
+      },
+      {
+        maxRetries: 3,
+        baseDelay: 2000,
+        maxDelay: 15000,
+        onRetry: (attempt, maxAttempts, delay, error) => {
+          console.log(`[Recommend API] Retry ${attempt}/${maxAttempts} in ${Math.round(delay)}ms due to: ${error.message}`);
+        }
+      }
+    );
     console.log('Gemini API response received');
-
-    const response = await result.response;
     let text = response.text();
     console.log('Gemini response text length:', text.length);
 
@@ -258,17 +263,31 @@ RULES:
 
     // Check for specific error types
     let errorMessage = "Terjadi kesalahan saat menganalisis jawaban Anda";
+    let userTip = "";
+
     if (error.message?.includes('API key')) {
       errorMessage = "Konfigurasi API key tidak valid";
     } else if (error.message?.includes('timeout')) {
-      errorMessage = "Request timeout - silakan coba lagi";
+      errorMessage = "Permintaan melebihi batas waktu";
+      userTip = "Silakan coba lagi dalam beberapa saat.";
     } else if (error.message?.includes('JSON')) {
       errorMessage = "Format respons AI tidak valid";
+      userTip = "Silakan coba lagi.";
+    } else if (error.message?.includes('503') || error.message?.includes('overloaded')) {
+      errorMessage = "Server AI sedang sibuk";
+      userTip = "Tunggu 30 detik dan coba lagi. Ini terjadi karena banyak pengguna menggunakan layanan ini secara bersamaan.";
+    } else if (error.message?.includes('429') || error.message?.includes('rate limit')) {
+      errorMessage = "Terlalu banyak permintaan";
+      userTip = "Tunggu 1 menit sebelum mencoba lagi.";
+    } else if (error.message?.includes('quota')) {
+      errorMessage = "Kuota API tercapai";
+      userTip = "Silakan hubungi administrator atau coba lagi nanti.";
     }
 
     return NextResponse.json({
       success: false,
       error: errorMessage,
+      userTip: userTip,
       debugError: error.message,
       details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     }, { status: 500 });

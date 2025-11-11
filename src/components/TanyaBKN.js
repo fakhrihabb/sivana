@@ -146,10 +146,21 @@ export default function TanyaBKN() {
     } catch (error) {
       console.error("Error processing voice message:", error);
 
+      // Determine error type for voice messages
+      let errorText = "Maaf, saya sedang mengalami kesulitan dalam memproses pesan suara Anda.";
+
+      if (error.message?.includes('503') || error.message?.includes('overloaded') || error.message?.includes('sibuk')) {
+        errorText = "🔄 Server AI sedang sibuk. Mohon tunggu 30 detik dan coba kirim pesan suara lagi.";
+      } else if (error.message?.includes('429') || error.message?.includes('rate limit')) {
+        errorText = "⏱️ Terlalu banyak permintaan. Mohon tunggu 1 menit sebelum mencoba lagi.";
+      } else {
+        errorText += " Silakan coba lagi.";
+      }
+
       const errorMessage = {
         id: messages.length + 2,
         type: "bot",
-        text: "Maaf, saya sedang mengalami kesulitan dalam memproses pertanyaan Anda. Silakan coba lagi.",
+        text: errorText,
         timestamp: new Date(),
       };
 
@@ -202,11 +213,24 @@ export default function TanyaBKN() {
     } catch (error) {
       console.error("Error getting Gemini response:", error);
 
+      // Determine error type and provide helpful message
+      let errorText = "Maaf, saya sedang mengalami kesulitan dalam memproses pertanyaan Anda.";
+
+      if (error.message?.includes('503') || error.message?.includes('overloaded') || error.message?.includes('sibuk')) {
+        errorText = "🔄 Server AI sedang sibuk karena banyak pengguna. Mohon tunggu 30 detik dan coba kirim pesan lagi.";
+      } else if (error.message?.includes('429') || error.message?.includes('rate limit')) {
+        errorText = "⏱️ Terlalu banyak permintaan. Mohon tunggu 1 menit sebelum mencoba lagi.";
+      } else if (error.message?.includes('timeout')) {
+        errorText = "⏳ Permintaan melebihi batas waktu. Silakan coba lagi dengan pertanyaan yang lebih singkat.";
+      } else {
+        errorText += " Silakan coba lagi dalam beberapa saat.";
+      }
+
       // Fallback error message
       const errorMessage = {
         id: messages.length + 2,
         type: "bot",
-        text: "Maaf, saya sedang mengalami kesulitan dalam memproses pertanyaan Anda. Silakan coba lagi.",
+        text: errorText,
         timestamp: new Date(),
       };
 

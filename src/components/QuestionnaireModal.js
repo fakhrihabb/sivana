@@ -217,10 +217,19 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
         setStep(7); // Results step
       } else {
         console.error('API returned error:', data.error, data.details);
-        // Show debug error if available for better troubleshooting
-        const errorMsg = data.debugError
-          ? `${data.error} (Debug: ${data.debugError})`
-          : data.error || 'Gagal mendapatkan rekomendasi';
+
+        // Build user-friendly error message with tip
+        let errorMsg = data.error || 'Gagal mendapatkan rekomendasi';
+
+        if (data.userTip) {
+          errorMsg += `\n\n💡 ${data.userTip}`;
+        }
+
+        // Add debug info in development
+        if (process.env.NODE_ENV === 'development' && data.debugError) {
+          errorMsg += `\n\n(Debug: ${data.debugError})`;
+        }
+
         setError(errorMsg);
         setStep(5); // Go back to last question
       }

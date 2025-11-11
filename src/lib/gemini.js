@@ -1,11 +1,16 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { searchKnowledge, formatResponseWithCitation } from "./knowledgeBase.js";
+import { sendMessageWithRetry, executeWithRateLimitAndRetry } from "./geminiRetry.js";
 
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 
-// Initialize Gemini 2.5 Flash model
+// Model configuration with fallback options
+const PRIMARY_MODEL = "gemini-2.0-flash-exp";
+const FALLBACK_MODELS = ["gemini-1.5-flash", "gemini-1.5-flash-8b"];
+
+// Initialize Gemini model with latest version
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash",
+  model: PRIMARY_MODEL,
   systemInstruction: `Kamu adalah TanyaBKN, chatbot AI helpdesk SIVANA (Sistem Integrasi dan Verifikasi ASN Nasional). 
 Tugas kamu adalah membantu calon peserta SIPASN/SSCASN menjawab pertanyaan mereka dengan akurat dan berdasarkan dokumen resmi.
 
@@ -74,11 +79,18 @@ User adalah peserta SSCASN yang menanyakan hal terkait. Berikan jawaban berdasar
       history: chatHistory,
     });
 
-    // 5. Send user message
-    const result = await chat.sendMessage(userMessage);
-    const response = await result.response;
+    // 5. Send user message with retry logic
+    const response = await sendMessageWithRetry(chat, userMessage, {
+      maxRetries: 3,
+      baseDelay: 2000,
+      maxDelay: 15000,
+      onRetry: (attempt, maxAttempts, delay) => {
+        console.log(`[Gemini] Retry ${attempt}/${maxAttempts} in ${Math.round(delay)}ms...`);
+      }
+    });
+
     const responseText = response.text();
-    
+
     return {
       success: true,
       message: responseText,
@@ -87,11 +99,18 @@ User adalah peserta SSCASN yang menanyakan hal terkait. Berikan jawaban berdasar
     };
   } catch (error) {
     console.error("Gemini API Error:", error);
+
+    // Check if it's an overload error
+    const isOverload = error?.message?.includes('503') || error?.message?.includes('overloaded');
+
     return {
       success: false,
       message: null,
-      error: error.message || "Terjadi kesalahan saat menghubungi AI",
+      error: isOverload
+        ? "AI sedang sibuk. Mohon tunggu beberapa saat dan coba lagi."
+        : (error.message || "Terjadi kesalahan saat menghubungi AI"),
       usedKnowledge: false,
+      isOverload: isOverload,
     };
   }
 }
