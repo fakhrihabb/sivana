@@ -4,18 +4,33 @@ import fs from 'fs';
 /**
  * TESSERACT OCR
  * OCR gratis untuk dokumen tercetak (KTP, transkrip, surat lamaran, surat pernyataan)
+ * OPTIMIZED FOR VERCEL SERVERLESS - Uses CDN for WASM and traineddata
  */
 export async function performTesseractOCR(imagePath) {
   let worker = null;
-  
+
   try {
     console.log('[Tesseract] Starting OCR for:', imagePath);
-    
-    // Create worker instance
+    console.log('[Tesseract] Environment:', process.env.NODE_ENV);
+    console.log('[Tesseract] Platform:', process.env.VERCEL ? 'Vercel' : 'Local');
+
+    // Create worker instance with CDN paths for Vercel compatibility
+    // Using CDN ensures WASM and traineddata files are accessible in serverless
     worker = await createWorker('eng', 1, {
+      // Use jsDelivr CDN for worker and core (most reliable for Vercel)
+      workerPath: 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/worker.min.js',
+      corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.0/tesseract-core-simd.wasm',
+      // Use official Tesseract traineddata CDN
+      langPath: 'https://tessdata.projectnaptha.com/4.0.0',
       logger: (m) => {
         if (m.status === 'recognizing text') {
           console.log(`[Tesseract] Progress: ${Math.round(m.progress * 100)}%`);
+        } else if (m.status === 'loading tesseract core') {
+          console.log('[Tesseract] Loading WASM core from CDN...');
+        } else if (m.status === 'initializing tesseract') {
+          console.log('[Tesseract] Initializing Tesseract engine...');
+        } else if (m.status === 'loading language traineddata') {
+          console.log('[Tesseract] Loading English traineddata from CDN...');
         }
       },
     });

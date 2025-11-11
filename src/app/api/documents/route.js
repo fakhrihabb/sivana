@@ -132,38 +132,31 @@ export async function POST(request) {
         };
       }
     } else {
-      // PRODUCTION: Always use Vision API (Tesseract doesn't work in serverless)
-      // Tesseract only works in local development with system dependencies
-      const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+      // HYBRID STRATEGY: Try Tesseract first (now works in Vercel with CDN), fallback to Vision API
+      // Tesseract.js v5+ with CDN paths works in serverless environments
+      console.log("[API] 🔍 Attempting Tesseract OCR (CDN-based, Vercel compatible) for", documentType);
 
-      if (isProduction) {
-        console.log("[API] 🌐 Production environment detected, using Vision API (Tesseract unavailable in serverless)");
+      try {
+        // Timeout increased to 30s for serverless cold starts
+        ocrResult = await Promise.race([
+          performTesseractOCR(filepath),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Tesseract timeout after 30s')), 30000)
+          )
+        ]);
+
+        // Check if Tesseract succeeded
+        if (!ocrResult.success || !ocrResult.text || ocrResult.text.length < 10) {
+          throw new Error('Tesseract returned insufficient data');
+        }
+
+        console.log("[API] ✅ Tesseract OCR succeeded (production-ready)");
+        console.log("[API] 📊 OCR Stats: text length:", ocrResult.text.length, "| confidence:", ocrResult.confidence);
+      } catch (tesseractError) {
+        console.warn("[API] ⚠️ Tesseract failed, falling back to Vision API:", tesseractError.message);
         const visionResult = await verifyDocument(filepath, documentType);
         ocrResult = visionResult.ocr;
         visionAnalysis = visionResult.analysis;
-      } else {
-        // Try Tesseract first in development, fallback to Vision API if fails
-        console.log("[API] 💻 Development environment, attempting Tesseract OCR for", documentType);
-        try {
-          ocrResult = await Promise.race([
-            performTesseractOCR(filepath),
-            new Promise((_, reject) =>
-              setTimeout(() => reject(new Error('Tesseract timeout')), 10000)
-            )
-          ]);
-
-          // Check if Tesseract failed
-          if (!ocrResult.success || !ocrResult.text || ocrResult.text.length < 10) {
-            throw new Error('Tesseract returned insufficient data');
-          }
-
-          console.log("[API] ✅ Tesseract OCR succeeded");
-        } catch (tesseractError) {
-          console.warn("[API] ⚠️ Tesseract failed, falling back to Vision API:", tesseractError.message);
-          const visionResult = await verifyDocument(filepath, documentType);
-          ocrResult = visionResult.ocr;
-          visionAnalysis = visionResult.analysis;
-        }
       }
     }
 
