@@ -191,48 +191,199 @@ export async function validateIjazah(ocrText, ktpData, formasiData, visionHandwr
       console.log('[IJAZAH Validation] ⚠️ Handwriting detected');
     }
 
-    // 2. Extract nomor ijazah dari OCR
+    // 2. Extract nomor ijazah dengan multi-tier approach
     let nomorIjazah = extractNomorIjazah(ocrText);
-    
+
     if (!nomorIjazah) {
-      console.log('[IJAZAH Validation] ⚠️ Nomor ijazah tidak ter-extract dari OCR');
-      console.log('[IJAZAH Validation] 🤖 Trying Gemini AI extraction immediately...');
-      
-      // If OCR fails, try Gemini AI extraction immediately
-      const { extractIjazahWithGemini } = await import('./gemini.js');
-      const geminiResult = await extractIjazahWithGemini(ocrText);
-      
-      if (geminiResult.success && geminiResult.data && geminiResult.data.nomor_ijazah) {
-        nomorIjazah = geminiResult.data.nomor_ijazah;
-        console.log('[IJAZAH Validation] ✅ Nomor ijazah extracted by AI:', nomorIjazah);
-        validation.nomorIjazah = nomorIjazah;
-        
-        // Store all Gemini data early
-        validation.geminiExtraction = true;
-        validation.geminiData = geminiResult.data;
-        validation.geminiConfidence = geminiResult.data.confidence;
-      } else {
-        console.log('[IJAZAH Validation] ⚠️ AI also failed to extract nomor ijazah');
-        validation.warnings.push(
-          '⚠️ Nomor ijazah tidak dapat diekstrak dari dokumen (OCR dan AI gagal). ' +
-          'Pastikan dokumen jelas dan terbaca. Verifikasi manual diperlukan.'
-        );
-        // Don't return here, continue validation with other data
+      console.log('[IJAZAH Validation] ⚠️ Nomor ijazah tidak ter-extract dari Tesseract OCR');
+
+      // TIER 2: Try Google Document AI (best for handwriting)
+      console.log('[IJAZAH Validation] 📄 Trying Google Document AI for handwriting...');
+      try {
+        const { isDocumentAIAvailable, extractNomorIjazahFromOCR } = await import('./googleDocumentAI.js');
+
+        if (isDocumentAIAvailable()) {
+          // Document AI already processed by API, just extract from text
+          // Note: We can enhance this by re-processing with Document AI if needed
+          const docAINomorIjazah = extractNomorIjazahFromOCR(ocrText);
+
+          if (docAINomorIjazah) {
+            nomorIjazah = docAINomorIjazah;
+            console.log('[IJAZAH Validation] ✅ Nomor ijazah extracted by Document AI:', nomorIjazah);
+            validation.nomorIjazah = nomorIjazah;
+            validation.extractionSource = 'google-document-ai';
+          } else {
+            console.log('[IJAZAH Validation] ⚠️ Document AI pattern matching failed');
+          }
+        } else {
+          console.log('[IJAZAH Validation] ℹ️ Google Document AI not configured');
+        }
+      } catch (docAIError) {
+        console.log('[IJAZAH Validation] ⚠️ Document AI error:', docAIError.message);
+      }
+
+      // TIER 3: Try Gemini AI as final fallback
+      if (!nomorIjazah) {
+        console.log('[IJAZAH Validation] 🤖 Trying Gemini AI extraction as final fallback...');
+
+        const { extractIjazahWithGemini } = await import('./gemini.js');
+        const geminiResult = await extractIjazahWithGemini(ocrText);
+
+        if (geminiResult.success && geminiResult.data && geminiResult.data.nomor_ijazah) {
+          nomorIjazah = geminiResult.data.nomor_ijazah;
+          console.log('[IJAZAH Validation] ✅ Nomor ijazah extracted by Gemini AI:', nomorIjazah);
+          validation.nomorIjazah = nomorIjazah;
+
+          // Store all Gemini data early
+          validation.geminiExtraction = true;
+          validation.geminiData = geminiResult.data;
+          validation.geminiConfidence = geminiResult.data.confidence;
+          validation.extractionSource = 'gemini-ai';
+        } else {
+          console.log('[IJAZAH Validation] ❌ All extraction methods failed (Tesseract, Document AI, Gemini)');
+          validation.warnings.push(
+            '⚠️ Nomor ijazah tidak dapat diekstrak dari dokumen (semua metode gagal). ' +
+            'Pastikan dokumen jelas dan terbaca. Verifikasi manual diperlukan.'
+          );
+          // Don't return here, continue validation with other data
+        }
       }
     } else {
+      validation.extractionSource = 'tesseract-ocr';
       validation.nomorIjazah = nomorIjazah;
       console.log('[IJAZAH Validation] ✅ Nomor ijazah extracted by OCR:', nomorIjazah);
+    }
 
-      // 3. Query database PDDIKTI (Forlap Dikti)
+    // 3. Query database PDDIKTI (Forlap Dikti) with fuzzy matching
+    // This runs for ALL extraction sources (Tesseract, Document AI, Gemini)
+    if (nomorIjazah) {
       console.log('[IJAZAH Validation] Querying PDDIKTI database...');
-      const { data: pddiktiData, error: pddiktiError } = await supabase
+      console.log('[IJAZAH Validation] Extracted nomor ijazah:', nomorIjazah);
+      console.log('[IJAZAH Validation] Extraction source:', validation.extractionSource);
+
+      // Helper function to normalize common OCR mistakes
+      const normalizeOCRText = (text) => {
+        if (!text) return '';
+
+        // Strategy: Save Roman numerals first, then normalize, then restore
+        const upperText = text.toUpperCase();
+        const romanNumerals = [];
+        const placeholder = '###ROMAN###';
+
+        // Step 1: Find and save all Roman numerals (VII, VIII, IX, IV, V, X, etc)
+        let protectedText = upperText.replace(/\b([IVX]{2,})\b/g, (match) => {
+          // Save the Roman numeral
+          const index = romanNumerals.length;
+          romanNumerals.push(match);
+          return `${placeholder}${index}${placeholder}`;
+        });
+
+        // Step 2: Normalize OCR errors (I/i/l/L → 1)
+        protectedText = protectedText
+          .replace(/[ILl]/g, '1')  // I, L, l → 1
+          .replace(/i/g, '1');      // i → 1
+
+        // Step 3: Restore Roman numerals
+        romanNumerals.forEach((roman, index) => {
+          const pattern = new RegExp(`${placeholder}${index}${placeholder}`, 'g');
+          protectedText = protectedText.replace(pattern, roman);
+        });
+
+        console.log(`[Normalize] Original: "${text}"`);
+        console.log(`[Normalize] Normalized: "${protectedText}"`);
+        console.log(`[Normalize] Preserved Romans: [${romanNumerals.join(', ')}]`);
+
+        return protectedText;
+      };
+
+      // Try exact match first
+      let { data: pddiktiData, error: pddiktiError } = await supabase
         .from('pddikti_dummy')
         .select('*')
         .eq('nomor_ijazah', nomorIjazah)
         .single();
 
+      // Debug: Log exact match attempt
+      console.log('[IJAZAH Validation] Exact match query result:');
+      console.log('  - Error:', pddiktiError);
+      console.log('  - Data found:', !!pddiktiData);
+
+      // If exact match fails, try with character normalization
       if (pddiktiError || !pddiktiData) {
-        console.log('[IJAZAH Validation] ⚠️ Nomor ijazah not found in PDDIKTI database');
+        console.log('[IJAZAH Validation] ⚠️ Exact match not found, trying with OCR error tolerance...');
+
+        const normalizedExtracted = normalizeOCRText(nomorIjazah);
+        console.log(`[IJAZAH Validation] Original: "${nomorIjazah}"`);
+        console.log(`[IJAZAH Validation] Normalized: "${normalizedExtracted}"`);
+
+        // Get all nomor ijazah from database
+        console.log('[IJAZAH Validation] Fetching all data from pddikti_dummy...');
+        const { data: allIjazah, error: allError } = await supabase
+          .from('pddikti_dummy')
+          .select('*');
+
+        console.log('[IJAZAH Validation] Query result:');
+        console.log('  - Error:', allError);
+        console.log('  - Data count:', allIjazah?.length || 0);
+        if (allIjazah && allIjazah.length > 0) {
+          console.log('  - Sample nomor:', allIjazah.slice(0, 3).map(i => i.nomor_ijazah));
+        }
+
+        if (!allError && allIjazah && allIjazah.length > 0) {
+          let bestMatch = null;
+          let bestSimilarity = 0;
+          let matchType = 'fuzzy'; // 'normalized' or 'fuzzy'
+
+          for (const ijazah of allIjazah) {
+            const normalizedDB = normalizeOCRText(ijazah.nomor_ijazah);
+
+            // Try normalized exact match first
+            if (normalizedExtracted === normalizedDB) {
+              console.log(`[IJAZAH Validation] ✅ Normalized exact match found: ${ijazah.nomor_ijazah}`);
+              bestMatch = ijazah;
+              bestSimilarity = 1.0;
+              matchType = 'normalized';
+              break;
+            }
+
+            // Fall back to fuzzy matching (80% similarity)
+            const similarity = nameSimilarity(
+              nomorIjazah,
+              ijazah.nomor_ijazah
+            ) / 100; // nameSimilarity returns 0-100, we need 0-1
+
+            console.log(`[IJAZAH Validation] Comparing with ${ijazah.nomor_ijazah}: ${(similarity * 100).toFixed(1)}%`);
+
+            if (similarity > bestSimilarity && similarity >= 0.80) {
+              bestSimilarity = similarity;
+              bestMatch = ijazah;
+              matchType = 'fuzzy';
+            }
+          }
+
+          if (bestMatch) {
+            console.log(`[IJAZAH Validation] ✅ Match found (${matchType}) with ${(bestSimilarity * 100).toFixed(1)}% similarity`);
+            console.log(`[IJAZAH Validation] Extracted: "${nomorIjazah}"`);
+            console.log(`[IJAZAH Validation] Database: "${bestMatch.nomor_ijazah}"`);
+            pddiktiData = bestMatch;
+            pddiktiError = null;
+
+            // Add warning based on match type
+            if (matchType === 'normalized') {
+              validation.warnings.push(
+                `⚠️ Nomor ijazah dikoreksi otomatis untuk kesalahan OCR umum (l/L/I/i → 1). Extracted: "${nomorIjazah}", Database: "${bestMatch.nomor_ijazah}".`
+              );
+            } else {
+              validation.warnings.push(
+                `⚠️ Nomor ijazah tidak cocok 100%. Extracted: "${nomorIjazah}", Database: "${bestMatch.nomor_ijazah}" (${(bestSimilarity * 100).toFixed(0)}% kesamaan). Verifikasi manual diperlukan.`
+              );
+            }
+          }
+        }
+      }
+
+      if (pddiktiError || !pddiktiData) {
+        console.log('[IJAZAH Validation] ❌ Nomor ijazah not found in PDDIKTI database (exact or fuzzy)');
         console.log('[IJAZAH Validation] 🤖 Attempting GEMINI AI extraction as intelligent fallback...');
         
         // Import Gemini extraction
@@ -417,7 +568,7 @@ export async function validateIjazah(ocrText, ktpData, formasiData, visionHandwr
           }
         }
       }
-    }
+    } // End of if (nomorIjazah) block - Supabase query
 
     // 6. Jika nomor ijazah tidak ditemukan, coba extract dari OCR sebagai fallback
     if (!validation.programStudi) {
