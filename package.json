@@ -17,7 +17,7 @@
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/drawing_utils": "^0.3.1675466124",
     "@mediapipe/face_mesh": "^0.4.1633559619",
-    "@supabase/supabase-js": "^2.80.0",
+    "@supabase/supabase-js": "^2.81.0",
     "@tailwindcss/oxide": "^4.1.17",
     "dotenv": "^17.2.3",
     "face-api.js": "^0.22.2",
