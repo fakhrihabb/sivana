@@ -476,25 +476,42 @@ export default function DaftarPendaftar() {
   }
 
   return (
-    <section id="daftar-formasi" className="py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Daftar Pendaftar
+    <section id="daftar-formasi" className="py-16 md:py-24 bg-gradient-to-b from-white via-blue-50 to-white relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(35, 157, 215, 0.15) 1px, transparent 0)',
+          backgroundSize: '40px 40px'
+        }}></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <div className="inline-block mb-6">
+            <span className="px-4 py-2 bg-white/80 backdrop-blur-xl rounded-full border border-[#239DD7]/20 text-sm font-mono text-[#239DD7] shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 hover:scale-110 hover:border-[#DE1B5D]/70 hover:bg-white hover:text-[#DE1B5D] transition-all duration-500 cursor-default hover:rotate-2">
+              DAFTAR FORMASI
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-gray-900 via-[#239DD7] to-gray-900 bg-clip-text text-transparent">
+              Daftar Pendaftar
+            </span>
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Pilih formasi yang sesuai dengan kualifikasi Anda
           </p>
           {error && (
-            <div className="mt-4 bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg max-w-2xl mx-auto">
+            <div className="mt-6 bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg max-w-2xl mx-auto shadow-lg">
               <p className="text-sm">⚠️ Menggunakan data fallback. Koneksi Supabase: {error}</p>
             </div>
           )}
         </div>
 
         {/* Filter Section */}
-        <div className="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+        <div className="group relative mb-10">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#239DD7] to-cyan-500 rounded-2xl blur opacity-10 group-hover:opacity-30 transition-opacity duration-500"></div>
+          <div className="relative bg-white/80 backdrop-blur-xl rounded-2xl p-8 border border-[#239DD7]/20 shadow-xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-6">
             {/* Periode Filter */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -503,7 +520,7 @@ export default function DaftarPendaftar() {
               <select
                 value={filters.periode}
                 onChange={(e) => handleFilterChange("periode", e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent"
+                className="w-full px-4 py-3 border border-[#239DD7]/30 rounded-xl focus:ring-2 focus:ring-[#239DD7] focus:border-[#239DD7] bg-white/70 backdrop-blur-sm hover:border-[#239DD7]/60 transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <option value="">Semua Periode</option>
                 {uniquePeriode.map(periode => (
@@ -520,7 +537,7 @@ export default function DaftarPendaftar() {
               <select
                 value={filters.jenjangPendidikan}
                 onChange={(e) => handleFilterChange("jenjangPendidikan", e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent"
+                className="w-full px-4 py-3 border border-[#239DD7]/30 rounded-xl focus:ring-2 focus:ring-[#239DD7] focus:border-[#239DD7] bg-white/70 backdrop-blur-sm hover:border-[#239DD7]/60 transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <option value="">Semua Jenjang</option>
                 {uniqueJenjang.map(jenjang => (
@@ -537,7 +554,7 @@ export default function DaftarPendaftar() {
               <select
                 value={filters.programStudi}
                 onChange={(e) => handleFilterChange("programStudi", e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent"
+                className="w-full px-4 py-3 border border-[#239DD7]/30 rounded-xl focus:ring-2 focus:ring-[#239DD7] focus:border-[#239DD7] bg-white/70 backdrop-blur-sm hover:border-[#239DD7]/60 transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <option value="">Semua Program Studi</option>
                 {uniqueProdi.map(prodi => (
@@ -554,7 +571,7 @@ export default function DaftarPendaftar() {
               <select
                 value={filters.instansi}
                 onChange={(e) => handleFilterChange("instansi", e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent"
+                className="w-full px-4 py-3 border border-[#239DD7]/30 rounded-xl focus:ring-2 focus:ring-[#239DD7] focus:border-[#239DD7] bg-white/70 backdrop-blur-sm hover:border-[#239DD7]/60 transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <option value="">Semua Instansi</option>
                 {uniqueInstansi.map(instansi => (
@@ -571,7 +588,7 @@ export default function DaftarPendaftar() {
               <select
                 value={filters.jenisPengadaan}
                 onChange={(e) => handleFilterChange("jenisPengadaan", e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent"
+                className="w-full px-4 py-3 border border-[#239DD7]/30 rounded-xl focus:ring-2 focus:ring-[#239DD7] focus:border-[#239DD7] bg-white/70 backdrop-blur-sm hover:border-[#239DD7]/60 transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <option value="">Semua Jenis</option>
                 {uniqueJenisPengadaan.map(jenis => (
@@ -584,54 +601,76 @@ export default function DaftarPendaftar() {
             <div className="flex items-end">
               <button
                 onClick={resetFilters}
-                className="w-full px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors"
+                className="group/reset relative w-full px-4 py-3 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-[#239DD7] hover:to-cyan-500 text-gray-700 hover:text-white rounded-xl font-semibold transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30 overflow-hidden"
               >
-                Reset Filter
+                <span className="relative z-10 group-hover/reset:scale-105 inline-block transition-transform">Reset Filter</span>
               </button>
             </div>
           </div>
 
           {/* Results Count */}
-          <div className="text-sm text-gray-600">
-            Menampilkan <span className="font-semibold">{((pagination.page - 1) * pagination.limit) + 1}-{Math.min(pagination.page * pagination.limit, pagination.total)}</span> dari <span className="font-semibold">{pagination.total}</span> formasi
+          <div className="text-sm text-gray-700 font-medium bg-blue-50/50 rounded-lg px-4 py-3 border border-[#239DD7]/10">
+            Menampilkan <span className="font-bold text-[#239DD7]">{((pagination.page - 1) * pagination.limit) + 1}-{Math.min(pagination.page * pagination.limit, pagination.total)}</span> dari <span className="font-bold text-[#239DD7]">{pagination.total}</span> formasi
           </div>
         </div>
+      </div>
 
         {/* Pendaftar Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {formasiData.map((formasi) => (
             <div
               key={formasi.id}
-              className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col"
+              className="group relative"
             >
-              <div className="flex-grow mb-4">
-                <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                  {formasi.name}
-                </h3>
-                <p className="text-gray-500 text-xs mb-3">
-                  {formasi.lembaga} • {formasi.lokasi}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-md">
-                    {formasi.jenisPengadaan}
-                  </span>
-                  <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-md">
-                    {formasi.jenjangPendidikan}
-                  </span>
+              {/* Glow Effect on Hover */}
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#239DD7] to-cyan-500 rounded-2xl blur opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
+
+              <div className="relative bg-white border border-[#239DD7]/20 rounded-2xl p-6 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 flex flex-col hover:-translate-y-2 hover:scale-[1.02] hover:border-[#239DD7]/50 shadow-lg">
+                <div className="flex-grow mb-4">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#239DD7] group-hover:scale-105 transition-all duration-300">
+                    {formasi.name}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-[#239DD7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    {formasi.lembaga}
+                  </p>
+                  <p className="text-gray-600 text-sm mb-4 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-[#239DD7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    {formasi.lokasi}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-cyan-50 text-[#239DD7] text-xs font-semibold rounded-lg border border-[#239DD7]/20 group-hover:scale-110 group-hover:border-[#239DD7]/40 transition-all duration-300">
+                      {formasi.jenisPengadaan}
+                    </span>
+                    <span className="px-3 py-1.5 bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 text-xs font-semibold rounded-lg border border-green-200 group-hover:scale-110 group-hover:border-green-300 transition-all duration-300">
+                      {formasi.jenjangPendidikan}
+                    </span>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    {formasi.description}
+                  </p>
+                  <div className="flex items-center gap-2 text-[#239DD7] font-bold text-sm">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    {formasi.quota}
+                  </div>
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-3">
-                  {formasi.description}
-                </p>
-                <p className="text-brand-blue font-medium text-sm">
-                  {formasi.quota}
-                </p>
+                <Link
+                  href={`/formasi/${formasi.id}`}
+                  className="group/btn relative block w-full overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#DE1B5D] to-pink-500 rounded-xl blur opacity-30 group-hover/btn:opacity-60 transition-opacity duration-500"></div>
+                  <div className="relative bg-gradient-to-r from-[#DE1B5D] to-pink-500 text-white text-center px-4 py-3 rounded-xl font-bold transition-all duration-500 group-hover/btn:scale-105 group-hover/btn:shadow-lg group-hover/btn:shadow-pink-500/30">
+                    <span className="group-hover/btn:scale-110 inline-block transition-transform duration-300">Daftar Sekarang</span>
+                  </div>
+                </Link>
               </div>
-              <Link
-                href={`/formasi/${formasi.id}`}
-                className="block w-full bg-brand-pink hover:bg-opacity-90 text-white text-center px-4 py-2 rounded-lg font-medium transition-all"
-              >
-                Daftar
-              </Link>
             </div>
           ))}
         </div>
@@ -643,10 +682,10 @@ export default function DaftarPendaftar() {
             <button
               onClick={() => handlePageChange(pagination.page - 1)}
               disabled={pagination.page === 1}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
                 pagination.page === 1
                   ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-brand-blue text-white hover:bg-opacity-90'
+                  : 'bg-gradient-to-r from-[#239DD7] to-cyan-500 text-white hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30'
               }`}
             >
               Sebelumnya
@@ -671,7 +710,7 @@ export default function DaftarPendaftar() {
                     <button
                       key={1}
                       onClick={() => handlePageChange(1)}
-                      className="px-4 py-2 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                      className="px-4 py-2 rounded-lg font-semibold bg-white text-gray-700 hover:bg-gradient-to-r hover:from-[#239DD7] hover:to-cyan-500 hover:text-white border border-[#239DD7]/20 hover:border-[#239DD7] transition-all duration-300 hover:scale-105 hover:shadow-md"
                     >
                       1
                     </button>
@@ -691,10 +730,10 @@ export default function DaftarPendaftar() {
                     <button
                       key={i}
                       onClick={() => handlePageChange(i)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                      className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 ${
                         i === pagination.page
-                          ? 'bg-brand-blue text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          ? 'bg-gradient-to-r from-[#239DD7] to-cyan-500 text-white shadow-lg shadow-blue-500/30 scale-110'
+                          : 'bg-white text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 border border-[#239DD7]/20 hover:border-[#239DD7]/40 hover:scale-105 hover:shadow-md'
                       }`}
                     >
                       {i}
@@ -715,7 +754,7 @@ export default function DaftarPendaftar() {
                     <button
                       key={pagination.totalPages}
                       onClick={() => handlePageChange(pagination.totalPages)}
-                      className="px-4 py-2 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                      className="px-4 py-2 rounded-lg font-semibold bg-white text-gray-700 hover:bg-gradient-to-r hover:from-[#239DD7] hover:to-cyan-500 hover:text-white border border-[#239DD7]/20 hover:border-[#239DD7] transition-all duration-300 hover:scale-105 hover:shadow-md"
                     >
                       {pagination.totalPages}
                     </button>
@@ -730,10 +769,10 @@ export default function DaftarPendaftar() {
             <button
               onClick={() => handlePageChange(pagination.page + 1)}
               disabled={pagination.page === pagination.totalPages}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
                 pagination.page === pagination.totalPages
                   ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-brand-blue text-white hover:bg-opacity-90'
+                  : 'bg-gradient-to-r from-[#239DD7] to-cyan-500 text-white hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30'
               }`}
             >
               Selanjutnya
@@ -743,16 +782,30 @@ export default function DaftarPendaftar() {
 
         {/* No Results Message */}
         {formasiData.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">
-              Tidak ada formasi yang sesuai dengan filter yang dipilih.
-            </p>
-            <button
-              onClick={resetFilters}
-              className="mt-4 px-6 py-2 bg-brand-blue text-white rounded-lg hover:bg-opacity-90 transition-colors"
-            >
-              Reset Filter
-            </button>
+          <div className="text-center py-16 relative">
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0" style={{
+                backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(35, 157, 215, 0.3) 1px, transparent 0)',
+                backgroundSize: '30px 30px'
+              }}></div>
+            </div>
+            <div className="relative">
+              <svg className="w-24 h-24 text-gray-300 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p className="text-gray-600 text-xl mb-6 font-medium">
+                Tidak ada formasi yang sesuai dengan filter yang dipilih.
+              </p>
+              <button
+                onClick={resetFilters}
+                className="group relative px-8 py-4 bg-gradient-to-r from-[#239DD7] to-cyan-500 text-white rounded-xl font-semibold transition-all duration-500 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30 inline-flex items-center gap-2"
+              >
+                <svg className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span className="group-hover:scale-105 inline-block transition-transform">Reset Filter</span>
+              </button>
+            </div>
           </div>
         )}
       </div>
