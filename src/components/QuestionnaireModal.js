@@ -182,7 +182,10 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
         options: []
       }));
 
+      console.log('=== SUBMIT ANSWERS DEBUG ===');
       console.log(`Submitting with ${filteredFormasi.length} pre-filtered formasi`);
+      console.log('Answers:', answers);
+      console.log('Session ID:', sessionId);
 
       const response = await fetch('/api/questionnaire/recommend', {
         method: 'POST',
@@ -197,18 +200,28 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
         }),
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
       const data = await response.json();
+      console.log('Response data:', data);
 
       if (data.success) {
         setRecommendations(data.data.recommendations);
         setAnalysisSummary(data.data.analysis_summary);
         setStep(7); // Results step
       } else {
-        setError(data.error || 'Gagal mendapatkan rekomendasi');
+        console.error('API returned error:', data.error, data.details);
+        // Show debug error if available for better troubleshooting
+        const errorMsg = data.debugError
+          ? `${data.error} (Debug: ${data.debugError})`
+          : data.error || 'Gagal mendapatkan rekomendasi';
+        setError(errorMsg);
         setStep(5); // Go back to last question
       }
     } catch (err) {
       console.error('Error submitting answers:', err);
+      console.error('Error stack:', err.stack);
       setError('Terjadi kesalahan saat memproses jawaban');
       setStep(5); // Go back to last question
     }
@@ -513,15 +526,8 @@ export default function QuestionnaireModal({ isOpen, onClose }) {
                           <h4 className="font-bold text-gray-900 text-lg mb-1 group-hover:text-brand-blue transition-colors">
                             {formasi.name}
                           </h4>
-                          <p className="text-sm text-gray-600 font-medium mb-1">
+                          <p className="text-sm text-gray-600 font-medium">
                             {formasi.lembaga}
-                          </p>
-                          <p className="text-sm text-gray-500 flex items-center gap-1">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            {formasi.lokasi}
                           </p>
                         </div>
 

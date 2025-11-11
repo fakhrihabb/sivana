@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect, useRef, use, useCallback } from "react";
 import { ArrowLeft, Camera, User, AlertCircle, CheckCircle, XCircle } from "lucide-react";
 import Link from "next/link";
 import Webcam from "react-webcam";
@@ -258,48 +258,20 @@ export default function VerifikasiWajahCamera({ params }) {
     setCameraReady(true);
   };
 
-  // Countdown and snapshot when face is straight
-  useEffect(() => {
-    let timer;
-
-    if (facingStraight && !isProcessing && !verificationResult && countdown === null) {
-      // Start countdown from 3
-      setCountdown(3);
-    }
-
-    if (countdown !== null && countdown > 0) {
-      timer = setTimeout(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
-    } else if (countdown === 0) {
-      // Countdown finished, take snapshot
-      captureAndVerify();
-    }
-
-    return () => clearTimeout(timer);
-  }, [facingStraight, countdown, isProcessing, verificationResult]);
-
-  // Reset countdown when face is not straight
-  useEffect(() => {
-    if (!facingStraight && countdown !== null && !isProcessing) {
-      setCountdown(null);
-    }
-  }, [facingStraight, countdown, isProcessing]);
-
-  const captureAndVerify = async () => {
+  const captureAndVerify = useCallback(async () => {
     if (!webcamRef.current) return;
 
     setIsProcessing(true);
     setCountdown(null);
 
     try {
-      // Capture multiple frames for liveness check (0.5 second apart)
+      // Capture multiple frames for liveness check (0.7 second apart for better variation)
       const frame1 = webcamRef.current.getScreenshot();
 
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 700));
       const frame2 = webcamRef.current.getScreenshot();
 
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 700));
       const frame3 = webcamRef.current.getScreenshot();
 
       // Call API to verify face with liveness check
@@ -325,7 +297,35 @@ export default function VerifikasiWajahCamera({ params }) {
       setError('Terjadi kesalahan saat verifikasi');
       setIsProcessing(false);
     }
-  };
+  }, []);
+
+  // Countdown and snapshot when face is straight
+  useEffect(() => {
+    let timer;
+
+    if (facingStraight && !isProcessing && !verificationResult && countdown === null) {
+      // Start countdown from 3
+      setCountdown(3);
+    }
+
+    if (countdown !== null && countdown > 0) {
+      timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+    } else if (countdown === 0) {
+      // Countdown finished, take snapshot
+      captureAndVerify();
+    }
+
+    return () => clearTimeout(timer);
+  }, [facingStraight, countdown, isProcessing, verificationResult, captureAndVerify]);
+
+  // Reset countdown when face is not straight
+  useEffect(() => {
+    if (!facingStraight && countdown !== null && !isProcessing) {
+      setCountdown(null);
+    }
+  }, [facingStraight, countdown, isProcessing]);
 
   const handleCloseModal = () => {
     setVerificationResult(null);

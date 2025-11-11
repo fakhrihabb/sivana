@@ -320,7 +320,7 @@ export default function DaftarPendaftar() {
   });
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: 9,
+    limit: 15,
     total: 0,
     totalPages: 0
   });
@@ -620,13 +620,13 @@ export default function DaftarPendaftar() {
           {formasiData.map((formasi) => (
             <div
               key={formasi.id}
-              className="group relative"
+              className="group relative h-full"
             >
               {/* Glow Effect on Hover */}
               <div className="absolute -inset-0.5 bg-gradient-to-r from-[#239DD7] to-cyan-500 rounded-2xl blur opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
 
-              <div className="relative bg-white border border-[#239DD7]/20 rounded-2xl p-6 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 flex flex-col hover:-translate-y-2 hover:scale-[1.02] hover:border-[#239DD7]/50 shadow-lg">
-                <div className="flex-grow mb-4">
+              <div className="relative bg-white border border-[#239DD7]/20 rounded-2xl p-6 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 flex flex-col h-full hover:-translate-y-2 hover:scale-[1.02] hover:border-[#239DD7]/50 shadow-lg">
+                <div className="flex-grow">
                   <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#239DD7] group-hover:scale-105 transition-all duration-300">
                     {formasi.name}
                   </h3>
@@ -636,16 +636,6 @@ export default function DaftarPendaftar() {
                     </svg>
                     {formasi.lembaga}
                   </p>
-                  
-                  {/* Headquarters */}
-                  {formasi.kantorPusat && (
-                    <p className="text-gray-500 text-xs mb-2 flex items-center gap-1.5">
-                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd" />
-                      </svg>
-                      <span>Kantor: {formasi.kantorPusat}</span>
-                    </p>
-                  )}
                   
                   {/* Display placement locations */}
                   {formasi.locations && formasi.locations.length > 0 && (
@@ -679,22 +669,24 @@ export default function DaftarPendaftar() {
                   <p className="text-gray-600 text-sm leading-relaxed mb-4">
                     {formasi.description}
                   </p>
+                </div>
+                <div className="mt-auto space-y-4">
                   <div className="flex items-center gap-2 text-[#239DD7] font-bold text-sm">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     {formasi.quota}
                   </div>
+                  <Link
+                    href={`/formasi/${formasi.id}`}
+                    className="group/btn relative block w-full overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#DE1B5D] to-pink-500 rounded-xl blur opacity-30 group-hover/btn:opacity-60 transition-opacity duration-500"></div>
+                    <div className="relative bg-gradient-to-r from-[#DE1B5D] to-pink-500 text-white text-center px-4 py-3 rounded-xl font-bold transition-all duration-500 group-hover/btn:scale-105 group-hover/btn:shadow-lg group-hover/btn:shadow-pink-500/30">
+                      <span className="group-hover/btn:scale-110 inline-block transition-transform duration-300">Daftar Sekarang</span>
+                    </div>
+                  </Link>
                 </div>
-                <Link
-                  href={`/formasi/${formasi.id}`}
-                  className="group/btn relative block w-full overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#DE1B5D] to-pink-500 rounded-xl blur opacity-30 group-hover/btn:opacity-60 transition-opacity duration-500"></div>
-                  <div className="relative bg-gradient-to-r from-[#DE1B5D] to-pink-500 text-white text-center px-4 py-3 rounded-xl font-bold transition-all duration-500 group-hover/btn:scale-105 group-hover/btn:shadow-lg group-hover/btn:shadow-pink-500/30">
-                    <span className="group-hover/btn:scale-110 inline-block transition-transform duration-300">Daftar Sekarang</span>
-                  </div>
-                </Link>
               </div>
             </div>
           ))}

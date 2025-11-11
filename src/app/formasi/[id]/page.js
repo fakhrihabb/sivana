@@ -6,6 +6,8 @@ import { supabase } from "@/lib/supabase";
 import DocumentUpload from "@/components/documents/DocumentUpload";
 import RequirementChecklist from "@/components/documents/RequirementChecklist";
 import { validateRequirements } from "@/components/documents/RequirementValidator";
+import LocationMap from "@/components/maps/LocationMap";
+import LocationDetailsModal from "@/components/maps/LocationDetailsModal";
 
 const formasiDataFallback = {
   1: {
@@ -128,29 +130,53 @@ export default function FormasiDetail() {
   const [sanggahReason, setSanggahReason] = useState("");
   const [sanggahSubmitted, setSanggahSubmitted] = useState(false);
   const [recommendedFormasi, setRecommendedFormasi] = useState([]);
+  const [provinceData, setProvinceData] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState(null);
+  const [showLocationModal, setShowLocationModal] = useState(false);
 
   // Fetch formasi detail from Supabase
   useEffect(() => {
     async function fetchFormasi() {
       try {
         setLoading(true);
-        const { data, error } = await supabase
-          .from('formasi_with_provinces')
-          .select('*')
+
+        // Fetch formasi with province details including coordinates
+        const { data: formasiData, error: formasiError } = await supabase
+          .from('formasi')
+          .select(`
+            *,
+            formasi_provinces (
+              provinces (
+                id,
+                name,
+                latitude,
+                longitude,
+                formatted_address,
+                location_details
+              )
+            )
+          `)
           .eq('id', params.id)
           .single();
 
-        if (error) throw error;
+        if (formasiError) throw formasiError;
 
-        if (data) {
+        if (formasiData) {
+          // Extract province data with coordinates
+          const provinces = formasiData.formasi_provinces
+            ?.map(fp => fp.provinces)
+            .filter(p => p && p.latitude && p.longitude) || [];
+
+          setProvinceData(provinces);
+
           // Transform dan set default documents & requirements
           setFormasi({
-            name: data.name,
-            lembaga: data.lembaga,
-            kantorPusat: data.kantor_pusat, // Headquarters location
-            locations: data.provinces || [], // Placement locations
+            name: formasiData.name,
+            lembaga: formasiData.lembaga,
+            kantorPusat: formasiData.kantor_pusat, // Headquarters location
+            locations: provinces.map(p => p.name), // Placement locations (just names for display)
             requirements: {
-              pendidikan: data.jenjang_pendidikan + ' ' + data.program_studi,
+              pendidikan: formasiData.jenjang_pendidikan + ' ' + formasiData.program_studi,
               ipk: "3.0",
               usia: "Maksimal 35 tahun",
             },
@@ -167,6 +193,7 @@ export default function FormasiDetail() {
         console.error('Error fetching formasi:', err);
         // Fallback ke data hardcoded
         setFormasi(formasiDataFallback[params.id]);
+        setProvinceData([]);
       } finally {
         setLoading(false);
       }
@@ -456,6 +483,16 @@ export default function FormasiDetail() {
     return requiredDocs.every((doc) => uploadedDocs[doc.id]);
   };
 
+  const handleMarkerClick = (province) => {
+    setSelectedProvince(province);
+    setShowLocationModal(true);
+  };
+
+  const handleCloseLocationModal = () => {
+    setShowLocationModal(false);
+    setSelectedProvince(null);
+  };
+
   // Loading state
   if (loading) {
     return (
@@ -605,89 +642,111 @@ export default function FormasiDetail() {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {currentStep === 1 && (
-          <div className="bg-white rounded-xl shadow-sm p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Persyaratan Formasi
-            </h2>
-            <div className="space-y-4 mb-8">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-brand-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg
-                    className="w-4 h-4 text-brand-blue"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl shadow-sm p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                Persyaratan Formasi
+              </h2>
+              <div className="space-y-4 mb-8">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-brand-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg
+                      className="w-4 h-4 text-brand-blue"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">Pendidikan</p>
+                    <p className="text-gray-600">{formasi.requirements.pendidikan}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-medium text-gray-900">Pendidikan</p>
-                  <p className="text-gray-600">{formasi.requirements.pendidikan}</p>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-brand-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg
+                      className="w-4 h-4 text-brand-blue"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">IPK Minimal</p>
+                    <p className="text-gray-600">{formasi.requirements.ipk}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-brand-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg
+                      className="w-4 h-4 text-brand-blue"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">Usia</p>
+                    <p className="text-gray-600">{formasi.requirements.usia}</p>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-brand-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg
-                    className="w-4 h-4 text-brand-blue"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">IPK Minimal</p>
-                  <p className="text-gray-600">{formasi.requirements.ipk}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-brand-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg
-                    className="w-4 h-4 text-brand-blue"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">Usia</p>
-                  <p className="text-gray-600">{formasi.requirements.usia}</p>
-                </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <h3 className="font-semibold text-blue-900 mb-2">
+                  Dokumen yang perlu disiapkan:
+                </h3>
+                <ul className="space-y-1">
+                  {formasi.documents.map((doc) => (
+                    <li key={doc.id} className="text-blue-800 text-sm">
+                      • {doc.name} {!doc.required && "(opsional)"}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-              <h3 className="font-semibold text-blue-900 mb-2">
-                Dokumen yang perlu disiapkan:
-              </h3>
-              <ul className="space-y-1">
-                {formasi.documents.map((doc) => (
-                  <li key={doc.id} className="text-blue-800 text-sm">
-                    • {doc.name} {!doc.required && "(opsional)"}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* Location Map Section */}
+            {provinceData && provinceData.length > 0 && (
+              <div className="bg-white rounded-xl shadow-sm p-8">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    Lokasi Penempatan
+                  </h2>
+                  <p className="text-gray-600">
+                    Klik pada marker di peta untuk melihat detail lokasi penempatan
+                  </p>
+                </div>
+                <LocationMap
+                  provinces={provinceData}
+                  onMarkerClick={handleMarkerClick}
+                />
+              </div>
+            )}
 
-            <button
-              onClick={() => setCurrentStep(2)}
-              className="w-full bg-brand-blue text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all"
-            >
-              Lanjut Upload Dokumen
-            </button>
+            <div className="bg-white rounded-xl shadow-sm p-8">
+              <button
+                onClick={() => setCurrentStep(2)}
+                className="w-full bg-brand-blue text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all"
+              >
+                Lanjut Upload Dokumen
+              </button>
+            </div>
           </div>
         )}
 
@@ -1159,6 +1218,13 @@ export default function FormasiDetail() {
           </div>
         </div>
       )}
+
+      {/* Location Details Modal */}
+      <LocationDetailsModal
+        isOpen={showLocationModal}
+        onClose={handleCloseLocationModal}
+        province={selectedProvince}
+      />
     </div>
   );
 }
