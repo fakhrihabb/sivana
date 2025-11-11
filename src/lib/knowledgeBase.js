@@ -429,32 +429,59 @@ Hubungi support SSCASN dengan SS error yang Anda alami`,
 
 /**
  * Fungsi untuk mencari jawaban berdasarkan keyword
+ * Automatically updates year references to 2025 in all responses
  */
 export function searchKnowledge(userQuery) {
   const query = userQuery.toLowerCase();
-  
+
   for (const category of Object.values(knowledgeBase)) {
     // Cek apakah keyword cocok
-    const keywordMatch = category.keywords.some(keyword => 
+    const keywordMatch = category.keywords.some(keyword =>
       query.includes(keyword)
     );
-    
+
     if (keywordMatch) {
-      return category.responses;
+      // Update all responses to use 2025 instead of 2024
+      const updatedResponses = category.responses.map(response => ({
+        ...response,
+        answer: updateYearReferences(response.answer),
+        source: updateYearReferences(response.source)
+      }));
+
+      return updatedResponses;
     }
   }
-  
+
   return null;
 }
 
 /**
+ * Replace 2024 references with 2025 to keep content current
+ * This function updates year references in text while preserving other content
+ */
+function updateYearReferences(text) {
+  if (!text) return text;
+
+  // Replace various formats of 2024 with 2025
+  return text
+    .replace(/2024/g, '2025')  // Standard 2024
+    .replace(/tahun 2024/gi, 'tahun 2025')  // "tahun 2024"
+    .replace(/Tahun 2024/g, 'Tahun 2025');  // Capitalized
+}
+
+/**
  * Fungsi untuk mendapatkan format jawaban dengan citation
+ * Automatically updates 2024 references to 2025
  */
 export function formatResponseWithCitation(response) {
-  return `${response.answer}
+  // Update both answer and source to use current year (2025)
+  const updatedAnswer = updateYearReferences(response.answer);
+  const updatedSource = updateYearReferences(response.source);
+
+  return `${updatedAnswer}
 
 ---
-📚 **Sumber**: ${response.source}
+📚 **Sumber**: ${updatedSource}
 🔗 **Link**: ${response.link}`;
 }
 
